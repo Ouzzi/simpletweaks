@@ -1,0 +1,34 @@
+{
+  "itemgroup.simpletweaks.money_items": "Currency Materials",
+
+  "text.autoconfig.simpletweaks.title": "Simpletweaks Config",
+  "text.autoconfig.simpletweaks.category.default": "General",
+
+  "text.autoconfig.simpletweaks.option.balancing": "Balancing",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize": "Rocket Stack Size",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.tooltip[0]": "Default: 64.",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.tooltip[1]": "Set to 16 to nerf elytra flight.",
+
+  "text.autoconfig.simpletweaks.option.vaults": "Vault Settings",
+  "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays": "Vault Cooldown (Days)",
+  "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays.tooltip": "Time in Minecraft days until a player can loot a vault again.",
+
+  "text.autoconfig.simpletweaks.option.pvp": "PvP Settings",
+  "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops": "Player Head Drops",
+  "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops.tooltip": "If enabled, players drop their head when killed by another player.",
+
+  "text.autoconfig.simpletweaks.option.commands": "Commands",
+  "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand": "Enable /killboats Command",
+  "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand.tooltip": "Enables a command to remove all empty boats nearby.",
+
+  "text.autoconfig.simpletweaks.option.tweaks": "Tweaks & Features",
+  "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk": "Enable Auto-Walk",
+  "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk.tooltip": "Allows automatic walking via keybind.",
+  "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes": "Nametag Mute Suffixes",
+  "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes.tooltip": "List of suffixes. Mobs named with one of these suffixes will be silenced.",
+
+  "key.categories.simpletweaks": "Simple Tweaks",
+  "key.simpletweaks.autowalk": "Auto Walk",
+
+  "commands.simpletweaks.killboats.success": "Removed %s empty boats."
+}

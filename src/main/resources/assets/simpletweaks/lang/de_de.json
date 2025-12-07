@@ -1,0 +1,34 @@
+{
+  "itemgroup.simpletweaks.money_items": "Währungsmaterialien",
+
+  "text.autoconfig.simpletweaks.title": "Simpletweaks Konfiguration",
+  "text.autoconfig.simpletweaks.category.default": "Allgemein",
+
+  "text.autoconfig.simpletweaks.option.balancing": "Balancing",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize": "Raketen-Stapelgröße",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.tooltip[0]": "Standard: 64.",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.tooltip[1]": "Auf 16 setzen, um den Elytren-Flug abzuschwächen.",
+
+  "text.autoconfig.simpletweaks.option.vaults": "Tresor-Einstellungen",
+  "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays": "Tresor-Abklingzeit (Tage)",
+  "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays.tooltip": "Zeit in Minecraft-Tagen, bis ein Spieler einen Tresor erneut plündern kann.",
+
+  "text.autoconfig.simpletweaks.option.pvp": "PvP Einstellungen",
+  "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops": "Spielerkopf-Drops",
+  "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops.tooltip": "Wenn aktiviert, lassen Spieler ihren Kopf fallen, wenn sie von anderen Spielern getötet werden.",
+
+  "text.autoconfig.simpletweaks.option.commands": "Befehle",
+  "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand": "Befehl /killboats aktivieren",
+  "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand.tooltip": "Aktiviert einen Befehl, um alle leeren Boote in der Nähe zu entfernen.",
+
+  "text.autoconfig.simpletweaks.option.tweaks": "Tweaks & Funktionen",
+  "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk": "Auto-Walk aktivieren",
+  "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk.tooltip": "Erlaubt das automatische Laufen per Tastendruck.",
+  "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes": "Namensschild Stumm-Suffixe",
+  "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes.tooltip": "Liste von Suffixen. Mobs mit einem dieser Namenszusätze machen keine Geräusche mehr.",
+
+  "key.categories.simpletweaks": "Simple Tweaks",
+  "key.simpletweaks.autowalk": "Automatisch Laufen",
+
+  "commands.simpletweaks.killboats.success": "%s leere Boote wurden entfernt."
+}
