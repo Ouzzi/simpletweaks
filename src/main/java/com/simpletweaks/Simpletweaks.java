@@ -38,3 +38,7 @@ public class Simpletweaks implements ModInitializer {
 }
 
 // TODO: Bug -> when autowalk toggled off while moving, the player keeps moving until walk forward pressed again
+// TODO:
+// - kill charts befehl
+// - yeet posibilliy, sneak and q to yeet item sneak and shift yeet stack
+
