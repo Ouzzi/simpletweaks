@@ -22,6 +22,15 @@ public class SimpletweaksConfig implements ConfigData {
     public PvpTweaks pvp = new PvpTweaks();
 
     @ConfigEntry.Gui.CollapsibleObject
+    public Dimensions dimensions = new Dimensions();
+
+    @ConfigEntry.Gui.CollapsibleObject
+    public Spawn spawn = new Spawn();
+
+    @ConfigEntry.Gui.CollapsibleObject
+    public WorldSpawn worldSpawn = new WorldSpawn(); // NEU
+
+    @ConfigEntry.Gui.CollapsibleObject
     public Commands commands = new Commands();
 
     @ConfigEntry.Gui.CollapsibleObject
@@ -42,9 +51,52 @@ public class SimpletweaksConfig implements ConfigData {
         public boolean playerHeadDrops = true;
     }
 
+    public static class Dimensions {
+        @ConfigEntry.Gui.Tooltip
+        public boolean allowNether = true;
+        @ConfigEntry.Gui.Tooltip
+        public boolean allowEnd = true;
+    }
+
+    public static class Spawn {
+        @ConfigEntry.Gui.Tooltip
+        public boolean giveElytraOnSpawn = false;
+        @ConfigEntry.Gui.Tooltip
+        public int spawnElytraRadius = 25;
+        @ConfigEntry.Gui.Tooltip
+        public boolean useWorldSpawnAsCenter = true;
+        @ConfigEntry.Gui.Tooltip
+        public int customSpawnElytraX = 0;
+        @ConfigEntry.Gui.Tooltip
+        public int customSpawnElytraZ = 0;
+        @ConfigEntry.Gui.Tooltip
+        public int flightTimeSeconds = 300;
+        @ConfigEntry.Gui.Tooltip
+        public int maxBoosts = 3;
+        @ConfigEntry.Gui.Tooltip
+        public float boostStrength = 1.5f;
+    }
+
+    // NEU: World Spawn Settings
+    public static class WorldSpawn {
+        @ConfigEntry.Gui.Tooltip
+        public boolean forceExactSpawn = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public int xCoordSpawnPoint = 0;
+
+        @ConfigEntry.Gui.Tooltip
+        public int yCoordSpawnPoint = -1; // -1 = Automatisch (Oberfläche)
+
+        @ConfigEntry.Gui.Tooltip
+        public int zCoordSpawnPoint = 0;
+    }
+
     public static class Commands {
         @ConfigEntry.Gui.Tooltip
         public boolean enableKillBoatsCommand = true;
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableKillCartsCommand = false;
     }
 
     public static class Tweaks {
@@ -53,5 +105,11 @@ public class SimpletweaksConfig implements ConfigData {
 
         @ConfigEntry.Gui.Tooltip
         public List<String> nametagMuteSuffixes = new ArrayList<>(Arrays.asList("_mute", "_shhh"));
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableYeet = true;
+        @ConfigEntry.Gui.Tooltip
+        public float yeetStrength = 1.5f;
+
     }
 }

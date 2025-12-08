@@ -1,9 +1,13 @@
 package com.simpletweaks;
 
-import com.simpletweaks.client.AutoWalkHandler;
 import com.simpletweaks.command.ModCommands;
+import com.simpletweaks.component.ModDataComponentTypes;
 import com.simpletweaks.config.SimpletweaksConfig;
 import com.simpletweaks.event.PlayerHeadDropHandler;
+import com.simpletweaks.event.SpawnHandler;
+import com.simpletweaks.event.WorldSpawnHandler;
+import com.simpletweaks.item.ModItems;
+import com.simpletweaks.network.SpawnElytraNetworking;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -23,22 +27,25 @@ public class Simpletweaks implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-        LOGGER.info("Starting Simplemoney initialization...");
+        LOGGER.info("Starting Simpletweaks initialization...");
 
         AutoConfig.register(SimpletweaksConfig.class, GsonConfigSerializer::new);
         CONFIG = AutoConfig.getConfigHolder(SimpletweaksConfig.class).getConfig();
 
 
+        ModDataComponentTypes.registerDataComponentTypes();
+        ModItems.registerModItems();
         PlayerHeadDropHandler.register();
+        SpawnHandler.register();
+        SpawnElytraNetworking.register();
         ModCommands.register();
-        AutoWalkHandler.register();
-	}
+        WorldSpawnHandler.register();
+
+    }
 
     public static SimpletweaksConfig getConfig() { return CONFIG; }
 }
 
 // TODO: Bug -> when autowalk toggled off while moving, the player keeps moving until walk forward pressed again
-// TODO:
-// - kill charts befehl
-// - yeet posibilliy, sneak and q to yeet item sneak and shift yeet stack
+
 

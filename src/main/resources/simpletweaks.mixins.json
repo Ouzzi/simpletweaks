@@ -3,18 +3,25 @@
   "package": "com.simpletweaks.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "DimensionBlockMixin",
     "EntityMuteMixin",
+    "ExactSpawnMixin",
     "ItemStackMixin",
+    "SpawnElytraDamageMixin",
     "VaultBlockEntityMixin",
     "VaultBlockEntityServerMixin",
     "VaultServerDataAccessor",
     "VaultServerDataMixin",
-    "VaultSharedDataAccessor"
+    "VaultSharedDataAccessor",
+    "YeetMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-	}
+  },
+  "client": [
+    "client.InGameHudMixin"
+  ]
 }
