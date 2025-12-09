@@ -48,4 +48,4 @@ public class Simpletweaks implements ModInitializer {
 
 // TODO: Bug -> when autowalk toggled off while moving, the player keeps moving until walk forward pressed again
 
-
+// TODO:

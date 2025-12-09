@@ -6,16 +6,16 @@
 
   "text.autoconfig.simpletweaks.option.balancing": "Balancing",
   "text.autoconfig.simpletweaks.option.balancing.rocketStackSize": "Rocket Stack Size",
-  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.tooltip[0]": "Default: 64.",
-  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.tooltip[1]": "Set to 16 to nerf elytra flight.",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.@Tooltip[0]": "Default: 64.",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.@Tooltip[1]": "Set to 16 to nerf elytra flight.",
 
   "text.autoconfig.simpletweaks.option.vaults": "Vault Settings",
   "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays": "Vault Cooldown (Days)",
-  "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays.tooltip": "Time in Minecraft days until a player can loot a vault again.",
+  "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays.@Tooltip": "Time in Minecraft days until a player can loot a vault again.",
 
   "text.autoconfig.simpletweaks.option.pvp": "PvP Settings",
   "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops": "Player Head Drops",
-  "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops.tooltip": "If enabled, players drop their head when killed by another player.",
+  "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops.@Tooltip": "If enabled, players drop their head when killed by another player.",
 
   "text.autoconfig.simpletweaks.option.dimensions": "Dimensions",
   "text.autoconfig.simpletweaks.option.dimensions.allowNether": "Allow Nether",
@@ -24,7 +24,7 @@
   "text.autoconfig.simpletweaks.option.spawn": "Spawn Loadout",
   "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn": "Elytra on Spawn",
   "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius": "Elytra Spawn Radius",
-  "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius.tooltip": "Radius around the center where players receive Elytra.",
+  "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius.@Tooltip": "Radius around the center where players receive Elytra.",
   "text.autoconfig.simpletweaks.option.spawn.useWorldSpawnAsCenter": "Use World Spawn as Center",
   "text.autoconfig.simpletweaks.option.spawn.customSpawnElytraX": "Custom Center X",
   "text.autoconfig.simpletweaks.option.spawn.customSpawnElytraZ": "Custom Center Z",
@@ -34,29 +34,37 @@
 
   "text.autoconfig.simpletweaks.option.worldSpawn": "World Spawn Settings",
   "text.autoconfig.simpletweaks.option.worldSpawn.forceExactSpawn": "Force Exact Spawn",
-  "text.autoconfig.simpletweaks.option.worldSpawn.forceExactSpawn.tooltip": "If enabled, players spawn exactly at the specific block (or on the pillow) instead of randomized around it.",
+  "text.autoconfig.simpletweaks.option.worldSpawn.forceExactSpawn.@Tooltip": "If enabled, players spawn exactly at the specific block (or on the pillow) instead of randomized around it.",
   "text.autoconfig.simpletweaks.option.worldSpawn.xCoordSpawnPoint": "Spawn Coordinate X",
   "text.autoconfig.simpletweaks.option.worldSpawn.yCoordSpawnPoint": "Spawn Coordinate Y (-1 = Auto)",
   "text.autoconfig.simpletweaks.option.worldSpawn.zCoordSpawnPoint": "Spawn Coordinate Z",
 
   "text.autoconfig.simpletweaks.option.commands": "Commands",
   "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand": "Enable /killboats Command",
-  "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand.tooltip": "Enables a command to remove all empty boats nearby.",
+  "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand.@Tooltip": "Enables a command to remove all empty boats nearby.",
   "text.autoconfig.simpletweaks.option.commands.enableKillCartsCommand": "Enable /killcarts Command",
-  "text.autoconfig.simpletweaks.option.commands.enableKillCartsCommand.tooltip": "Enables a command to remove all empty minecarts nearby.",
+  "text.autoconfig.simpletweaks.option.commands.enableKillCartsCommand.@Tooltip": "Enables a command to remove all empty minecarts nearby.",
 
   "text.autoconfig.simpletweaks.option.tweaks": "Tweaks & Features",
   "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk": "Enable Auto-Walk",
-  "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk.tooltip": "Allows automatic walking via keybind.",
+  "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk.@Tooltip": "Allows automatic walking via keybind.",
   "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes": "Nametag Mute Suffixes",
-  "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes.tooltip": "List of name suffixes. Mobs named with one of these will be silenced.",
+  "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes.@Tooltip": "List of name suffixes. Mobs named with one of these will be silenced.",
   "text.autoconfig.simpletweaks.option.tweaks.enableYeet": "Enable Yeet (Throw)",
   "text.autoconfig.simpletweaks.option.tweaks.yeetStrength": "Yeet Strength",
-  "text.autoconfig.simpletweaks.option.tweaks.yeetStrength.tooltip": "Velocity multiplier when throwing items while sneaking.",
+  "text.autoconfig.simpletweaks.option.tweaks.yeetStrength.@Tooltip": "Velocity multiplier when throwing items while sneaking.",
   "text.autoconfig.simpletweaks.option.tweaks.yeetChargeSpeed": "Yeet Charge Speed",
   "text.autoconfig.simpletweaks.option.tweaks.maxYeetPower": "Max Yeet Power",
 
+  "text.autoconfig.simpletweaks.option.tweaks.preventFarmlandTrampleWithFeatherFalling": "Feather Falling Protects Farmland",
+  "text.autoconfig.simpletweaks.option.tweaks.preventFarmlandTrampleWithFeatherFalling.@Tooltip": "If enabled, players with Feather Falling boots will not trample farmland.",
+  "text.autoconfig.simpletweaks.option.tweaks.ladderClimbingSpeed": "Ladder Climbing Speed",
+  "text.autoconfig.simpletweaks.option.tweaks.ladderClimbingSpeed.@Tooltip": "Adjusts the vertical speed when climbing ladders. Vanilla default is ~0.2.",
+  "text.autoconfig.simpletweaks.option.tweaks.sharpnessCutsGrass": "Sharpness Cuts Grass",
+  "text.autoconfig.simpletweaks.option.tweaks.sharpnessCutsGrass.@Tooltip": "If enabled, Sharpness III+ weapons cut through grass/flowers when attacking entities.",
+
   "key.categories.simpletweaks": "Simple Tweaks",
+  "key.category.simpletweaks.general": "Simple Tweaks - General",
   "key.simpletweaks.autowalk": "Auto Walk",
 
   "commands.simpletweaks.killboats.success": "Removed %s empty boats."

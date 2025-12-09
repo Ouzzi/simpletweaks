@@ -18,6 +18,9 @@
 		"main": [
 			"com.simpletweaks.Simpletweaks"
 		],
+		"client": [
+			"com.simpletweaks.SimpletweaksClient"
+		],
 		"fabric-datagen": [
 			"com.simpletweaks.SimpletweaksDataGenerator"
 		],

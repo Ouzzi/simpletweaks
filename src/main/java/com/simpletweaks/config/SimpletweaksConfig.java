@@ -111,5 +111,13 @@ public class SimpletweaksConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public float yeetStrength = 1.5f;
 
+        @ConfigEntry.Gui.Tooltip
+        public boolean preventFarmlandTrampleWithFeatherFalling = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public double ladderClimbingSpeed = 0.2; // Vanilla default is ~0.2
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean sharpnessCutsGrass = true;
     }
 }

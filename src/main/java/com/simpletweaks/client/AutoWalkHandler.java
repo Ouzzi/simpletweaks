@@ -47,6 +47,12 @@ public class AutoWalkHandler {
                         .append(Text.literal(autoWalkEnabled ? "ON" : "OFF")
                                 .formatted(autoWalkEnabled ? Formatting.GREEN : Formatting.RED));
                 client.player.sendMessage(message, true);
+
+                // FIX: Wenn ausgeschaltet, Taste explizit loslassen!
+                // Sonst "klebt" die Taste fest, bis man sie manuell drückt.
+                if (!autoWalkEnabled) {
+                    client.options.forwardKey.setPressed(false);
+                }
             }
 
             // Bewegung erzwingen
