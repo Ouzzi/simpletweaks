@@ -45,7 +45,3 @@ public class Simpletweaks implements ModInitializer {
 
     public static SimpletweaksConfig getConfig() { return CONFIG; }
 }
-
-// TODO: Bug -> when autowalk toggled off while moving, the player keeps moving until walk forward pressed again
-
-// TODO:

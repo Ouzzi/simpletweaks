@@ -74,7 +74,7 @@ public class SimpletweaksConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public int maxBoosts = 3;
         @ConfigEntry.Gui.Tooltip
-        public float boostStrength = 1.5f;
+        public float boostStrength = 0.6f;
     }
 
     // NEU: World Spawn Settings
@@ -109,13 +109,13 @@ public class SimpletweaksConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public boolean enableYeet = true;
         @ConfigEntry.Gui.Tooltip
-        public float yeetStrength = 1.5f;
+        public float yeetStrength = 3.0f;
 
         @ConfigEntry.Gui.Tooltip
         public boolean preventFarmlandTrampleWithFeatherFalling = true;
 
         @ConfigEntry.Gui.Tooltip
-        public double ladderClimbingSpeed = 0.2; // Vanilla default is ~0.2
+        public double ladderClimbingSpeed = 0.4; // Vanilla default is ~0.2
 
         @ConfigEntry.Gui.Tooltip
         public boolean sharpnessCutsGrass = true;

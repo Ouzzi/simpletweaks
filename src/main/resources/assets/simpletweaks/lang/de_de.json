@@ -19,10 +19,13 @@
 
   "text.autoconfig.simpletweaks.option.dimensions": "Dimensionen",
   "text.autoconfig.simpletweaks.option.dimensions.allowNether": "Nether erlauben",
+  "text.autoconfig.simpletweaks.option.dimensions.allowNether.@Tooltip": "Wenn deaktiviert, können Spieler nicht auf die Nether-Dimension zugreifen.",
   "text.autoconfig.simpletweaks.option.dimensions.allowEnd": "Ende erlauben",
+  "text.autoconfig.simpletweaks.option.dimensions.allowEnd.@Tooltip": "Wenn deaktiviert, können Spieler nicht auf die End-Dimension zugreifen.",
 
   "text.autoconfig.simpletweaks.option.spawn": "Spawn-Ausrüstung",
   "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn": "Elytren beim Spawn",
+  "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn.@Tooltip": "Wenn aktiviert, erhalten Spieler Elytren beim Spawnen.",
   "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius": "Elytren Spawn-Radius",
   "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius.@Tooltip": "Radius um den Mittelpunkt, in dem Spieler Elytren erhalten.",
   "text.autoconfig.simpletweaks.option.spawn.useWorldSpawnAsCenter": "Welt-Spawn als Zentrum nutzen",
@@ -51,6 +54,7 @@
   "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes": "Namensschild Stumm-Suffixe",
   "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes.@Tooltip": "Liste von Suffixen. Mobs mit einem dieser Namenszusätze machen keine Geräusche mehr.",
   "text.autoconfig.simpletweaks.option.tweaks.enableYeet": "Yeet (Werfen) aktivieren",
+  "text.autoconfig.simpletweaks.option.tweaks.enableYeet.@Tooltip": "Ermöglicht das Werfen von Gegenständen beim Schleichen.",
   "text.autoconfig.simpletweaks.option.tweaks.yeetStrength": "Wurfstärke (Yeet Strength)",
   "text.autoconfig.simpletweaks.option.tweaks.yeetStrength.@Tooltip": "Multiplikator für die Wurfweite beim Schleichen.",
   "text.autoconfig.simpletweaks.option.tweaks.yeetChargeSpeed": "Yeet Aufladegeschwindigkeit",
@@ -66,5 +70,9 @@
   "key.categories.simpletweaks": "Simple Tweaks",
   "key.simpletweaks.autowalk": "Automatisch Laufen",
 
-  "commands.simpletweaks.killboats.success": "%s leere Boote wurden entfernt."
+  "commands.simpletweaks.killboats.success": "%s leere Boote wurden entfernt.",
+  "text.autoconfig.simpletweaks.option.dimensions.allowNether.@Tooltip": "If disabled, players cannot access the Nether dimension.",
+  "text.autoconfig.simpletweaks.option.dimensions.allowEnd.@Tooltip": "If disabled, players cannot access the End dimension.",
+  "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn.@Tooltip": "If enabled, players receive an Elytra upon spawning.",
+  "key.category.simpletweaks.general": "Simple Tweaks - General"
 }

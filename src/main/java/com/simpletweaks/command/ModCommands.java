@@ -1,17 +1,23 @@
 package com.simpletweaks.command;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 import com.simpletweaks.Simpletweaks;
 import com.simpletweaks.config.SimpletweaksConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.entity.vehicle.AbstractMinecartEntity;
-import net.minecraft.entity.vehicle.BoatEntity;
+import net.minecraft.command.CommandSource;
+import net.minecraft.entity.vehicle.*;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
@@ -22,69 +28,27 @@ public class ModCommands {
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 
+            // --- KILL BOATS ---
             dispatcher.register(CommandManager.literal("killboats")
-                    .requires(source -> source.hasPermissionLevel(2)) // Nur OPs / Cheats
-                    .executes(context -> {
-                        // Config Check
-                        if (!Simpletweaks.getConfig().commands.enableKillBoatsCommand) {
-                            context.getSource().sendError(Text.literal("Command is disabled in config."));
-                            return 0;
-                        }
-
-                        if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
-                            context.getSource().sendError(Text.literal("Only players can use this command."));
-                            return 0;
-                        }
-
-                        // Suche Boote im Radius von 100 Blöcken
-                        Box box = player.getBoundingBox().expand(100);
-                        List<BoatEntity> boats = player.getEntityWorld().getEntitiesByClass(BoatEntity.class, box, boat -> !boat.hasPassengers());
-
-                        int count = 0;
-                        for (BoatEntity boat : boats) {
-                            boat.discard();
-                            count++;
-                        }
-
-                        // Variable muss für Lambda final sein
-                        final int finalCount = count;
-                        context.getSource().sendFeedback(() -> Text.translatable("commands.simpletweaks.killboats.success", finalCount), true);
-                        return count;
-                    }));
+                    .requires(source -> source.hasPermissionLevel(2))
+                    .executes(context -> executeKillBoats(context, "standard"))
+                    .then(CommandManager.argument("mode", StringArgumentType.word())
+                            .suggests((context, builder) -> CommandSource.suggestMatching(new String[]{"standard", "empty", "all"}, builder))
+                            .executes(context -> executeKillBoats(context, StringArgumentType.getString(context, "mode")))
+                    ));
 
             // --- KILL CARTS ---
-            // Entfernt leere Loren im Radius von 100 Blöcken
             dispatcher.register(CommandManager.literal("killcarts")
                     .requires(source -> source.hasPermissionLevel(2))
-                    .executes(context -> {
-                        if (!Simpletweaks.getConfig().commands.enableKillCartsCommand) {
-                            context.getSource().sendError(Text.literal("Command is disabled in config."));
-                            return 0;
-                        }
-
-                        if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
-                            context.getSource().sendError(Text.literal("Only players can use this command."));
-                            return 0;
-                        }
-
-                        Box box = player.getBoundingBox().expand(100);
-                        // AbstractMinecartEntity erfasst alle Loren-Typen (TNT, Kiste, Hopper, etc.)
-                        List<AbstractMinecartEntity> carts = player.getEntityWorld().getEntitiesByClass(AbstractMinecartEntity.class, box, cart -> !cart.hasPassengers());
-
-                        int count = 0;
-                        for (AbstractMinecartEntity cart : carts) {
-                            cart.discard();
-                            count++;
-                        }
-
-                        final int finalCount = count;
-                        context.getSource().sendFeedback(() -> Text.literal("Removed " + finalCount + " empty minecarts."), true);
-                        return count;
-                    }));
+                    .executes(context -> executeKillCarts(context, "standard"))
+                    .then(CommandManager.argument("mode", StringArgumentType.word())
+                            .suggests((context, builder) -> CommandSource.suggestMatching(new String[]{"standard", "empty", "all"}, builder))
+                            .executes(context -> executeKillCarts(context, StringArgumentType.getString(context, "mode")))
+                    ));
 
             // --- CONFIG COMMANDS (simpletweaks) ---
             dispatcher.register(CommandManager.literal("simpletweaks")
-                    .requires(source -> source.hasPermissionLevel(4)) // Admin Only (Level 4)
+                    .requires(source -> source.hasPermissionLevel(4))
 
                     // 1. Balancing
                     .then(CommandManager.literal("balancing")
@@ -146,7 +110,7 @@ public class ModCommands {
                                                 return 1;
                                             }))))
 
-                    // 2. Spawn Elytra (/simpletweaks spawn elytra ...)
+                    // 5. Spawn Elytra
                     .then(CommandManager.literal("spawn")
                             .then(CommandManager.literal("elytra")
                                     // Toggle An/Aus
@@ -269,8 +233,31 @@ public class ModCommands {
                             }))
                     )
 
-                    // 7. Tweaks
+                    // 7. Command Settings (NEU)
+                    .then(CommandManager.literal("commands")
+                            .then(CommandManager.literal("enableKillBoats")
+                                    .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                            .executes(ctx -> {
+                                                boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                Simpletweaks.getConfig().commands.enableKillBoatsCommand = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("/killboats enabled: " + val), true);
+                                                return 1;
+                                            })))
+                            .then(CommandManager.literal("enableKillCarts")
+                                    .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                            .executes(ctx -> {
+                                                boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                Simpletweaks.getConfig().commands.enableKillCartsCommand = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("/killcarts enabled: " + val), true);
+                                                return 1;
+                                            })))
+                    )
+
+                    // 8. Tweaks (Erweitert)
                     .then(CommandManager.literal("tweaks")
+                            // AutoWalk
                             .then(CommandManager.literal("autowalk")
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
@@ -280,6 +267,7 @@ public class ModCommands {
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Auto-Walk enabled: " + val), true);
                                                 return 1;
                                             })))
+                            // Yeet
                             .then(CommandManager.literal("yeet")
                                     .then(CommandManager.literal("toggle")
                                             .then(CommandManager.argument("enabled", BoolArgumentType.bool())
@@ -299,23 +287,196 @@ public class ModCommands {
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Yeet Strength set to: " + val), true);
                                                         return 1;
                                                     })))
-                                    .then(CommandManager.literal("yeetStrength")
-                                            .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.01f))
+                            )
+                            // Farmland Protect (NEU)
+                            .then(CommandManager.literal("farmlandProtect")
+                                    .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                            .executes(ctx -> {
+                                                boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                Simpletweaks.getConfig().tweaks.preventFarmlandTrampleWithFeatherFalling = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Farmland Feather Falling Protection: " + val), true);
+                                                return 1;
+                                            })))
+                            // Ladder Speed (NEU)
+                            .then(CommandManager.literal("ladderSpeed")
+                                    .then(CommandManager.argument("speed", DoubleArgumentType.doubleArg(0.0))
+                                            .executes(ctx -> {
+                                                double val = DoubleArgumentType.getDouble(ctx, "speed");
+                                                Simpletweaks.getConfig().tweaks.ladderClimbingSpeed = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Ladder Climbing Speed set to: " + val), true);
+                                                return 1;
+                                            })))
+                            // Sharpness Cut (NEU)
+                            .then(CommandManager.literal("sharpnessCut")
+                                    .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                            .executes(ctx -> {
+                                                boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                Simpletweaks.getConfig().tweaks.sharpnessCutsGrass = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Sharpness Cuts Grass: " + val), true);
+                                                return 1;
+                                            })))
+                            // Mute Suffixes (NEU: LISTE)
+                            .then(CommandManager.literal("muteSuffixes")
+                                    .then(CommandManager.literal("list")
+                                            .executes(ctx -> {
+                                                List<String> list = Simpletweaks.getConfig().tweaks.nametagMuteSuffixes;
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Mute Suffixes: " + list.toString()).formatted(Formatting.YELLOW), false);
+                                                return list.size();
+                                            }))
+                                    .then(CommandManager.literal("add")
+                                            .then(CommandManager.argument("suffix", StringArgumentType.string())
                                                     .executes(ctx -> {
-                                                        float val = FloatArgumentType.getFloat(ctx, "value");
-                                                        Simpletweaks.getConfig().tweaks.yeetStrength = val;
-                                                        saveConfig();
-                                                        ctx.getSource().sendFeedback(() -> Text.literal("Yeet Strength set to: " + val), true);
+                                                        String suffix = StringArgumentType.getString(ctx, "suffix");
+                                                        List<String> list = Simpletweaks.getConfig().tweaks.nametagMuteSuffixes;
+                                                        if (!list.contains(suffix)) {
+                                                            list.add(suffix);
+                                                            saveConfig();
+                                                            ctx.getSource().sendFeedback(() -> Text.literal("Added suffix: " + suffix).formatted(Formatting.GREEN), true);
+                                                        } else {
+                                                            ctx.getSource().sendError(Text.literal("Suffix already exists."));
+                                                        }
                                                         return 1;
                                                     })))
+                                    .then(CommandManager.literal("remove")
+                                            .then(CommandManager.argument("suffix", StringArgumentType.string())
+                                                    .suggests((context, builder) -> CommandSource.suggestMatching(Simpletweaks.getConfig().tweaks.nametagMuteSuffixes, builder))
+                                                    .executes(ctx -> {
+                                                        String suffix = StringArgumentType.getString(ctx, "suffix");
+                                                        List<String> list = Simpletweaks.getConfig().tweaks.nametagMuteSuffixes;
+                                                        if (list.remove(suffix)) {
+                                                            saveConfig();
+                                                            ctx.getSource().sendFeedback(() -> Text.literal("Removed suffix: " + suffix).formatted(Formatting.GREEN), true);
+                                                        } else {
+                                                            ctx.getSource().sendError(Text.literal("Suffix not found."));
+                                                        }
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("clear")
+                                            .executes(ctx -> {
+                                                Simpletweaks.getConfig().tweaks.nametagMuteSuffixes.clear();
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Cleared all mute suffixes.").formatted(Formatting.RED), true);
+                                                return 1;
+                                            }))
                             )
                     )
             );
         });
     }
 
-    // Hilfsmethode zum Speichern der Config
+    // --- EXECUTION LOGIC ---
+
+    private static int executeKillBoats(CommandContext<ServerCommandSource> context, String mode) {
+        if (!Simpletweaks.getConfig().commands.enableKillBoatsCommand) {
+            context.getSource().sendError(Text.literal("Command is disabled in config."));
+            return 0;
+        }
+
+        if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
+            context.getSource().sendError(Text.literal("Only players can use this command."));
+            return 0;
+        }
+
+        Box box = player.getBoundingBox().expand(100);
+        List<AbstractBoatEntity> boats = player.getEntityWorld().getEntitiesByClass(AbstractBoatEntity.class, box, boat -> !boat.hasPassengers());
+
+        int count = 0;
+        for (AbstractBoatEntity boat : boats) {
+            boolean isStorage = boat instanceof AbstractChestBoatEntity;
+
+            boolean shouldRemove = false;
+            switch (mode) {
+                case "standard":
+                    if (!isStorage) shouldRemove = true;
+                    break;
+                case "empty":
+                    if (!isStorage) {
+                        shouldRemove = true;
+                    } else {
+                        if (((Inventory) boat).isEmpty()) shouldRemove = true;
+                    }
+                    break;
+                case "all":
+                    shouldRemove = true;
+                    break;
+                default:
+                    if (!isStorage) shouldRemove = true;
+                    break;
+            }
+
+            if (shouldRemove) {
+                boat.discard();
+                count++;
+            }
+        }
+
+        final int finalCount = count;
+        context.getSource().sendFeedback(() -> Text.translatable("commands.simpletweaks.killboats.success", finalCount)
+                .append(Text.literal(" (" + mode + ")")), true);
+        return count;
+    }
+
+    private static int executeKillCarts(CommandContext<ServerCommandSource> context, String mode) {
+        if (!Simpletweaks.getConfig().commands.enableKillCartsCommand) {
+            context.getSource().sendError(Text.literal("Command is disabled in config."));
+            return 0;
+        }
+
+        if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
+            context.getSource().sendError(Text.literal("Only players can use this command."));
+            return 0;
+        }
+
+        Box box = player.getBoundingBox().expand(100);
+        List<AbstractMinecartEntity> carts = player.getEntityWorld().getEntitiesByClass(AbstractMinecartEntity.class, box, cart -> !cart.hasPassengers());
+
+        int count = 0;
+        for (AbstractMinecartEntity cart : carts) {
+            boolean isStandard = cart instanceof MinecartEntity;
+            boolean isStorage = cart instanceof StorageMinecartEntity;
+
+            // Filter Logik
+            boolean shouldRemove = false;
+            switch (mode) {
+                case "standard":
+                    // Nur das normale Minecart
+                    if (isStandard) shouldRemove = true;
+                    break;
+                case "empty":
+                    // Normales Minecart ODER leere Storage Carts
+                    if (isStandard) {
+                        shouldRemove = true;
+                    } else if (isStorage) {
+                        if (((StorageMinecartEntity) cart).isEmpty()) shouldRemove = true;
+                    }
+                    // TNT, Furnace, Spawner, CommandBlock werden hier NICHT gelöscht
+                    break;
+                case "all":
+                    // Alles weg (TNT, Spawner, gefüllte Kisten...)
+                    shouldRemove = true;
+                    break;
+                default:
+                    if (isStandard) shouldRemove = true;
+                    break;
+            }
+
+            if (shouldRemove) {
+                cart.discard();
+                count++;
+            }
+        }
+
+        final int finalCount = count;
+        context.getSource().sendFeedback(() -> Text.literal("Removed " + finalCount + " minecarts (" + mode + ")."), true);
+        return count;
+    }
+
     private static void saveConfig() {
         AutoConfig.getConfigHolder(SimpletweaksConfig.class).save();
     }
 }
+
+// todo: killcart soll einen parameter haben der sagt ob er auch chart variationen löschen soll, also tnt kiste hopper etc. das selbe bei boats. default nur leere standart boote/charts, all  für alles und eine zwichenstufe für leere kisten/hopper etc.

@@ -19,10 +19,13 @@
 
   "text.autoconfig.simpletweaks.option.dimensions": "Dimensions",
   "text.autoconfig.simpletweaks.option.dimensions.allowNether": "Allow Nether",
+  "text.autoconfig.simpletweaks.option.dimensions.allowNether.@Tooltip": "If disabled, players cannot access the Nether dimension.",
   "text.autoconfig.simpletweaks.option.dimensions.allowEnd": "Allow End",
+  "text.autoconfig.simpletweaks.option.dimensions.allowEnd.@Tooltip": "If disabled, players cannot access the End dimension.",
 
   "text.autoconfig.simpletweaks.option.spawn": "Spawn Loadout",
   "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn": "Elytra on Spawn",
+  "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn.@Tooltip": "If enabled, players receive an Elytra upon spawning.",
   "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius": "Elytra Spawn Radius",
   "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius.@Tooltip": "Radius around the center where players receive Elytra.",
   "text.autoconfig.simpletweaks.option.spawn.useWorldSpawnAsCenter": "Use World Spawn as Center",
@@ -51,6 +54,7 @@
   "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes": "Nametag Mute Suffixes",
   "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes.@Tooltip": "List of name suffixes. Mobs named with one of these will be silenced.",
   "text.autoconfig.simpletweaks.option.tweaks.enableYeet": "Enable Yeet (Throw)",
+  "text.autoconfig.simpletweaks.option.tweaks.enableYeet.@Tooltip": "Allows throwing items while sneaking.",
   "text.autoconfig.simpletweaks.option.tweaks.yeetStrength": "Yeet Strength",
   "text.autoconfig.simpletweaks.option.tweaks.yeetStrength.@Tooltip": "Velocity multiplier when throwing items while sneaking.",
   "text.autoconfig.simpletweaks.option.tweaks.yeetChargeSpeed": "Yeet Charge Speed",
