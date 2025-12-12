@@ -16,7 +16,7 @@ public abstract class YeetMixin {
     @Inject(method = "dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;", at = @At("RETURN"))
     private void onDropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> cir) {
         // Config Check
-        if (!Simpletweaks.getConfig().tweaks.enableYeet) return;
+        if (!Simpletweaks.getConfig().fun.enableYeet) return;
 
         ItemEntity itemEntity = cir.getReturnValue();
         if (itemEntity == null) return;
@@ -25,7 +25,7 @@ public abstract class YeetMixin {
 
         // Yeet nur wenn Sneaking (Shift)
         if (player.isSneaking()) {
-            float strength = Simpletweaks.getConfig().tweaks.yeetStrength;
+            float strength = Simpletweaks.getConfig().fun.yeetStrength;
 
             // Aktuelle Geschwindigkeit holen
             Vec3d currentVel = itemEntity.getVelocity();

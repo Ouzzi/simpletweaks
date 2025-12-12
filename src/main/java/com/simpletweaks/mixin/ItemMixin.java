@@ -23,7 +23,7 @@ public class ItemMixin {
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     private void useThrowableBrick(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         // CONFIG CHECK: Wenn deaktiviert, sofort abbrechen
-        if (!Simpletweaks.getConfig().tweaks.enableThrowableBricks) {
+        if (!Simpletweaks.getConfig().fun.enableThrowableBricks) {
             return;
         }
 

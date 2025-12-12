@@ -33,7 +33,7 @@ public class AutoWalkHandler {
             if (client.player == null) return;
 
             // Config Check
-            if (!Simpletweaks.getConfig().tweaks.enableAutowalk) {
+            if (!Simpletweaks.getConfig().qOL.enableAutowalk) {
                 autoWalkEnabled = false;
                 return;
             }

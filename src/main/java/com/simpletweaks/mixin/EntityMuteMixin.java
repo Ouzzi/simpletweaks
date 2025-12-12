@@ -23,7 +23,7 @@ public abstract class EntityMuteMixin {
         if (this.hasCustomName()) {
             String name = this.getCustomName().getString();
             // Zugriff auf die Liste in der Config
-            List<String> suffixes = Simpletweaks.getConfig().tweaks.nametagMuteSuffixes;
+            List<String> suffixes = Simpletweaks.getConfig().qOL.nametagMuteSuffixes;
 
             if (suffixes != null) {
                 for (String suffix : suffixes) {

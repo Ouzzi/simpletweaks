@@ -72,7 +72,7 @@ public abstract class LocatorBarMixin implements Bar {
                         boolean renderedHead = false;
 
                         // --- CUSTOM LOGIC: Spielerkopf rendern ---
-                        if (Simpletweaks.getConfig().tweaks.enablePlayerLocator) {
+                        if (Simpletweaks.getConfig().visuals.enablePlayerLocator) {
                             Optional<UUID> sourceUuid = waypoint.getSource().left();
                             if (sourceUuid.isPresent()) {
                                 PlayerListEntry playerEntry = this.client.getNetworkHandler().getPlayerListEntry(sourceUuid.get());

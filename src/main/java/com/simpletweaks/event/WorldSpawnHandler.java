@@ -23,7 +23,7 @@ public class WorldSpawnHandler {
     }
 
     private static void applyCustomSpawn(ServerWorld world) {
-        SimpletweaksConfig.WorldSpawn config = Simpletweaks.getConfig().worldSpawn;
+        SimpletweaksConfig.Spawn config = Simpletweaks.getConfig().spawn;
 
         int x = config.xCoordSpawnPoint;
         int y = config.yCoordSpawnPoint;

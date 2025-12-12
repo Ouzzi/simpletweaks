@@ -19,7 +19,7 @@ public abstract class ExactSpawnMixin {
     // 1. WELT SPAWN: Verhindert den Zufallsradius beim Spawnen (Fuzzing)
     @Inject(method = "getWorldSpawnPos", at = @At("HEAD"), cancellable = true)
     private void onGetWorldSpawnPos(ServerWorld world, BlockPos basePos, CallbackInfoReturnable<BlockPos> cir) {
-        if (Simpletweaks.getConfig().worldSpawn.forceExactSpawn) {
+        if (Simpletweaks.getConfig().spawn.forceExactSpawn) {
             // Gibt direkt die Basis-Position zurück, ohne SpawnLocating.locateSpawnPos aufzurufen (was den Radius addiert)
             cir.setReturnValue(basePos);
         }
@@ -29,7 +29,7 @@ public abstract class ExactSpawnMixin {
     // Wir nutzen getRespawnTarget statt findRespawnPosition, da RespawnPos private/unsichtbar ist.
     @Inject(method = "getRespawnTarget", at = @At("RETURN"), cancellable = true)
     private void onGetRespawnTarget(boolean alive, TeleportTarget.PostDimensionTransition postDimensionTransition, CallbackInfoReturnable<TeleportTarget> cir) {
-        if (!Simpletweaks.getConfig().worldSpawn.forceExactSpawn) return;
+        if (!Simpletweaks.getConfig().spawn.forceExactSpawn) return;
 
         TeleportTarget original = cir.getReturnValue();
         if (original == null) return; // Kein valider Respawn gefunden

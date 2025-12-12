@@ -48,7 +48,7 @@ public abstract class InventoryEffectBarMixin {
                                     int j
     ) {
 
-        if (!Simpletweaks.getConfig().tweaks.enableStatusEffectBars) return;
+        if (!Simpletweaks.getConfig().visuals.enableStatusEffectBars) return;
         if (instance.isInfinite()) return;
 
         // --- FIX: Nutzung des zentralen Trackers statt lokaler Map ---

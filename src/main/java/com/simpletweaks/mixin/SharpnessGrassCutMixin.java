@@ -24,7 +24,7 @@ public class SharpnessGrassCutMixin {
 
     @Inject(method = "attack", at = @At("HEAD"))
     private void onAttack(Entity target, CallbackInfo ci) {
-        if (!Simpletweaks.getConfig().tweaks.sharpnessCutsGrass) return;
+        if (!Simpletweaks.getConfig().qOL.sharpnessCutsGrass) return;
 
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack mainHand = player.getMainHandStack();

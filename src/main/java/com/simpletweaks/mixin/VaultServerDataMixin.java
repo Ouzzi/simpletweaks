@@ -30,7 +30,7 @@ public class VaultServerDataMixin implements IVaultCooldown {
         long configDays = 50; // Standard 100 Tage
         try {
             if (Simpletweaks.getConfig() != null) {
-                configDays = Simpletweaks.getConfig().vaults.vaultCooldownDays;
+                configDays = Simpletweaks.getConfig().balancing.vaultCooldownDays;
                 Simpletweaks.LOGGER.info("Geladener Vault Cooldown aus Config: " + configDays + " Tage");
             }
         } catch (Exception e) {

@@ -21,7 +21,7 @@ public class FarmlandTrampleMixin {
     // Corrected fallDistance to double
     @Inject(method = "onLandedUpon", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/FarmlandBlock;setToDirt(Lnet/minecraft/entity/Entity;Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)V"), cancellable = true)
     private void preventTrampleIfFeatherFalling(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) {
-        if (!Simpletweaks.getConfig().tweaks.preventFarmlandTrampleWithFeatherFalling) return;
+        if (!Simpletweaks.getConfig().qOL.preventFarmlandTrampleWithFeatherFalling) return;
 
         if (entity instanceof LivingEntity living) {
             // Use getOrThrow to get the registry

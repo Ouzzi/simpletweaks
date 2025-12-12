@@ -20,7 +20,7 @@ public class LadderSpeedMixin {
         if (!self.isClimbing()) return;
 
         // Config laden
-        double configSpeed = Simpletweaks.getConfig().tweaks.ladderClimbingSpeed;
+        double configSpeed = Simpletweaks.getConfig().qOL.ladderClimbingSpeed;
 
         // Nicht eingreifen, wenn man schleciht (Sneaking), um stehen zu bleiben
         if (self.isSneaking()) return;

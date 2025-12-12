@@ -47,7 +47,7 @@ public abstract class StatusEffectBarMixin {
                                  int k, int l,
                                  float f) {
 
-        if (!Simpletweaks.getConfig().tweaks.enableStatusEffectBars) return;
+        if (!Simpletweaks.getConfig().visuals.enableStatusEffectBars) return;
         if (instance.isInfinite()) return;
 
         float percent = EffectDurationTracker.getProgress(instance);

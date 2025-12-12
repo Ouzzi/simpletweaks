@@ -70,7 +70,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("days", IntegerArgumentType.integer(0))
                                             .executes(ctx -> {
                                                 int val = IntegerArgumentType.getInteger(ctx, "days");
-                                                Simpletweaks.getConfig().vaults.vaultCooldownDays = val;
+                                                Simpletweaks.getConfig().balancing.vaultCooldownDays = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Vault Cooldown set to: " + val + " days"), true);
                                                 return 1;
@@ -213,7 +213,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
                                                 boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                Simpletweaks.getConfig().worldSpawn.forceExactSpawn = val;
+                                                Simpletweaks.getConfig().spawn.forceExactSpawn = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Force Exact Spawn enabled: " + val), true);
                                                 return 1;
@@ -226,18 +226,18 @@ public class ModCommands {
                                                                 int x = IntegerArgumentType.getInteger(ctx, "x");
                                                                 int y = IntegerArgumentType.getInteger(ctx, "y");
                                                                 int z = IntegerArgumentType.getInteger(ctx, "z");
-                                                                Simpletweaks.getConfig().worldSpawn.xCoordSpawnPoint = x;
-                                                                Simpletweaks.getConfig().worldSpawn.yCoordSpawnPoint = y;
-                                                                Simpletweaks.getConfig().worldSpawn.zCoordSpawnPoint = z;
+                                                                Simpletweaks.getConfig().spawn.xCoordSpawnPoint = x;
+                                                                Simpletweaks.getConfig().spawn.yCoordSpawnPoint = y;
+                                                                Simpletweaks.getConfig().spawn.zCoordSpawnPoint = z;
                                                                 saveConfig();
                                                                 ctx.getSource().sendFeedback(() -> Text.literal("Custom World Spawn set to X:" + x + " Y:" + y + " Z:" + z), true);
                                                                 return 1;
                                                             })))))
                             .then(CommandManager.literal("here").executes(ctx -> {
                                 BlockPos pos = ctx.getSource().getEntityOrThrow().getBlockPos();
-                                Simpletweaks.getConfig().worldSpawn.xCoordSpawnPoint = pos.getX();
-                                Simpletweaks.getConfig().worldSpawn.yCoordSpawnPoint = pos.getY();
-                                Simpletweaks.getConfig().worldSpawn.zCoordSpawnPoint = pos.getZ();
+                                Simpletweaks.getConfig().spawn.xCoordSpawnPoint = pos.getX();
+                                Simpletweaks.getConfig().spawn.yCoordSpawnPoint = pos.getY();
+                                Simpletweaks.getConfig().spawn.zCoordSpawnPoint = pos.getZ();
                                 saveConfig();
                                 ctx.getSource().sendFeedback(() -> Text.literal("Custom World Spawn set to your position (X:" + pos.getX() + " Y:" + pos.getY() + " Z:" + pos.getZ() + ")"), true);
                                 return 1;
@@ -273,7 +273,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
                                                 boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                Simpletweaks.getConfig().tweaks.enableAutowalk = val;
+                                                Simpletweaks.getConfig().qOL.enableAutowalk = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Auto-Walk enabled: " + val), true);
                                                 return 1;
@@ -284,7 +284,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                                     .executes(ctx -> {
                                                         boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                        Simpletweaks.getConfig().tweaks.enableYeet = val;
+                                                        Simpletweaks.getConfig().fun.enableYeet = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Yeet enabled: " + val), true);
                                                         return 1;
@@ -293,7 +293,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.1f))
                                                     .executes(ctx -> {
                                                         float val = FloatArgumentType.getFloat(ctx, "value");
-                                                        Simpletweaks.getConfig().tweaks.yeetStrength = val;
+                                                        Simpletweaks.getConfig().fun.yeetStrength = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Yeet Strength set to: " + val), true);
                                                         return 1;
@@ -304,7 +304,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
                                                 boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                Simpletweaks.getConfig().tweaks.preventFarmlandTrampleWithFeatherFalling = val;
+                                                Simpletweaks.getConfig().qOL.preventFarmlandTrampleWithFeatherFalling = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Farmland Feather Falling Protection: " + val), true);
                                                 return 1;
@@ -314,7 +314,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("speed", DoubleArgumentType.doubleArg(0.0))
                                             .executes(ctx -> {
                                                 double val = DoubleArgumentType.getDouble(ctx, "speed");
-                                                Simpletweaks.getConfig().tweaks.ladderClimbingSpeed = val;
+                                                Simpletweaks.getConfig().qOL.ladderClimbingSpeed = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Ladder Climbing Speed set to: " + val), true);
                                                 return 1;
@@ -324,7 +324,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
                                                 boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                Simpletweaks.getConfig().tweaks.sharpnessCutsGrass = val;
+                                                Simpletweaks.getConfig().qOL.sharpnessCutsGrass = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Sharpness Cuts Grass: " + val), true);
                                                 return 1;
@@ -333,7 +333,7 @@ public class ModCommands {
                             .then(CommandManager.literal("muteSuffixes")
                                     .then(CommandManager.literal("list")
                                             .executes(ctx -> {
-                                                List<String> list = Simpletweaks.getConfig().tweaks.nametagMuteSuffixes;
+                                                List<String> list = Simpletweaks.getConfig().qOL.nametagMuteSuffixes;
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Mute Suffixes: " + list.toString()).formatted(Formatting.YELLOW), false);
                                                 return list.size();
                                             }))
@@ -341,7 +341,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("suffix", StringArgumentType.string())
                                                     .executes(ctx -> {
                                                         String suffix = StringArgumentType.getString(ctx, "suffix");
-                                                        List<String> list = Simpletweaks.getConfig().tweaks.nametagMuteSuffixes;
+                                                        List<String> list = Simpletweaks.getConfig().qOL.nametagMuteSuffixes;
                                                         if (!list.contains(suffix)) {
                                                             list.add(suffix);
                                                             saveConfig();
@@ -353,10 +353,10 @@ public class ModCommands {
                                                     })))
                                     .then(CommandManager.literal("remove")
                                             .then(CommandManager.argument("suffix", StringArgumentType.string())
-                                                    .suggests((context, builder) -> CommandSource.suggestMatching(Simpletweaks.getConfig().tweaks.nametagMuteSuffixes, builder))
+                                                    .suggests((context, builder) -> CommandSource.suggestMatching(Simpletweaks.getConfig().qOL.nametagMuteSuffixes, builder))
                                                     .executes(ctx -> {
                                                         String suffix = StringArgumentType.getString(ctx, "suffix");
-                                                        List<String> list = Simpletweaks.getConfig().tweaks.nametagMuteSuffixes;
+                                                        List<String> list = Simpletweaks.getConfig().qOL.nametagMuteSuffixes;
                                                         if (list.remove(suffix)) {
                                                             saveConfig();
                                                             ctx.getSource().sendFeedback(() -> Text.literal("Removed suffix: " + suffix).formatted(Formatting.GREEN), true);
@@ -367,7 +367,7 @@ public class ModCommands {
                                                     })))
                                     .then(CommandManager.literal("clear")
                                             .executes(ctx -> {
-                                                Simpletweaks.getConfig().tweaks.nametagMuteSuffixes.clear();
+                                                Simpletweaks.getConfig().qOL.nametagMuteSuffixes.clear();
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Cleared all mute suffixes.").formatted(Formatting.RED), true);
                                                 return 1;
@@ -378,7 +378,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
                                                 boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                Simpletweaks.getConfig().tweaks.enablePlayerLocator = val;
+                                                Simpletweaks.getConfig().visuals.enablePlayerLocator = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Player Locator enabled: " + val), true);
                                                 return 1;
@@ -389,7 +389,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                                     .executes(ctx -> {
                                                         boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                        Simpletweaks.getConfig().tweaks.enableXpClumps = val;
+                                                        Simpletweaks.getConfig().optimization.enableXpClumps = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("XP Clumps enabled: " + val), true);
                                                         return 1;
@@ -398,7 +398,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                                     .executes(ctx -> {
                                                         boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                        Simpletweaks.getConfig().tweaks.scaleXpOrbs = val;
+                                                        Simpletweaks.getConfig().optimization.scaleXpOrbs = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("XP Orb Scaling enabled: " + val), true);
                                                         return 1;
@@ -409,7 +409,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
                                                 boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                Simpletweaks.getConfig().tweaks.enableStatusEffectBars = val;
+                                                Simpletweaks.getConfig().visuals.enableStatusEffectBars = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Status Effect Bars enabled: " + val), true);
                                                 return 1;
@@ -419,7 +419,7 @@ public class ModCommands {
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
                                                 boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                Simpletweaks.getConfig().tweaks.enableChatHeads = val;
+                                                Simpletweaks.getConfig().visuals.enableChatHeads = val;
                                                 saveConfig();
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Chat Heads enabled: " + val), true);
                                                 return 1;
@@ -430,7 +430,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                                     .executes(ctx -> {
                                                         boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                        Simpletweaks.getConfig().tweaks.enableThrowableBricks = val;
+                                                        Simpletweaks.getConfig().fun.enableThrowableBricks = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Throwable Bricks enabled: " + val), true);
                                                         return 1;
@@ -439,7 +439,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                                     .executes(ctx -> {
                                                         boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                        Simpletweaks.getConfig().tweaks.throwableBricksBreakBlocks = val;
+                                                        Simpletweaks.getConfig().fun.throwableBricksBreakBlocks = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Bricks Break Glass enabled: " + val), true);
                                                         return 1;
@@ -448,7 +448,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.0f))
                                                     .executes(ctx -> {
                                                         float val = FloatArgumentType.getFloat(ctx, "value");
-                                                        Simpletweaks.getConfig().tweaks.brickDamage = val;
+                                                        Simpletweaks.getConfig().fun.brickDamage = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Brick Damage set to: " + val), true);
                                                         return 1;
@@ -457,7 +457,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.0f))
                                                     .executes(ctx -> {
                                                         float val = FloatArgumentType.getFloat(ctx, "value");
-                                                        Simpletweaks.getConfig().tweaks.brickSnowballDamage = val;
+                                                        Simpletweaks.getConfig().fun.brickSnowballDamage = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Brick Snowball Damage set to: " + val), true);
                                                         return 1;
@@ -469,7 +469,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                                     .executes(ctx -> {
                                                         boolean val = BoolArgumentType.getBool(ctx, "enabled");
-                                                        Simpletweaks.getConfig().tweaks.enableElytraPitchHelper = val;
+                                                        Simpletweaks.getConfig().visuals.enableElytraPitchHelper = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Elytra Pitch Helper enabled: " + val), true);
                                                         return 1;
@@ -480,8 +480,8 @@ public class ModCommands {
                                                             .executes(ctx -> {
                                                                 float up = FloatArgumentType.getFloat(ctx, "up");
                                                                 float down = FloatArgumentType.getFloat(ctx, "down");
-                                                                Simpletweaks.getConfig().tweaks.elytraTargetAngleUp = up;
-                                                                Simpletweaks.getConfig().tweaks.elytraTargetAngleDown = down;
+                                                                Simpletweaks.getConfig().visuals.elytraTargetAngleUp = up;
+                                                                Simpletweaks.getConfig().visuals.elytraTargetAngleDown = down;
                                                                 saveConfig();
                                                                 ctx.getSource().sendFeedback(() -> Text.literal("Elytra Helper Targets set to Up:" + up + " Down:" + down), true);
                                                                 return 1;
@@ -490,7 +490,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.0f))
                                                     .executes(ctx -> {
                                                         float val = FloatArgumentType.getFloat(ctx, "value");
-                                                        Simpletweaks.getConfig().tweaks.elytraPitchTolerance = val;
+                                                        Simpletweaks.getConfig().visuals.elytraPitchTolerance = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Elytra Helper Tolerance set to: " + val), true);
                                                         return 1;
@@ -499,7 +499,7 @@ public class ModCommands {
                                             .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.0f))
                                                     .executes(ctx -> {
                                                         float val = FloatArgumentType.getFloat(ctx, "value");
-                                                        Simpletweaks.getConfig().tweaks.elytraSensitivity = val;
+                                                        Simpletweaks.getConfig().visuals.elytraSensitivity = val;
                                                         saveConfig();
                                                         ctx.getSource().sendFeedback(() -> Text.literal("Elytra Helper Sensitivity set to: " + val), true);
                                                         return 1;

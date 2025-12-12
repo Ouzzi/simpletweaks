@@ -45,7 +45,7 @@ public abstract class ChatHudMixin {
             )
     )
     private void shiftChatBeforeInternalRender(DrawContext context, TextRenderer textRenderer, int currentTick, int mouseX, int mouseY, boolean interactable, boolean bl, CallbackInfo ci) {
-        if (!this.isChatHidden() && Simpletweaks.getConfig().tweaks.enableChatHeads) {
+        if (!this.isChatHidden() && Simpletweaks.getConfig().visuals.enableChatHeads) {
             // Verschiebe den Kontext um 12 Pixel nach rechts
             context.getMatrices().translate(12.0f, 0.0f);
         }
@@ -54,7 +54,7 @@ public abstract class ChatHudMixin {
     // 2. Köpfe rendern (Am Ende der Methode)
     @Inject(method = "render(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/client/font/TextRenderer;IIIZZ)V", at = @At("TAIL"))
     private void renderChatHeads(DrawContext context, TextRenderer textRenderer, int currentTick, int mouseX, int mouseY, boolean interactable, boolean bl, CallbackInfo ci) {
-        if (this.isChatHidden() || !Simpletweaks.getConfig().tweaks.enableChatHeads) return;
+        if (this.isChatHidden() || !Simpletweaks.getConfig().visuals.enableChatHeads) return;
         if (this.visibleMessages.isEmpty()) return;
 
         float scale = (float) this.getChatScale();

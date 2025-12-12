@@ -14,7 +14,7 @@ public class ElytraPitchHud implements HudRenderCallback {
 
     @Override
     public void onHudRender(DrawContext context, RenderTickCounter tickCounter) {
-        SimpletweaksConfig.Tweaks config = Simpletweaks.getConfig().tweaks;
+        SimpletweaksConfig.Visuals config = Simpletweaks.getConfig().visuals;
         if (!config.enableElytraPitchHelper) return;
 
         MinecraftClient client = MinecraftClient.getInstance();

@@ -98,11 +98,11 @@ public class BrickProjectileEntity extends ThrownItemEntity {
         if (world instanceof ServerWorld serverWorld) {
 
             // SCHADEN AUS CONFIG
-            float damageAmount = Simpletweaks.getConfig().tweaks.brickDamage; // Default
+            float damageAmount = Simpletweaks.getConfig().fun.brickDamage; // Default
 
             // Wenn es der Brick Snowball ist, nimm den anderen Wert
             if (this.getStack().isOf(ModItems.BRICK_SNOWBALL)) {
-                damageAmount = Simpletweaks.getConfig().tweaks.brickSnowballDamage;
+                damageAmount = Simpletweaks.getConfig().fun.brickSnowballDamage;
             }
 
             entity.damage(serverWorld, this.getDamageSources().thrown(this, this.getOwner()), damageAmount);
@@ -118,7 +118,7 @@ public class BrickProjectileEntity extends ThrownItemEntity {
             BlockState state = this.getEntityWorld().getBlockState(pos);
 
             // NEU: Prüfung der Config Option
-            boolean canBreak = Simpletweaks.getConfig().tweaks.throwableBricksBreakBlocks;
+            boolean canBreak = Simpletweaks.getConfig().fun.throwableBricksBreakBlocks;
 
             if (canBreak && shouldBreakBlock(state)) {
                 this.getEntityWorld().breakBlock(pos, true, this.getOwner());

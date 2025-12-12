@@ -28,7 +28,7 @@ public class GrassOutlineMixin {
         // Prüfen, ob der Kontext ein Spieler ist
         if (context instanceof EntityShapeContext entityContext && entityContext.getEntity() instanceof PlayerEntity player) {
 
-            if (!Simpletweaks.getConfig().tweaks.sharpnessCutsGrass) return;
+            if (!Simpletweaks.getConfig().qOL.sharpnessCutsGrass) return;
 
             ItemStack mainHand = player.getMainHandStack();
             boolean isWeapon = mainHand.isIn(ItemTags.SWORDS) || mainHand.isIn(ItemTags.AXES);

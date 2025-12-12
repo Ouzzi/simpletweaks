@@ -31,7 +31,7 @@ public abstract class ExperienceOrbMixin extends Entity {
     // sobald er mit dem Orb kollidiert.
     @Inject(method = "onPlayerCollision", at = @At("HEAD"))
     private void instantPickup(PlayerEntity player, CallbackInfo ci) {
-        if (!Simpletweaks.getConfig().tweaks.enableXpClumps) return;
+        if (!Simpletweaks.getConfig().optimization.enableXpClumps) return;
 
         // Entfernt die 2-Tick Wartezeit des Spielers
         player.experiencePickUpDelay = 0;
@@ -42,7 +42,7 @@ public abstract class ExperienceOrbMixin extends Entity {
     private void clumpOrbs(CallbackInfo ci) {
         // Nur Server-seitig und wenn aktiviert
         // Performance: Nur alle 5 Ticks prüfen
-        if (this.getEntityWorld().isClient() || !Simpletweaks.getConfig().tweaks.enableXpClumps || this.age % 5 != 0) return;
+        if (this.getEntityWorld().isClient() || !Simpletweaks.getConfig().optimization.enableXpClumps || this.age % 5 != 0) return;
 
         // Radius von 2 Blöcken suchen
         Box box = this.getBoundingBox().expand(2.0);

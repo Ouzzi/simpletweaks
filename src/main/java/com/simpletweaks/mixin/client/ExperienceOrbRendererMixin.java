@@ -26,7 +26,7 @@ public class ExperienceOrbRendererMixin {
     // 2. Rendering: State -> Bildschirm
     @Inject(method = "render(Lnet/minecraft/client/render/entity/state/ExperienceOrbEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/command/OrderedRenderCommandQueue;Lnet/minecraft/client/render/state/CameraRenderState;)V", at = @At("HEAD"))
     private void scaleOrb(ExperienceOrbEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue orderedRenderCommandQueue, CameraRenderState cameraRenderState, CallbackInfo ci) {
-        if (Simpletweaks.getConfig().tweaks.scaleXpOrbs) {
+        if (Simpletweaks.getConfig().optimization.scaleXpOrbs) {
             // Wert aus dem State holen
             int value = ((IOrbValue) state).simpletweaks$getValue();
 
