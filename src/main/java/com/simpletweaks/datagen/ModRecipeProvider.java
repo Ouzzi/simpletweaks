@@ -52,15 +52,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Items.SNOWBALL), conditionsFromItem(Items.SNOWBALL))
                         .criterion(hasItem(Items.BRICK), conditionsFromItem(Items.BRICK))
                         .offerTo(exporter);
-
-                createShaped(RecipeCategory.COMBAT, ModItems.BRICK_SNOWBALL)
-                        .pattern(" S ")
-                        .pattern("SBS")
-                        .pattern(" S ")
-                        .input('S', Items.SNOWBALL)
-                        .input('B', Items.NETHER_BRICK)
-                        .criterion(hasItem(Items.NETHER_BRICK), conditionsFromItem(Items.NETHER_BRICK))
-                        .offerTo(exporter);
             }
         };
     }

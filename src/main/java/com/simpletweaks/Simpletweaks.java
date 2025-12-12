@@ -55,4 +55,10 @@ public class Simpletweaks implements ModInitializer {
 }
 
 // TODO:
-// - client-side own spawn teleporter normal, teleporter owned by others darker texture
+// - client-side own spawn teleporter outlined, teleporter owned by others normal
+// - xp clumps
+// - Locator heads
+// - Status Effect bars (Later)
+// - Elytra pitch helper (Later)
+// - Chat Heads (Later)
+// - Chat Calc (Later Later)
