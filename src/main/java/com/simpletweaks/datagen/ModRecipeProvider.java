@@ -43,6 +43,20 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE), conditionsFromItem(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE))
                         .offerTo(exporter, getRecipeName(ModBlocks.SPAWN_TELEPORTER) + "_smithing");
 
+                SmithingTransformRecipeJsonBuilder.create(
+                                // Template (Upgrade Template)
+                                Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                                // Base (Gold Pressure Plate)
+                                Ingredient.ofItems(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE),
+                                // Addition (Netherite Ingot)
+                                Ingredient.ofItems(Items.NETHERITE_INGOT),
+                                RecipeCategory.TOOLS,
+                                ModBlocks.LAUNCHPAD.asItem()
+                        )
+                        // hasItem und conditionsFromItem sind Methoden von RecipeGenerator und hier verfügbar
+                        .criterion(hasItem(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE), conditionsFromItem(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE))
+                        .offerTo(exporter, getRecipeName(ModBlocks.LAUNCHPAD) + "_smithing");
+
                 createShaped(RecipeCategory.COMBAT, ModItems.BRICK_SNOWBALL)
                         .pattern(" S ")
                         .pattern("SBS")

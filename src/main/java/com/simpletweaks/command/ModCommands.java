@@ -30,7 +30,6 @@ public class ModCommands {
 
             // --- KILL BOATS ---
             dispatcher.register(CommandManager.literal("killboats")
-                    // FIX: Use getPermissions().test(2) instead of hasPermission(2)
                     .requires(source -> checkPermission(source, 2))
                     .executes(context -> executeKillBoats(context, "standard"))
                     .then(CommandManager.argument("mode", StringArgumentType.word())
@@ -49,7 +48,7 @@ public class ModCommands {
 
             // --- CONFIG COMMANDS (simpletweaks) ---
             dispatcher.register(CommandManager.literal("simpletweaks")
-                    // Level 4 für Admin-Befehle
+                    // Level 4 für Admin-Befehle (Config Änderungen)
                     .requires(source -> checkPermission(source, 4))
 
                     // 1. Balancing
@@ -112,8 +111,18 @@ public class ModCommands {
                                                 return 1;
                                             }))))
 
-                    // 5. Spawn Elytra
+                    // 5. Spawn (Elytra + Teleporter)
                     .then(CommandManager.literal("spawn")
+                            // NEU: Teleporter Count
+                            .then(CommandManager.literal("teleporterCount")
+                                    .then(CommandManager.argument("count", IntegerArgumentType.integer(0, 64))
+                                            .executes(ctx -> {
+                                                int val = IntegerArgumentType.getInteger(ctx, "count");
+                                                Simpletweaks.getConfig().spawn.spawnTeleporterCount = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Spawn Teleporter Count set to: " + val), true);
+                                                return 1;
+                                            })))
                             .then(CommandManager.literal("elytra")
                                     // Toggle An/Aus
                                     .then(CommandManager.literal("toggle")
@@ -211,19 +220,19 @@ public class ModCommands {
                                             })))
                             .then(CommandManager.literal("set")
                                     .then(CommandManager.argument("x", IntegerArgumentType.integer())
-                                    .then(CommandManager.argument("y", IntegerArgumentType.integer(-1, 320))
-                                    .then(CommandManager.argument("z", IntegerArgumentType.integer())
-                                    .executes(ctx -> {
-                                        int x = IntegerArgumentType.getInteger(ctx, "x");
-                                        int y = IntegerArgumentType.getInteger(ctx, "y");
-                                        int z = IntegerArgumentType.getInteger(ctx, "z");
-                                        Simpletweaks.getConfig().worldSpawn.xCoordSpawnPoint = x;
-                                        Simpletweaks.getConfig().worldSpawn.yCoordSpawnPoint = y;
-                                        Simpletweaks.getConfig().worldSpawn.zCoordSpawnPoint = z;
-                                        saveConfig();
-                                        ctx.getSource().sendFeedback(() -> Text.literal("Custom World Spawn set to X:" + x + " Y:" + y + " Z:" + z), true);
-                                        return 1;
-                                    })))))
+                                            .then(CommandManager.argument("y", IntegerArgumentType.integer(-1, 320))
+                                                    .then(CommandManager.argument("z", IntegerArgumentType.integer())
+                                                            .executes(ctx -> {
+                                                                int x = IntegerArgumentType.getInteger(ctx, "x");
+                                                                int y = IntegerArgumentType.getInteger(ctx, "y");
+                                                                int z = IntegerArgumentType.getInteger(ctx, "z");
+                                                                Simpletweaks.getConfig().worldSpawn.xCoordSpawnPoint = x;
+                                                                Simpletweaks.getConfig().worldSpawn.yCoordSpawnPoint = y;
+                                                                Simpletweaks.getConfig().worldSpawn.zCoordSpawnPoint = z;
+                                                                saveConfig();
+                                                                ctx.getSource().sendFeedback(() -> Text.literal("Custom World Spawn set to X:" + x + " Y:" + y + " Z:" + z), true);
+                                                                return 1;
+                                                            })))))
                             .then(CommandManager.literal("here").executes(ctx -> {
                                 BlockPos pos = ctx.getSource().getEntityOrThrow().getBlockPos();
                                 Simpletweaks.getConfig().worldSpawn.xCoordSpawnPoint = pos.getX();
@@ -235,7 +244,7 @@ public class ModCommands {
                             }))
                     )
 
-                    // 7. Command Settings (NEU)
+                    // 7. Command Settings
                     .then(CommandManager.literal("commands")
                             .then(CommandManager.literal("enableKillBoats")
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
@@ -257,7 +266,7 @@ public class ModCommands {
                                             })))
                     )
 
-                    // 8. Tweaks (Erweitert)
+                    // 8. Tweaks (Alle Features)
                     .then(CommandManager.literal("tweaks")
                             // AutoWalk
                             .then(CommandManager.literal("autowalk")
@@ -290,7 +299,7 @@ public class ModCommands {
                                                         return 1;
                                                     })))
                             )
-                            // Farmland Protect (NEU)
+                            // Farmland Protect
                             .then(CommandManager.literal("farmlandProtect")
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
@@ -300,7 +309,7 @@ public class ModCommands {
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Farmland Feather Falling Protection: " + val), true);
                                                 return 1;
                                             })))
-                            // Ladder Speed (NEU)
+                            // Ladder Speed
                             .then(CommandManager.literal("ladderSpeed")
                                     .then(CommandManager.argument("speed", DoubleArgumentType.doubleArg(0.0))
                                             .executes(ctx -> {
@@ -310,7 +319,7 @@ public class ModCommands {
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Ladder Climbing Speed set to: " + val), true);
                                                 return 1;
                                             })))
-                            // Sharpness Cut (NEU)
+                            // Sharpness Cut
                             .then(CommandManager.literal("sharpnessCut")
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
@@ -320,7 +329,7 @@ public class ModCommands {
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Sharpness Cuts Grass: " + val), true);
                                                 return 1;
                                             })))
-                            // Mute Suffixes (NEU: LISTE)
+                            // Mute Suffixes
                             .then(CommandManager.literal("muteSuffixes")
                                     .then(CommandManager.literal("list")
                                             .executes(ctx -> {
@@ -363,6 +372,138 @@ public class ModCommands {
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Cleared all mute suffixes.").formatted(Formatting.RED), true);
                                                 return 1;
                                             }))
+                            )
+                            // NEU: Player Locator
+                            .then(CommandManager.literal("locator")
+                                    .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                            .executes(ctx -> {
+                                                boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                Simpletweaks.getConfig().tweaks.enablePlayerLocator = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Player Locator enabled: " + val), true);
+                                                return 1;
+                                            })))
+                            // NEU: XP Clumps
+                            .then(CommandManager.literal("xpClumps")
+                                    .then(CommandManager.literal("enable")
+                                            .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                        Simpletweaks.getConfig().tweaks.enableXpClumps = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("XP Clumps enabled: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("scale")
+                                            .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                        Simpletweaks.getConfig().tweaks.scaleXpOrbs = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("XP Orb Scaling enabled: " + val), true);
+                                                        return 1;
+                                                    })))
+                            )
+                            // NEU: Status Effect Bars
+                            .then(CommandManager.literal("statusBars")
+                                    .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                            .executes(ctx -> {
+                                                boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                Simpletweaks.getConfig().tweaks.enableStatusEffectBars = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Status Effect Bars enabled: " + val), true);
+                                                return 1;
+                                            })))
+                            // NEU: Chat Heads
+                            .then(CommandManager.literal("chatHeads")
+                                    .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                            .executes(ctx -> {
+                                                boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                Simpletweaks.getConfig().tweaks.enableChatHeads = val;
+                                                saveConfig();
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Chat Heads enabled: " + val), true);
+                                                return 1;
+                                            })))
+                            // NEU: Throwable Bricks
+                            .then(CommandManager.literal("bricks")
+                                    .then(CommandManager.literal("enable")
+                                            .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                        Simpletweaks.getConfig().tweaks.enableThrowableBricks = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("Throwable Bricks enabled: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("breakGlass")
+                                            .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                        Simpletweaks.getConfig().tweaks.throwableBricksBreakBlocks = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("Bricks Break Glass enabled: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("damage")
+                                            .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.0f))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "value");
+                                                        Simpletweaks.getConfig().tweaks.brickDamage = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("Brick Damage set to: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("snowballDamage")
+                                            .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.0f))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "value");
+                                                        Simpletweaks.getConfig().tweaks.brickSnowballDamage = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("Brick Snowball Damage set to: " + val), true);
+                                                        return 1;
+                                                    })))
+                            )
+                            // NEU: Elytra Pitch Helper
+                            .then(CommandManager.literal("elytraHelper")
+                                    .then(CommandManager.literal("enable")
+                                            .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                        Simpletweaks.getConfig().tweaks.enableElytraPitchHelper = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("Elytra Pitch Helper enabled: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("angles")
+                                            .then(CommandManager.argument("up", FloatArgumentType.floatArg())
+                                                    .then(CommandManager.argument("down", FloatArgumentType.floatArg())
+                                                            .executes(ctx -> {
+                                                                float up = FloatArgumentType.getFloat(ctx, "up");
+                                                                float down = FloatArgumentType.getFloat(ctx, "down");
+                                                                Simpletweaks.getConfig().tweaks.elytraTargetAngleUp = up;
+                                                                Simpletweaks.getConfig().tweaks.elytraTargetAngleDown = down;
+                                                                saveConfig();
+                                                                ctx.getSource().sendFeedback(() -> Text.literal("Elytra Helper Targets set to Up:" + up + " Down:" + down), true);
+                                                                return 1;
+                                                            }))))
+                                    .then(CommandManager.literal("tolerance")
+                                            .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.0f))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "value");
+                                                        Simpletweaks.getConfig().tweaks.elytraPitchTolerance = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("Elytra Helper Tolerance set to: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("sensitivity")
+                                            .then(CommandManager.argument("value", FloatArgumentType.floatArg(0.0f))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "value");
+                                                        Simpletweaks.getConfig().tweaks.elytraSensitivity = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("Elytra Helper Sensitivity set to: " + val), true);
+                                                        return 1;
+                                                    })))
                             )
                     )
             );
@@ -440,24 +581,19 @@ public class ModCommands {
             boolean isStandard = cart instanceof MinecartEntity;
             boolean isStorage = cart instanceof StorageMinecartEntity;
 
-            // Filter Logik
             boolean shouldRemove = false;
             switch (mode) {
                 case "standard":
-                    // Nur das normale Minecart
                     if (isStandard) shouldRemove = true;
                     break;
                 case "empty":
-                    // Normales Minecart ODER leere Storage Carts
                     if (isStandard) {
                         shouldRemove = true;
                     } else if (isStorage) {
                         if (((StorageMinecartEntity) cart).isEmpty()) shouldRemove = true;
                     }
-                    // TNT, Furnace, Spawner, CommandBlock werden hier NICHT gelöscht
                     break;
                 case "all":
-                    // Alles weg (TNT, Spawner, gefüllte Kisten...)
                     shouldRemove = true;
                     break;
                 default:
@@ -481,11 +617,11 @@ public class ModCommands {
     }
 
     private static boolean checkPermission(ServerCommandSource source, int level) {
+        // level 2 für killboats/killcarts, level 4 für config
+        // Wenn source kein Spieler ist (Konsole/CommandBlock), immer erlauben
         if (source.getEntity() instanceof ServerPlayerEntity player) {
             return source.getServer().getPlayerManager().isOperator(player.getPlayerConfigEntry());
         }
         return true;
     }
 }
-
-// todo: killcart soll einen parameter haben der sagt ob er auch chart variationen löschen soll, also tnt kiste hopper etc. das selbe bei boats. default nur leere standart boote/charts, all  für alles und eine zwichenstufe für leere kisten/hopper etc.

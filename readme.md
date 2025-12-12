@@ -24,6 +24,14 @@ A personal teleportation pad to get you back to the world spawn quickly.
 * **Ownership:** Only the player who placed the teleporter can break it. It is indestructible to others.
 * **Crafting:** Can be crafted in a Smithing Table: `Netherite Upgrade` + `Gold Pressure Plate` + `Netherite Ingot`.
 
+### 🌪️ Launchpad
+A powerful jump pad powered by wind.
+* **Crafting:** `Wind Charge` + `Heavy Weighted Pressure Plate` + `Wind Charge` (Vertical pattern).
+* **Charging:** Right-click with **Wind Charges** to fuel the pad (Max: 16 charges).
+* **Launch:** Stand on the pad for 3 seconds to be launched high into the air.
+* **Variable Power:** The more charges stored, the stronger the launch!
+* **Visuals:** Emits wind particles when charged and displays the current power level via sound and particles.
+
 ### 🧱 Throwable Bricks
 Turn construction materials into dangerous projectiles!
 * **Vanilla Items:** Standard **Bricks** and **Nether Bricks** can now be thrown by right-clicking.
@@ -43,41 +51,47 @@ Throw items further than ever before!
 * **Effect:** The item is launched at high velocity in your viewing direction.
 * **Configurable:** Adjust the throw strength in the config or via commands.
 
-### 🚶 Auto-Walk
-* **Toggle:** Press the configured key (Default: `R`) to walk forward automatically.
-* **Feedback:** A chat message confirms toggling On/Off ("Auto-Walk: ON").
-* **Usage:** Perfect for long journeys, Elytra flights, or AFK travel.
+## 🖥️ HUD & Visual Enhancements
 
-### 🤫 Mob Muting (Name Tags)
-Silence annoying mobs without commands.
-* **How to:** Rename a Name Tag to end with a configured suffix (Default: `_mute` or `_shhh`).
-* **Effect:** Applying it to a mob makes it completely silent (`isSilent = true`).
-* **Example:** "Cow_mute"
+### 🧭 Locator Heads
+Find your friends easily!
+* **Compass Bar:** Shows a bar at the top of the screen displaying the **heads of nearby players**.
+* **Directional:** The heads move left/right based on your viewing angle, acting like a compass.
+* **Immersive:** Replaces abstract markers with actual player skins.
 
-### 💀 PvP Player Heads
-* When a player is killed by another player, they drop their head.
-* Includes the player's skin data (using 1.21 ProfileComponents).
+### 💬 Chat Heads
+See who is talking.
+* **Visual Chat:** Displays the player's head next to their chat messages.
+* **Opacity:** The heads fade out together with the chat text.
 
-### 🌾 Farmland Protection
-* Players wearing boots with **Feather Falling** enchantment will not trample farmland when jumping on it.
+### 🧪 Status Effect Bars
+Never guess your potion duration again.
+* **Duration Bar:** Adds a colored durability-like bar under status effect icons in the **HUD** and **Inventory**.
+* **Visual:** The bar shrinks as the effect wears off, matching the effect's color (e.g., pink for Regeneration).
 
-### ⚔️ Sharpness Cuts Grass
-* Weapons (Swords/Axes) with **Sharpness III** or higher automatically cut through grass and flowers when attacking entities, preventing obstructed hits.
+### 📉 Elytra Pitch Helper
+Master the perfect flight.
+* **40/40 Guide:** Displays visual guide lines when you are gliding near the optimal pitch of **±40°**.
+* **Alignment:** Align the line with your crosshair for maximum speed or altitude gain.
 
-### 🪜 Faster Ladders
-* Increases the vertical climbing speed on ladders (Configurable).
+## 🔥 Fun & Quality of Life
 
-### 🌍 Dimension Management
-* Globally disable access to the **Nether** or **End**.
-* Players trying to enter a disabled dimension are blocked and notified.
+* **🟢 XP Clumps:** Groups XP orbs into single entities to reduce lag.
+    * **Instant Pickup:** No more waiting for the "ding-ding-ding" cooldown; pick up all XP instantly.
+    * **Visual Scaling:** Orbs with more XP appear physically larger.
+* **💨 YEET!** Hold `Shift` + `Q` to throw items with great force.
+* **🚶 Auto-Walk:** Press `R` (configurable) to walk automatically. Perfect for long trips.
+* **🤫 Silence Mobs:** Name tags ending with `_mute` or `_shhh` silence mobs completely.
+* **🌾 Crop Protection:** Players with **Feather Falling** boots will not trample farmland.
+* **⚔️ Lawn Mower:** Weapons with **Sharpness III+** cut through grass and flowers during combat.
+* **🪜 Faster Ladders:** Climb ladders noticeably faster.
 
-### 📍 World Spawn Management
-* **Exact Spawn:** Force players to spawn exactly at the specific block coordinates (or on a bed cushion), removing the vanilla spawn radius fuzzing.
-* **Custom Spawn:** Set custom world spawn coordinates independent of the vanilla world data.
+## 🛡️ Admin & Server Tools
 
-### ⚖️ Balancing
-* **Rocket Stack Size:** Nerf Elytra flight by reducing the stack size of firework rockets (e.g., to 16).
-* **Vault Cooldown:** Set a cooldown (in days) for looting Vaults to prevent farming.
+* **💀 PvP Heads:** Players drop their head (skin included) upon death in PvP.
+* **📍 Exact Spawn:** Force players to spawn exactly on a block (or pillow) - no random radius.
+* **🌍 Dimensions:** Globally disable the Nether or End until you are ready.
+* **🧹 Lag Killer:** Remove empty boats and minecarts with a single command.
 
 ---
 

@@ -108,6 +108,35 @@ public class SimpletweaksConfig implements ConfigData {
         public boolean enableAutowalk = true;
 
         @ConfigEntry.Gui.Tooltip
+        public boolean enablePlayerLocator = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableXpClumps = true;
+        @ConfigEntry.Gui.Tooltip
+        public boolean scaleXpOrbs = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableStatusEffectBars = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableChatHeads = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableElytraPitchHelper = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public float elytraTargetAngleUp = -40.0f;
+
+        @ConfigEntry.Gui.Tooltip
+        public float elytraTargetAngleDown = 40.0f;
+
+        @ConfigEntry.Gui.Tooltip
+        public float elytraPitchTolerance = 10.0f;
+
+        @ConfigEntry.Gui.Tooltip
+        public float elytraSensitivity = 4.0f;
+
+        @ConfigEntry.Gui.Tooltip
         public List<String> nametagMuteSuffixes = new ArrayList<>(Arrays.asList("_mute", "_shhh"));
 
         @ConfigEntry.Gui.Tooltip

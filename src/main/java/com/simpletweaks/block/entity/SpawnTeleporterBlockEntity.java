@@ -46,6 +46,11 @@ public class SpawnTeleporterBlockEntity extends BlockEntity {
         }
     }
 
+    // --- NEU: Getter für den Mixin ---
+    public UUID getOwnerUuid() {
+        return ownerUuid;
+    }
+
     public boolean isOwner(PlayerEntity player) {
         return ownerUuid != null && ownerUuid.equals(player.getUuid());
     }

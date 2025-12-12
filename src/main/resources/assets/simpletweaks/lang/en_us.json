@@ -86,5 +86,31 @@
   "text.autoconfig.simpletweaks.option.tweaks.brickSnowballDamage.@Tooltip": "Damage dealt by thrown Brick Snowballs.",
 
   "block.simpletweaks.spawn_teleporter": "Spawn Teleporter",
-  "item.simpletweaks.brick_snowball": "Brick Snowball"
+  "item.simpletweaks.brick_snowball": "Brick Snowball",
+  "text.autoconfig.simpletweaks.option.tweaks.enablePlayerLocator": "Player Locator Heads",
+  "text.autoconfig.simpletweaks.option.tweaks.enablePlayerLocator.@Tooltip": "Shows player heads on a compass bar at the top of the screen to locate nearby players.",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableXpClumps": "XP Clumps",
+  "text.autoconfig.simpletweaks.option.tweaks.enableXpClumps.@Tooltip": "Groups XP orbs together to reduce lag and allows instant pickup.",
+  "text.autoconfig.simpletweaks.option.tweaks.scaleXpOrbs": "Scale XP Orbs",
+  "text.autoconfig.simpletweaks.option.tweaks.scaleXpOrbs.@Tooltip": "If enabled, XP orbs containing more experience will appear visually larger.",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableStatusEffectBars": "Status Effect Bars",
+  "text.autoconfig.simpletweaks.option.tweaks.enableStatusEffectBars.@Tooltip": "Shows a duration bar under status effect icons in the HUD and inventory.",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableChatHeads": "Chat Heads",
+  "text.autoconfig.simpletweaks.option.tweaks.enableChatHeads.@Tooltip": "Displays the player's head next to their chat messages.",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableElytraPitchHelper": "Elytra Pitch Helper",
+  "text.autoconfig.simpletweaks.option.tweaks.enableElytraPitchHelper.@Tooltip": "Shows guide lines for perfect +/- 40 degree pitch while gliding.",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraTargetAngleUp": "Elytra Target Up (°)",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraTargetAngleUp.@Tooltip": "Target pitch angle for climbing (Negative is up, Default: -40).",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraTargetAngleDown": "Elytra Target Down (°)",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraTargetAngleDown.@Tooltip": "Target pitch angle for diving (Default: 40).",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraPitchTolerance": "Pitch Tolerance",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraPitchTolerance.@Tooltip": "Angle range in which the guide lines appear.",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraSensitivity": "Guide Sensitivity",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraSensitivity.@Tooltip": "How many pixels the guide moves per degree of pitch difference.",
+
+  "block.simpletweaks.launchpad": "Launchpad"
 }

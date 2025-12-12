@@ -1,8 +1,11 @@
 // 1.21.11	-999999999-01-01T00:00:00	simpletweaks/Model Definitions
+1f5207d64269582f876c8a05a7e0bdfd04bf1bc8 assets/simpletweaks/blockstates/launchpad.json
 ea22bedaa9e55d3c0367007f5346bc7faa26ab17 assets/simpletweaks/blockstates/spawn_teleporter.json
 942055f16e14133eeea72bf4a2220337d3765a64 assets/simpletweaks/items/brick_snowball.json
+a92a27fe64a216214c69a391a76f9aea28d98a73 assets/simpletweaks/items/launchpad.json
 706ded08f900a6dc3b71809bc1fe7f92c04bb6bb assets/simpletweaks/items/spawn_elytra.json
 255ae8f6eb3a14e092f9065cd8b19fad9ff9e245 assets/simpletweaks/items/spawn_teleporter.json
+3649deb82e2a5a63eccb5ed6ba8fb8128d862d78 assets/simpletweaks/models/block/launchpad.json
 5cebd1e5633edd6f51714a3fc8408f845484bba1 assets/simpletweaks/models/block/spawn_teleporter.json
 18ad9d4116f0a44e55db3d6acf4492c23857d551 assets/simpletweaks/models/item/brick_snowball.json
 947e107261902c6fe6820c8c21e1b8a027d50f11 assets/simpletweaks/models/item/spawn_elytra.json

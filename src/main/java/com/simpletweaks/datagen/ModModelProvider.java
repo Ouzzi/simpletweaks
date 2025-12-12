@@ -16,30 +16,16 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         // --- SPAWN TELEPORTER BLOCK ---
-        // 1. Textur-Zuordnung definieren
-        TextureMap teleporterTexture = new TextureMap()
-                .put(TextureKey.TEXTURE, Identifier.of(Simpletweaks.MOD_ID, "block/spawn_teleporter"));
+        TextureMap teleporterTexture = new TextureMap().put(TextureKey.TEXTURE, Identifier.of(Simpletweaks.MOD_ID, "block/spawn_teleporter"));
+        Identifier modelId = Models.PRESSURE_PLATE_UP.upload(ModBlocks.SPAWN_TELEPORTER, teleporterTexture, blockStateModelGenerator.modelCollector);
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(ModBlocks.SPAWN_TELEPORTER, BlockStateModelGenerator.createWeightedVariant(modelId)));
+        blockStateModelGenerator.registerParentedItemModel(ModBlocks.SPAWN_TELEPORTER, modelId);
 
-        // 2. Modell manuell hochladen (erzeugt die JSON im models/block Ordner)
-        Identifier modelId = Models.PRESSURE_PLATE_UP.upload(
-                ModBlocks.SPAWN_TELEPORTER,
-                teleporterTexture,
-                blockStateModelGenerator.modelCollector
-        );
-
-        // 3. Blockstate registrieren (verweist auf das Modell)
-        blockStateModelGenerator.blockStateCollector.accept(
-                BlockStateModelGenerator.createSingletonBlockState(
-                        ModBlocks.SPAWN_TELEPORTER,
-                        BlockStateModelGenerator.createWeightedVariant(modelId)
-                )
-        );
-
-        // 4. Item-Modell registrieren (damit es im Inventar wie der Block aussieht)
-        blockStateModelGenerator.registerParentedItemModel(
-                ModBlocks.SPAWN_TELEPORTER,
-                modelId
-        );
+        // --- LAUNCHPAD BLOCK ---
+        TextureMap launchpadTexture = new TextureMap().put(TextureKey.TEXTURE, Identifier.of(Simpletweaks.MOD_ID, "block/launchpad"));
+        Identifier launchpadModelId = Models.PRESSURE_PLATE_UP.upload(ModBlocks.LAUNCHPAD, launchpadTexture, blockStateModelGenerator.modelCollector);
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(ModBlocks.LAUNCHPAD, BlockStateModelGenerator.createWeightedVariant(launchpadModelId)));
+        blockStateModelGenerator.registerParentedItemModel(ModBlocks.LAUNCHPAD, launchpadModelId);
     }
 
     @Override

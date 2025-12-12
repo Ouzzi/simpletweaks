@@ -1,6 +1,7 @@
 package com.simpletweaks.block;
 
 import com.simpletweaks.Simpletweaks;
+import com.simpletweaks.block.custom.LaunchpadBlock;
 import com.simpletweaks.block.custom.SpawnTeleporterBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
@@ -29,6 +30,13 @@ public class ModBlocks {
                     .nonOpaque()
             ));
 
+    public static final Block LAUNCHPAD = registerBlock("launchpad",
+            new LaunchpadBlock(AbstractBlock.Settings.create()
+                    .registryKey(keyOf("launchpad"))
+                    .luminance(state -> 5)
+                    .nonOpaque()
+            ));
+
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
         return Registry.register(Registries.BLOCK, Identifier.of(Simpletweaks.MOD_ID, name), block);
@@ -47,6 +55,7 @@ public class ModBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
             entries.add(SPAWN_TELEPORTER);
+            entries.add(LAUNCHPAD);
         });
     }
 }

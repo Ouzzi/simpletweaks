@@ -19,13 +19,10 @@
 
   "text.autoconfig.simpletweaks.option.dimensions": "Dimensionen",
   "text.autoconfig.simpletweaks.option.dimensions.allowNether": "Nether erlauben",
-  "text.autoconfig.simpletweaks.option.dimensions.allowNether.@Tooltip": "Wenn deaktiviert, können Spieler nicht auf die Nether-Dimension zugreifen.",
   "text.autoconfig.simpletweaks.option.dimensions.allowEnd": "Ende erlauben",
-  "text.autoconfig.simpletweaks.option.dimensions.allowEnd.@Tooltip": "Wenn deaktiviert, können Spieler nicht auf die End-Dimension zugreifen.",
 
   "text.autoconfig.simpletweaks.option.spawn": "Spawn-Ausrüstung",
   "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn": "Elytren beim Spawn",
-  "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn.@Tooltip": "Wenn aktiviert, erhalten Spieler Elytren beim Spawnen.",
   "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius": "Elytren Spawn-Radius",
   "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius.@Tooltip": "Radius um den Mittelpunkt, in dem Spieler Elytren erhalten.",
   "text.autoconfig.simpletweaks.option.spawn.useWorldSpawnAsCenter": "Welt-Spawn als Zentrum nutzen",
@@ -54,7 +51,6 @@
   "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes": "Namensschild Stumm-Suffixe",
   "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes.@Tooltip": "Liste von Suffixen. Mobs mit einem dieser Namenszusätze machen keine Geräusche mehr.",
   "text.autoconfig.simpletweaks.option.tweaks.enableYeet": "Yeet (Werfen) aktivieren",
-  "text.autoconfig.simpletweaks.option.tweaks.enableYeet.@Tooltip": "Ermöglicht das Werfen von Gegenständen beim Schleichen.",
   "text.autoconfig.simpletweaks.option.tweaks.yeetStrength": "Wurfstärke (Yeet Strength)",
   "text.autoconfig.simpletweaks.option.tweaks.yeetStrength.@Tooltip": "Multiplikator für die Wurfweite beim Schleichen.",
   "text.autoconfig.simpletweaks.option.tweaks.yeetChargeSpeed": "Yeet Aufladegeschwindigkeit",
@@ -71,9 +67,6 @@
   "key.simpletweaks.autowalk": "Automatisch Laufen",
 
   "commands.simpletweaks.killboats.success": "%s leere Boote wurden entfernt.",
-  "text.autoconfig.simpletweaks.option.dimensions.allowNether.@Tooltip": "If disabled, players cannot access the Nether dimension.",
-  "text.autoconfig.simpletweaks.option.dimensions.allowEnd.@Tooltip": "If disabled, players cannot access the End dimension.",
-  "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn.@Tooltip": "If enabled, players receive an Elytra upon spawning.",
   "key.category.simpletweaks.general": "Simple Tweaks - General",
 
   "text.autoconfig.simpletweaks.option.spawn.spawnTeleporterCount": "Spawn Teleporter Anzahl",
@@ -89,5 +82,31 @@
   "text.autoconfig.simpletweaks.option.tweaks.brickSnowballDamage.@Tooltip": "Schaden, den geworfene Ziegel-Schneebälle verursachen.",
 
   "block.simpletweaks.spawn_teleporter": "Spawn Teleporter",
-  "item.simpletweaks.brick_snowball": "Ziegel-Schneeball"
+  "item.simpletweaks.brick_snowball": "Ziegel-Schneeball",
+  "text.autoconfig.simpletweaks.option.tweaks.enablePlayerLocator": "Spieler-Locator Köpfe",
+  "text.autoconfig.simpletweaks.option.tweaks.enablePlayerLocator.@Tooltip": "Zeigt Spielerköpfe auf einer Kompassleiste am oberen Bildschirmrand an, um Spieler zu finden.",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableXpClumps": "XP-Klumpen (Clumps)",
+  "text.autoconfig.simpletweaks.option.tweaks.enableXpClumps.@Tooltip": "Gruppiert Erfahrungskugeln, um Lag zu reduzieren, und ermöglicht sofortiges Aufsammeln.",
+  "text.autoconfig.simpletweaks.option.tweaks.scaleXpOrbs": "XP-Kugeln skalieren",
+  "text.autoconfig.simpletweaks.option.tweaks.scaleXpOrbs.@Tooltip": "Wenn aktiviert, erscheinen XP-Kugeln mit mehr Erfahrung optisch größer.",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableStatusEffectBars": "Statuseffekt-Balken",
+  "text.autoconfig.simpletweaks.option.tweaks.enableStatusEffectBars.@Tooltip": "Zeigt einen Dauer-Balken unter Statuseffekt-Icons im HUD und Inventar an.",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableChatHeads": "Chat-Köpfe",
+  "text.autoconfig.simpletweaks.option.tweaks.enableChatHeads.@Tooltip": "Zeigt den Kopf des Spielers neben seinen Chat-Nachrichten an.",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableElytraPitchHelper": "Elytra Pitch-Hilfe",
+  "text.autoconfig.simpletweaks.option.tweaks.enableElytraPitchHelper.@Tooltip": "Zeigt Hilfslinien für die perfekte +/- 40 Grad Neigung beim Gleiten an.",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraTargetAngleUp": "Elytra Zielwinkel Oben (°)",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraTargetAngleUp.@Tooltip": "Zielwinkel für den Steigflug (Negativ ist oben, Standard: -40).",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraTargetAngleDown": "Elytra Zielwinkel Unten (°)",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraTargetAngleDown.@Tooltip": "Zielwinkel für den Sturzflug (Standard: 40).",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraPitchTolerance": "Winkel-Toleranz",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraPitchTolerance.@Tooltip": "Winkelbereich, in dem die Hilfslinien erscheinen.",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraSensitivity": "Guide Empfindlichkeit",
+  "text.autoconfig.simpletweaks.option.tweaks.elytraSensitivity.@Tooltip": "Wie viele Pixel sich die Linie pro Grad Neigungsunterschied bewegt.",
+
+  "block.simpletweaks.launchpad": "Startrampe"
 }
