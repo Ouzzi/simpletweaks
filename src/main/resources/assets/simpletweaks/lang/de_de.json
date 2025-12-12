@@ -74,5 +74,20 @@
   "text.autoconfig.simpletweaks.option.dimensions.allowNether.@Tooltip": "If disabled, players cannot access the Nether dimension.",
   "text.autoconfig.simpletweaks.option.dimensions.allowEnd.@Tooltip": "If disabled, players cannot access the End dimension.",
   "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn.@Tooltip": "If enabled, players receive an Elytra upon spawning.",
-  "key.category.simpletweaks.general": "Simple Tweaks - General"
+  "key.category.simpletweaks.general": "Simple Tweaks - General",
+
+  "text.autoconfig.simpletweaks.option.spawn.spawnTeleporterCount": "Spawn Teleporter Anzahl",
+  "text.autoconfig.simpletweaks.option.spawn.spawnTeleporterCount.@Tooltip": "Anzahl der Spawn Teleporter, die Spieler beim ersten Beitritt erhalten (0 zum Deaktivieren).",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableThrowableBricks": "Werfbare Ziegel aktivieren",
+  "text.autoconfig.simpletweaks.option.tweaks.enableThrowableBricks.@Tooltip": "Wenn aktiviert, können Ziegel und Netherziegel geworfen werden.",
+  "text.autoconfig.simpletweaks.option.tweaks.throwableBricksBreakBlocks": "Ziegel brechen Glas",
+  "text.autoconfig.simpletweaks.option.tweaks.throwableBricksBreakBlocks.@Tooltip": "Wenn aktiviert, zerbrechen geworfene Ziegel Glas beim Aufprall.",
+  "text.autoconfig.simpletweaks.option.tweaks.brickDamage": "Ziegel Schaden",
+  "text.autoconfig.simpletweaks.option.tweaks.brickDamage.@Tooltip": "Schaden, den geworfene Ziegel verursachen.",
+  "text.autoconfig.simpletweaks.option.tweaks.brickSnowballDamage": "Ziegel-Schneeball Schaden",
+  "text.autoconfig.simpletweaks.option.tweaks.brickSnowballDamage.@Tooltip": "Schaden, den geworfene Ziegel-Schneebälle verursachen.",
+
+  "block.simpletweaks.spawn_teleporter": "Spawn Teleporter",
+  "item.simpletweaks.brick_snowball": "Ziegel-Schneeball"
 }

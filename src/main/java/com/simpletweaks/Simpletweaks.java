@@ -1,8 +1,11 @@
 package com.simpletweaks;
 
+import com.simpletweaks.block.ModBlocks;
+import com.simpletweaks.block.entity.ModBlockEntities;
 import com.simpletweaks.command.ModCommands;
 import com.simpletweaks.component.ModDataComponentTypes;
 import com.simpletweaks.config.SimpletweaksConfig;
+import com.simpletweaks.event.FirstJoinHandler;
 import com.simpletweaks.event.PlayerHeadDropHandler;
 import com.simpletweaks.event.SpawnHandler;
 import com.simpletweaks.event.WorldSpawnHandler;
@@ -35,6 +38,11 @@ public class Simpletweaks implements ModInitializer {
 
         ModDataComponentTypes.registerDataComponentTypes();
         ModItems.registerModItems();
+
+        ModBlocks.registerModBlocks();
+        ModBlockEntities.registerBlockEntities();
+        FirstJoinHandler.register();
+
         PlayerHeadDropHandler.register();
         SpawnHandler.register();
         SpawnElytraNetworking.register();
@@ -45,3 +53,6 @@ public class Simpletweaks implements ModInitializer {
 
     public static SimpletweaksConfig getConfig() { return CONFIG; }
 }
+
+// TODO:
+// - client-side own spawn teleporter normal, teleporter owned by others darker texture

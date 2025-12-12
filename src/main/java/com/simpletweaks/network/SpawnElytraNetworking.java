@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
+import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -51,7 +52,10 @@ public class SpawnElytraNetworking {
                         Vec3d look = player.getRotationVector();
                         Vec3d vel = player.getVelocity();
                         player.setVelocity(vel.add(look.x * strength, look.y * strength, look.z * strength));
-                        player.velocityModified = true;
+
+                        // FIX: Statt velocityModified = true zu setzen (was protected ist),
+                        // senden wir dem Client direkt das Update-Paket.
+                        player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player));
 
                         player.getEntityWorld().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENTITY_FIREWORK_ROCKET_LAUNCH, SoundCategory.PLAYERS, 0.3f, 1.0f);
 

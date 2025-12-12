@@ -71,5 +71,20 @@
   "key.category.simpletweaks.general": "Simple Tweaks - General",
   "key.simpletweaks.autowalk": "Auto Walk",
 
-  "commands.simpletweaks.killboats.success": "Removed %s empty boats."
+  "commands.simpletweaks.killboats.success": "Removed %s empty boats.",
+
+  "text.autoconfig.simpletweaks.option.spawn.spawnTeleporterCount": "Spawn Teleporter Count",
+  "text.autoconfig.simpletweaks.option.spawn.spawnTeleporterCount.@Tooltip": "Amount of Spawn Teleporters given to players on their first join (0 to disable).",
+
+  "text.autoconfig.simpletweaks.option.tweaks.enableThrowableBricks": "Enable Throwable Bricks",
+  "text.autoconfig.simpletweaks.option.tweaks.enableThrowableBricks.@Tooltip": "If enabled, Bricks and Nether Bricks can be thrown.",
+  "text.autoconfig.simpletweaks.option.tweaks.throwableBricksBreakBlocks": "Throwable Bricks Break Glass",
+  "text.autoconfig.simpletweaks.option.tweaks.throwableBricksBreakBlocks.@Tooltip": "If enabled, thrown bricks will shatter glass upon impact.",
+  "text.autoconfig.simpletweaks.option.tweaks.brickDamage": "Brick Damage",
+  "text.autoconfig.simpletweaks.option.tweaks.brickDamage.@Tooltip": "Damage dealt by thrown bricks.",
+  "text.autoconfig.simpletweaks.option.tweaks.brickSnowballDamage": "Brick Snowball Damage",
+  "text.autoconfig.simpletweaks.option.tweaks.brickSnowballDamage.@Tooltip": "Damage dealt by thrown Brick Snowballs.",
+
+  "block.simpletweaks.spawn_teleporter": "Spawn Teleporter",
+  "item.simpletweaks.brick_snowball": "Brick Snowball"
 }

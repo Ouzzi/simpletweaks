@@ -17,6 +17,26 @@ A unique system designed for server lobbies or spawn areas.
 
 ![Spawn Elytra In Inventory](https://cdn.modrinth.com/data/cached_images/f366ca4cd22cb7a445599f62257e9a0ac1e7aa10_0.webp)
 
+### 🌌 Spawn Teleporter
+A personal teleportation pad to get you back to the world spawn quickly.
+* **First Join Gift:** Players receive a configurable amount (Default: 1) on their first join.
+* **Usage:** Place the pad and stand still on it for **5 seconds** to teleport to the world spawn.
+* **Ownership:** Only the player who placed the teleporter can break it. It is indestructible to others.
+* **Crafting:** Can be crafted in a Smithing Table: `Netherite Upgrade` + `Gold Pressure Plate` + `Netherite Ingot`.
+
+### 🧱 Throwable Bricks
+Turn construction materials into dangerous projectiles!
+* **Vanilla Items:** Standard **Bricks** and **Nether Bricks** can now be thrown by right-clicking.
+* **Damage:** They deal significant damage on impact (Default: 2 Hearts). Configurable.
+* **Physics:** Thrown bricks can shatter **Glass** and **Glass Panes** (but not Tinted Glass). This can be disabled in the config.
+* **Drop:** The brick item drops on the ground after impact.
+
+### ❄️🧱 Brick Snowball
+A nasty surprise wrapped in snow.
+* **Crafting:** Combine **3 Snowballs** and **1 Brick** to craft.
+* **Effect:** Throws like a snowball but deals physical damage (Default: 1 Heart) and breaks glass.
+* **Visuals:** Emits a mix of snowball and brick particles upon impact.
+
 ### 💨 "Yeet" Item Throw
 Throw items further than ever before!
 * **Action:** Hold `Sneak (Shift)` + `Drop (Q)` to throw an item.
@@ -160,4 +180,3 @@ Change settings directly in-game without restarting.
 
 **Optional:**
 * [Mod Menu](https://modrinth.com/mod/modmenu) (To edit the config via graphical interface).
-

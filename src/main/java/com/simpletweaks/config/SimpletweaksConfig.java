@@ -60,6 +60,10 @@ public class SimpletweaksConfig implements ConfigData {
 
     public static class Spawn {
         @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.BoundedDiscrete(min = 0, max = 64)
+        public int spawnTeleporterCount = 1;
+
+        @ConfigEntry.Gui.Tooltip
         public boolean giveElytraOnSpawn = false;
         @ConfigEntry.Gui.Tooltip
         public int spawnElytraRadius = 25;
@@ -110,6 +114,18 @@ public class SimpletweaksConfig implements ConfigData {
         public boolean enableYeet = true;
         @ConfigEntry.Gui.Tooltip
         public float yeetStrength = 3.0f;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableThrowableBricks = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean throwableBricksBreakBlocks = false;
+
+        @ConfigEntry.Gui.Tooltip
+        public float brickDamage = 2.0f;
+
+        @ConfigEntry.Gui.Tooltip
+        public float brickSnowballDamage = 2.0f;
 
         @ConfigEntry.Gui.Tooltip
         public boolean preventFarmlandTrampleWithFeatherFalling = true;

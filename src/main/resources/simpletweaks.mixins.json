@@ -8,6 +8,7 @@
     "ExactSpawnMixin",
     "FarmlandTrampleMixin",
     "GrassOutlineMixin",
+    "ItemMixin",
     "ItemStackMixin",
     "LadderSpeedMixin",
     "SharpnessGrassCutMixin",

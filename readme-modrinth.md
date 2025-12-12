@@ -6,12 +6,36 @@
 
 **Simpletweaks** ist die All-in-One Lösung, um deinen Server oder deine Singleplayer-Welt lebendiger, sauberer und spaßiger zu machen. Schluss mit langweiligen Lobbys und nervigem Mikromanagement!
 
-## 🚀 Spawn Elytra
+## 🚀 Spawn Features
+
+### 🪽 Spawn Elytra
 Verwandle deinen Spawn in einen Spielplatz!
 * **Automatische Ausrüstung:** Erhalte im Spawn-Bereich sofort eine spezielle, unzerstörbare Elytra.
 * **Boost-System:** Drücke im Flug die **Leertaste**, um wie eine Rakete zu beschleunigen!
 * **Custom HUD:** Eine schicke **blaue Boost-Bar** ersetzt die XP-Leiste und zeigt dir deine Energie an.
 * **Sicherheit:** Kein Fallschaden und kein Schaden beim Aufprall gegen Wände.
+
+### 🌌 Spawn Teleporter
+Ein persönliches Teleport-Pad für den schnellen Heimweg.
+* **Einzugsgeschenk:** Spieler erhalten beim ersten Beitritt eine konfigurierbare Anzahl (Standard: 1).
+* **Benutzung:** Platziere das Pad und bleibe **5 Sekunden** darauf stehen, um zum Welt-Spawn teleportiert zu werden.
+* **Besitz:** Nur der Spieler, der den Teleporter platziert hat, kann ihn abbauen. Für andere ist er unzerstörbar.
+* **Crafting:** `Netherite Upgrade` + `Gold-Druckplatte` + `Netherite-Barren` im Schmiedetisch.
+
+## 🧱 Neue Items & Kampfmechaniken
+
+### 🧱 Werfbare Ziegel (Throwable Bricks)
+Mach Baumaterial zu Waffen!
+* **Werfen:** Normale **Ziegel** und **Nether-Ziegel** können per Rechtsklick geworfen werden.
+* **Schaden:** Verursacht ordentlichen Schaden (Standard: 2 Herzen). Konfigurierbar.
+* **Physik:** Ziegel zerbrechen **Glas** und Glasscheiben (außer getöntes Glas). Deaktivierbar in der Config.
+* **Recycling:** Der Ziegelstein droppt nach dem Aufprall als Item.
+
+### ❄️ Ziegel-Schneeball (Brick Snowball)
+Eine fiese Überraschung, verpackt in Schnee.
+* **Crafting:** 3 Schneebälle um 1 Ziegelstein.
+* **Effekt:** Fliegt wie ein Schneeball, macht aber physischen Schaden (Standard: 1 Herz) und bricht Glas.
+* **Optik:** Erzeugt beim Aufprall eine Mischung aus Schnee- und Ziegel-Partikeln.
 
 ## 🔥 Fun & Quality of Life
 * **💨 YEET!** Halte `Shift` + `Q`, um Items mit Wucht durch die Gegend zu werfen. Aufladen und Feuer frei!
@@ -19,6 +43,7 @@ Verwandle deinen Spawn in einen Spielplatz!
 * **🤫 Ruhe im Stall:** Benenne Namensschilder mit Endungen wie `_mute` oder `_shhh`, um nervige Tiergeräusche sofort abzuschalten.
 * **🌾 Acker-Schutz:** Mit **Federfall**-Schuhen zertrampelst du nie wieder versehentlich deine Felder.
 * **⚔️ Rasenmäher:** Waffen mit **Schärfe III+** schneiden Gras und Blumen beim Kämpfen automatisch weg.
+* **🪜 Schnellere Leitern:** Klettere Leitern spürbar schneller hoch.
 
 ## 🛡️ Admin & Server Tools
 * **💀 PvP Köpfe:** Spieler droppen ihren Kopf (inklusive Skin) im PvP.

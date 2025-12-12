@@ -30,7 +30,8 @@ public class ModCommands {
 
             // --- KILL BOATS ---
             dispatcher.register(CommandManager.literal("killboats")
-                    .requires(source -> source.hasPermissionLevel(2))
+                    // FIX: Use getPermissions().test(2) instead of hasPermission(2)
+                    .requires(source -> checkPermission(source, 2))
                     .executes(context -> executeKillBoats(context, "standard"))
                     .then(CommandManager.argument("mode", StringArgumentType.word())
                             .suggests((context, builder) -> CommandSource.suggestMatching(new String[]{"standard", "empty", "all"}, builder))
@@ -39,7 +40,7 @@ public class ModCommands {
 
             // --- KILL CARTS ---
             dispatcher.register(CommandManager.literal("killcarts")
-                    .requires(source -> source.hasPermissionLevel(2))
+                    .requires(source -> checkPermission(source, 2))
                     .executes(context -> executeKillCarts(context, "standard"))
                     .then(CommandManager.argument("mode", StringArgumentType.word())
                             .suggests((context, builder) -> CommandSource.suggestMatching(new String[]{"standard", "empty", "all"}, builder))
@@ -48,7 +49,8 @@ public class ModCommands {
 
             // --- CONFIG COMMANDS (simpletweaks) ---
             dispatcher.register(CommandManager.literal("simpletweaks")
-                    .requires(source -> source.hasPermissionLevel(4))
+                    // Level 4 für Admin-Befehle
+                    .requires(source -> checkPermission(source, 4))
 
                     // 1. Balancing
                     .then(CommandManager.literal("balancing")
@@ -476,6 +478,13 @@ public class ModCommands {
 
     private static void saveConfig() {
         AutoConfig.getConfigHolder(SimpletweaksConfig.class).save();
+    }
+
+    private static boolean checkPermission(ServerCommandSource source, int level) {
+        if (source.getEntity() instanceof ServerPlayerEntity player) {
+            return source.getServer().getPlayerManager().isOperator(player.getPlayerConfigEntry());
+        }
+        return true;
     }
 }
 
