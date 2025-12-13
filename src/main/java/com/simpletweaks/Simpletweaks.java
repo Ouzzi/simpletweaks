@@ -58,4 +58,5 @@ public class Simpletweaks implements ModInitializer {
 // - Better Item Frames (Later)
 // - Pickup notifier (Later) - also xp notifier
 // - Chat Calc (Later Later)
-// - Visuals - speedlines like cartoon or anime when fast (weak) when accelerating (strong)
+// - Visuals - speed-lines like cartoon or anime when fast (weak) when accelerating (strong)
+// - laserpointer or similar tool
