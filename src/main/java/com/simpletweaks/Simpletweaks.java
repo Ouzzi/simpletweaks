@@ -45,3 +45,12 @@ public class Simpletweaks implements ModInitializer {
 
     public static SimpletweaksConfig getConfig() { return CONFIG; }
 }
+
+
+
+
+
+
+
+// Todo:
+// - laserpointer or simmilar tool
