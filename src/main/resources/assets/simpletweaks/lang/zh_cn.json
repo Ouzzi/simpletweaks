@@ -1,0 +1,75 @@
+{
+  "itemgroup.simpletweaks.money_items": "货币材料",
+
+  "text.autoconfig.simpletweaks.title": "Simpletweaks 配置",
+  "text.autoconfig.simpletweaks.category.default": "通用",
+
+  "text.autoconfig.simpletweaks.option.balancing": "平衡性调整",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize": "烟花火箭堆叠数量",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.@Tooltip[0]": "默认值：64。",
+  "text.autoconfig.simpletweaks.option.balancing.rocketStackSize.@Tooltip[1]": "设为 16 可削弱鞘翅飞行。",
+
+  "text.autoconfig.simpletweaks.option.vaults": "密室设置",
+  "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays": "密室冷却时间（天）",
+  "text.autoconfig.simpletweaks.option.vaults.vaultCooldownDays.@Tooltip": "玩家可再次搜刮同一密室的等待时间（以 Minecraft 天为单位）。",
+
+  "text.autoconfig.simpletweaks.option.pvp": "PvP 设置",
+  "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops": "玩家头颅掉落",
+  "text.autoconfig.simpletweaks.option.pvp.playerHeadDrops.@Tooltip": "若启用，玩家被其他玩家杀死时会掉落头颅。",
+
+  "text.autoconfig.simpletweaks.option.dimensions": "维度",
+  "text.autoconfig.simpletweaks.option.dimensions.allowNether": "允许下界",
+  "text.autoconfig.simpletweaks.option.dimensions.allowNether.@Tooltip": "若禁用，玩家将无法进入下界维度。",
+  "text.autoconfig.simpletweaks.option.dimensions.allowEnd": "允许末地",
+  "text.autoconfig.simpletweaks.option.dimensions.allowEnd.@Tooltip": "若禁用，玩家将无法进入末地维度。",
+
+  "text.autoconfig.simpletweaks.option.spawn": "初始装备",
+  "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn": "生成时给予鞘翅",
+  "text.autoconfig.simpletweaks.option.spawn.giveElytraOnSpawn.@Tooltip": "若启用，玩家生成时会获得一个鞘翅。",
+  "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius": "鞘翅生成半径",
+  "text.autoconfig.simpletweaks.option.spawn.spawnElytraRadius.@Tooltip": "在中心点半径范围内，玩家会获得鞘翅。",
+  "text.autoconfig.simpletweaks.option.spawn.useWorldSpawnAsCenter": "使用世界出生点作为中心",
+  "text.autoconfig.simpletweaks.option.spawn.customSpawnElytraX": "自定义中心点 X 坐标",
+  "text.autoconfig.simpletweaks.option.spawn.customSpawnElytraZ": "自定义中心点 Z 坐标",
+  "text.autoconfig.simpletweaks.option.spawn.flightTimeSeconds": "飞行时间（秒）",
+  "text.autoconfig.simpletweaks.option.spawn.maxBoosts": "最大推进次数",
+  "text.autoconfig.simpletweaks.option.spawn.boostStrength": "推进强度",
+
+  "text.autoconfig.simpletweaks.option.worldSpawn": "世界出生点设置",
+  "text.autoconfig.simpletweaks.option.worldSpawn.forceExactSpawn": "强制精确出生",
+  "text.autoconfig.simpletweaks.option.worldSpawn.forceExactSpawn.@Tooltip": "若启用，玩家将在特定方块处（或枕头上）精确生成，而不是在其周围随机化。",
+  "text.autoconfig.simpletweaks.option.worldSpawn.xCoordSpawnPoint": "出生点 X 坐标",
+  "text.autoconfig.simpletweaks.option.worldSpawn.yCoordSpawnPoint": "出生点 Y 坐标（-1 = 自动）",
+  "text.autoconfig.simpletweaks.option.worldSpawn.zCoordSpawnPoint": "出生点 Z 坐标",
+
+  "text.autoconfig.simpletweaks.option.commands": "命令",
+  "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand": "启用 /killboats 命令",
+  "text.autoconfig.simpletweaks.option.commands.enableKillBoatsCommand.@Tooltip": "启用一个用于移除附近所有空船的指令。",
+  "text.autoconfig.simpletweaks.option.commands.enableKillCartsCommand": "启用 /killcarts 命令",
+  "text.autoconfig.simpletweaks.option.commands.enableKillCartsCommand.@Tooltip": "启用一个用于移除附近所有空矿车的指令。",
+
+  "text.autoconfig.simpletweaks.option.tweaks": "功能与调整",
+  "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk": "启用自动行走",
+  "text.autoconfig.simpletweaks.option.tweaks.enableAutowalk.@Tooltip": "允许通过按键绑定实现自动行走。",
+  "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes": "命名牌静默后缀",
+  "text.autoconfig.simpletweaks.option.tweaks.nametagMuteSuffixes.@Tooltip": "名字后缀列表。使用其中之一的生物将被静音。",
+  "text.autoconfig.simpletweaks.option.tweaks.enableYeet": "启用投掷功能",
+  "text.autoconfig.simpletweaks.option.tweaks.enableYeet.@Tooltip": "允许潜行时投掷物品。",
+  "text.autoconfig.simpletweaks.option.tweaks.yeetStrength": "投掷强度",
+  "text.autoconfig.simpletweaks.option.tweaks.yeetStrength.@Tooltip": "潜行时投掷物品的速度倍率。",
+  "text.autoconfig.simpletweaks.option.tweaks.yeetChargeSpeed": "投掷蓄力速度",
+  "text.autoconfig.simpletweaks.option.tweaks.maxYeetPower": "最大投掷力度",
+
+  "text.autoconfig.simpletweaks.option.tweaks.preventFarmlandTrampleWithFeatherFalling": "摔落保护保护耕地",
+  "text.autoconfig.simpletweaks.option.tweaks.preventFarmlandTrampleWithFeatherFalling.@Tooltip": "若启用，穿着带有摔落保护附魔靴子的玩家将不会踩坏耕地。",
+  "text.autoconfig.simpletweaks.option.tweaks.ladderClimbingSpeed": "梯子攀爬速度",
+  "text.autoconfig.simpletweaks.option.tweaks.ladderClimbingSpeed.@Tooltip": "调整爬梯时的垂直速度。原版默认值约为 0.2。",
+  "text.autoconfig.simpletweaks.option.tweaks.sharpnessCutsGrass": "锋利切割杂草",
+  "text.autoconfig.simpletweaks.option.tweaks.sharpnessCutsGrass.@Tooltip": "若启用，锋利 III 及以上等级的武器攻击生物时会同时切割周围的草/花。",
+
+  "key.categories.simpletweaks": "简易调整",
+  "key.category.simpletweaks.general": "简易调整 - 通用",
+  "key.simpletweaks.autowalk": "自动行走",
+
+  "commands.simpletweaks.killboats.success": "已移除 %s 艘空船。"
+}
