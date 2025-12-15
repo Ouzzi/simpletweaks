@@ -60,3 +60,8 @@ public class Simpletweaks implements ModInitializer {
 // - Chat Calc (Later Later)
 // - Visuals - speed-lines like cartoon or anime when fast (weak) when accelerating (strong)
 // - laserpointer or similar tool
+// - Map Tooltips showing map
+// - more compostable items
+// - dispenser place more blocks
+// - replant with hoe
+// - Leader slide faster when looking down while descending
