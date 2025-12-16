@@ -72,4 +72,6 @@ public class Simpletweaks implements ModInitializer {
 // - replant with hoe
 // - Leader slide faster when looking down while descending
 
+// - modmenu pages
+// - toggle all on some groups
 
