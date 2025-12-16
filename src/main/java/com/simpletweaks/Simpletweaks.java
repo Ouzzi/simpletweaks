@@ -75,3 +75,10 @@ public class Simpletweaks implements ModInitializer {
 // - modmenu pages
 // - toggle all on some groups
 
+
+// - 4 extra inv for challenges 
+// - - example eat a dark heart -> wildcard slot
+// - - example eat a enchanted gapple -> food slot
+// - - example break 10000 ores -> tool slot
+// - - example kill 10000 mobs -> weapon slot
+
