@@ -77,6 +77,15 @@ public class Simpletweaks implements ModInitializer {
 // - modmenu pages
 // - toggle all on some groups
 
+
+// - challenges/progressing system:
+// -- you get a book at first join with Introduction and list of challenges like achievements.
+// -- when completing challenges you get rewards like items, blocks, xp, money, perks (like faster mining, higher jumps, extra inv, ...)
+// -- rewards could be given via commands to be compatible with other mods
+// -- rewards must be collected manually via a gui (like advancements)
+// -- only big challenges give rewards, small ones are just for fun
+// -- fully customizable via config file - enable/disable challenges, custom challenges, custom rewards, ...
+
 // - 4 extra inv for challenges
 // - - example eat a dark heart -> wildcard slot
 // - - example eat a enchanted gapple -> food slot
@@ -88,4 +97,5 @@ public class Simpletweaks implements ModInitializer {
 // - textures for pads
 // - sometimes pickup notifier doesnt show picked up item
 // - set world spawn not working properly
+
 
