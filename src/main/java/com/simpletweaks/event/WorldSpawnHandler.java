@@ -15,7 +15,6 @@ public class WorldSpawnHandler {
 
     public static void register() {
         ServerWorldEvents.LOAD.register((server, world) -> {
-            // Nur für die Oberwelt
             if (world.getRegistryKey() == World.OVERWORLD) {
                 applyCustomSpawn(world);
             }
@@ -29,34 +28,35 @@ public class WorldSpawnHandler {
         int y = config.yCoordSpawnPoint;
         int z = config.zCoordSpawnPoint;
 
-        // Wenn y = -1, suchen wir die Oberfläche (Top Y)
+        // Automatische Y-Höhe berechnen
         if (y == -1) {
-            // FIX: Berechne Chunk-Koordinaten
             int chunkX = ChunkSectionPos.getSectionCoord(x);
             int chunkZ = ChunkSectionPos.getSectionCoord(z);
 
-            // FIX: Erzwinge das Laden des Chunks, damit getTopY korrekte Werte liefert
-            // Sonst gibt es oft den Tiefstwert (z.B. -64), wenn der Chunk noch nicht generiert ist.
+            // Chunk laden erzwingen, um die Höhe sicher zu bestimmen
             world.getChunk(chunkX, chunkZ, ChunkStatus.FULL);
 
             y = world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z);
-
-            // Sicherheits-Check: Falls immer noch unter der Welt (z.B. Void), setze auf sichere Höhe
             if (y <= world.getBottomY()) {
-                y = 70; // Fallback Höhe
-                Simpletweaks.LOGGER.warn("Konnte keine sichere Spawn-Höhe finden (Y=" + y + "). Setze Fallback auf 70.");
+                y = 70;
+                Simpletweaks.LOGGER.warn("Konnte keine sichere Spawn-Höhe finden. Setze auf 70.");
             }
         }
 
-        // Zugriff auf den aktuellen Spawn-Punkt
-        BlockPos currentSpawnPos = world.getSpawnPoint().getPos();
+        BlockPos newPos = new BlockPos(x, y, z);
 
-        if (currentSpawnPos.getX() != x || currentSpawnPos.getY() != y || currentSpawnPos.getZ() != z) {
-            BlockPos newPos = new BlockPos(x, y, z);
-            float angle = 0.0f;
+        // Aktuellen Spawn abrufen (in 1.21.3 über getSpawnPoint())
+        BlockPos currentPos = world.getSpawnPoint().getPos();
 
-            world.setSpawnPoint(WorldProperties.SpawnPoint.create(world.getRegistryKey(), newPos, angle, 0.0f));
-            Simpletweaks.LOGGER.info("Set World Spawn to: " + x + ", " + y + ", " + z);
+        // Nur setzen, wenn es sich geändert hat
+        if (!currentPos.equals(newPos)) {
+            // FIX: WorldProperties.SpawnPoint nutzen
+            // Parameter: RegistryKey (Dimension), BlockPos, Yaw, Pitch
+            // Wir erstellen ein SpawnPoint-Objekt für die aktuelle Dimension
+            WorldProperties.SpawnPoint spawnPoint = WorldProperties.SpawnPoint.create(world.getRegistryKey(), newPos, 0.0f, 0.0f);
+
+            world.setSpawnPoint(spawnPoint);
+            Simpletweaks.LOGGER.info("Simpletweaks: Set Custom World Spawn to " + newPos.toShortString());
         }
     }
 }

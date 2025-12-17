@@ -1,4 +1,7 @@
-# Simpletweaks
+# 🛠️ Simpletweaks
+![Fabric](https://img.shields.io/badge/Loader-Fabric-be7653?style=for-the-badge&logo=fabric)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.21.x-brightgreen?style=for-the-badge&logo=minecraft)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=for-the-badge)
 
 **Simpletweaks** is a Fabric mod for **Minecraft 1.21** that adds useful Quality-of-Life features, server management tools, and fun gameplay mechanics.
 
@@ -74,6 +77,9 @@ Master the perfect flight.
 * **40/40 Guide:** Displays visual guide lines when you are gliding near the optimal pitch of **±40°**.
 * **Alignment:** Align the line with your crosshair for maximum speed or altitude gain.
 
+## Speed-Lines
+Visual speed indicators when sprinting or flying with Elytra.
+
 ## 🔥 Fun & Quality of Life
 
 * **🟢 XP Clumps:** Groups XP orbs into single entities to reduce lag.
@@ -84,7 +90,8 @@ Master the perfect flight.
 * **🤫 Silence Mobs:** Name tags ending with `_mute` or `_shhh` silence mobs completely.
 * **🌾 Crop Protection:** Players with **Feather Falling** boots will not trample farmland.
 * **⚔️ Lawn Mower:** Weapons with **Sharpness III+** cut through grass and flowers during combat.
-* **🪜 Faster Ladders:** Climb ladders noticeably faster.
+* **🪜 Faster Ladders:** Climb ladders noticeably faster. Slide down quicker too!
+* **🔫 Laser-Pointer:** Projects a red laser point.
 
 ## 🛡️ Admin & Server Tools
 
@@ -175,6 +182,63 @@ Change settings directly in-game without restarting.
 
     /simpletweaks commands enableKillBoats <true|false>
     /simpletweaks commands enableKillCarts <true|false>
+
+**🔧 More Gameplay Tweaks:**
+
+    /simpletweaks tweaks hoeHarvest <true|false>
+    /simpletweaks tweaks locator <true|false>
+    /simpletweaks tweaks xpClumps enable <true|false>
+    /simpletweaks tweaks xpClumps scale <true|false>
+
+**🧱 Throwable Bricks:**
+
+    /simpletweaks tweaks bricks enable <true|false>
+    /simpletweaks tweaks bricks breakGlass <true|false>
+    /simpletweaks tweaks bricks damage <value>
+    /simpletweaks tweaks bricks snowballDamage <value>
+**👶 Baby Suffixes:**
+
+    /simpletweaks tweaks babySuffixes list
+    /simpletweaks tweaks babySuffixes add <suffix>
+    /simpletweaks tweaks babySuffixes remove <suffix>
+**⚡ Speed Lines:**
+
+    /simpletweaks visuals speedLines enable <true|false>
+    /simpletweaks visuals speedLines color <hex_value>
+    /simpletweaks visuals speedLines alpha <0.0-1.0>
+    /simpletweaks visuals speedLines amount <value>
+    /simpletweaks visuals speedLines threshold <value>
+
+**📥 Pickup Notifier:**
+
+    /simpletweaks visuals pickupNotifier enable <true|false>
+    /simpletweaks visuals pickupNotifier scale <value>
+    /simpletweaks visuals pickupNotifier duration <ticks>
+    /simpletweaks visuals pickupNotifier opacity <0.0-1.0>
+    /simpletweaks visuals pickupNotifier showXp <true|false>
+    /simpletweaks visuals pickupNotifier vanillaStyle <true|false>
+
+**Notifier Layout & Position:**
+
+    /simpletweaks visuals pickupNotifier offset <x> <y>
+    /simpletweaks visuals pickupNotifier side <left|right>
+    /simpletweaks visuals pickupNotifier layout <icon_name_count|...>
+    /simpletweaks visuals pickupNotifier elements item <true|false>
+    /simpletweaks visuals pickupNotifier elements name <true|false>
+    /simpletweaks visuals pickupNotifier elements count <true|false>
+
+**🖥️ HUD & Overlay Extras:**
+
+    /simpletweaks visuals statusBars <true|false>
+    /simpletweaks visuals chatHeads <true|false>
+    /simpletweaks visuals elytraHelper enable <true|false>
+    /simpletweaks visuals elytraHelper angles <up_angle> <down_angle>
+    /simpletweaks visuals elytraHelper tolerance <value>
+    /simpletweaks visuals elytraHelper sensitivity <value>
+
+**📍 Spawn Teleporter:**
+
+    /simpletweaks spawn teleporterCount <amount>
 
 
 

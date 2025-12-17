@@ -90,8 +90,6 @@ public class Simpletweaks implements ModInitializer {
 
 
 // BUGS/todo:
-// - textures for pads
 // - sometimes pickup notifier doesnt show picked up item
-// - set world spawn not working properly
 
 

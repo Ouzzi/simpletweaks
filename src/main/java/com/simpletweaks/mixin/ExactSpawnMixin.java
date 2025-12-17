@@ -16,50 +16,41 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ServerPlayerEntity.class)
 public abstract class ExactSpawnMixin {
 
-    // 1. WELT SPAWN: Verhindert den Zufallsradius beim Spawnen (Fuzzing)
+    // 1. WELT SPAWN FUZZING (Entfernt den Zufallsradius)
+    // Wir fangen getWorldSpawnPos ab, bevor es den Radius addiert.
     @Inject(method = "getWorldSpawnPos", at = @At("HEAD"), cancellable = true)
     private void onGetWorldSpawnPos(ServerWorld world, BlockPos basePos, CallbackInfoReturnable<BlockPos> cir) {
         if (Simpletweaks.getConfig().spawn.forceExactSpawn) {
-            // Gibt direkt die Basis-Position zurück, ohne SpawnLocating.locateSpawnPos aufzurufen (was den Radius addiert)
+            // Gibt direkt die Basis-Position (unsere Config-Position) zurück
             cir.setReturnValue(basePos);
         }
     }
 
-    // 2. BETT SPAWN & GENERELLER RESPAWN: Position korrigieren
-    // Wir nutzen getRespawnTarget statt findRespawnPosition, da RespawnPos private/unsichtbar ist.
+    // 2. BETT SPAWN & WELT SPAWN ZENTRIERUNG
     @Inject(method = "getRespawnTarget", at = @At("RETURN"), cancellable = true)
     private void onGetRespawnTarget(boolean alive, TeleportTarget.PostDimensionTransition postDimensionTransition, CallbackInfoReturnable<TeleportTarget> cir) {
         if (!Simpletweaks.getConfig().spawn.forceExactSpawn) return;
 
         TeleportTarget original = cir.getReturnValue();
-        if (original == null) return; // Kein valider Respawn gefunden
+        if (original == null) return;
 
+        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
         ServerWorld world = original.world();
-        Vec3d pos = original.position();
-        BlockPos blockPos = BlockPos.ofFloored(pos);
-        BlockState state = world.getBlockState(blockPos);
+        BlockPos pos = BlockPos.ofFloored(original.position());
+        BlockState state = world.getBlockState(pos);
 
-        // Prüfen, ob wir auf einem Bett spawnen
         if (state.getBlock() instanceof BedBlock) {
-            // Exakt auf das Kissen setzen (Mitte des Blocks + Höhe des Bettes)
-            // BedBlock ist 0.5625 Blöcke hoch
-            Vec3d exactPos = new Vec3d(
-                    blockPos.getX() + 0.5d,
-                    blockPos.getY() + 0.5625d,
-                    blockPos.getZ() + 0.5d
-            );
+            Vec3d exactPos = new Vec3d(pos.getX() + 0.5d, pos.getY() + 0.5625d, pos.getZ() + 0.5d);
+            cir.setReturnValue(new TeleportTarget(world, exactPos, Vec3d.ZERO, original.yaw(), original.pitch(), postDimensionTransition));
+            return;
+        }
 
-            // Neues Target erstellen mit exakter Position
-            TeleportTarget newTarget = new TeleportTarget(
-                    world,
-                    exactPos,
-                    Vec3d.ZERO, // Keine Bewegung
-                    original.yaw(),
-                    original.pitch(),
-                    postDimensionTransition
-            );
+        if (player.getRespawn() == null) {
+            BlockPos worldSpawn = world.getSpawnPoint().getPos();
 
-            cir.setReturnValue(newTarget);
+            Vec3d exactWorldSpawn = new Vec3d(worldSpawn.getX() + 0.5d, worldSpawn.getY(), worldSpawn.getZ() + 0.5d);
+
+            cir.setReturnValue(new TeleportTarget(world, exactWorldSpawn, Vec3d.ZERO, original.yaw(), original.pitch(), postDimensionTransition));
         }
     }
 }
