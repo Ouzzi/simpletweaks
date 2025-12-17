@@ -23,7 +23,8 @@
     "VaultSharedDataAccessor",
     "YeetMixin",
     "client.FilledMapItemMixin",
-    "client.SpawnTeleporterClientMixin"
+    "client.SpawnTeleporterClientMixin",
+    "common.PassiveEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

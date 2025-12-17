@@ -10,6 +10,7 @@ import com.simpletweaks.event.PlayerHeadDropHandler;
 import com.simpletweaks.event.SpawnHandler;
 import com.simpletweaks.event.WorldSpawnHandler;
 import com.simpletweaks.item.ModItems;
+import com.simpletweaks.network.LaserManager;
 import com.simpletweaks.network.SpawnElytraNetworking;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -48,6 +49,7 @@ public class Simpletweaks implements ModInitializer {
         SpawnElytraNetworking.register();
         ModCommands.register();
         WorldSpawnHandler.register();
+        LaserManager.register();
 
     }
 
@@ -55,8 +57,6 @@ public class Simpletweaks implements ModInitializer {
 }
 
 /// TODO:
-// - replant with hoe
-// - nametags on mobs to prevent growing up (like baby villagers,...)
 // - laserpointer or similar tool to point at blocks/entities - for building or presentations (Later Later)
 
 

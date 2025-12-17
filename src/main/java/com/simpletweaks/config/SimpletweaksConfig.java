@@ -122,6 +122,10 @@ public class SimpletweaksConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public List<String> nametagMuteSuffixes = new ArrayList<>(Arrays.asList("_mute", "_shhh"));
 
+        // NEU: Baby Suffixes
+        @ConfigEntry.Gui.Tooltip
+        public List<String> nametagBabySuffixes = new ArrayList<>(Arrays.asList("_baby", "_small"));
+
         @ConfigEntry.Gui.Tooltip
         public boolean preventFarmlandTrampleWithFeatherFalling = true;
 
@@ -140,6 +144,9 @@ public class SimpletweaksConfig implements ConfigData {
 
         @ConfigEntry.Gui.Tooltip
         public boolean sharpnessCutsGrass = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableHoeHarvest = true;
 
     }
 
@@ -184,6 +191,9 @@ public class SimpletweaksConfig implements ConfigData {
         // Unterkategorie: Pickup Notifier
         @ConfigEntry.Gui.CollapsibleObject
         public PickupNotifier pickupNotifier = new PickupNotifier();
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public LaserPointer laserPointer = new LaserPointer();
 
         public static class SpeedLines {
             @ConfigEntry.Gui.Tooltip
@@ -260,6 +270,23 @@ public class SimpletweaksConfig implements ConfigData {
             // NEU: Hintergrund Opazität
             @ConfigEntry.Gui.Tooltip
             public float pickupBackgroundOpacity = 1.0f;
+        }
+
+        public static class LaserPointer {
+            @ConfigEntry.Gui.Tooltip
+            public boolean enable = true;
+
+            @ConfigEntry.Gui.Tooltip
+            public int color = 0xFF0000; // Rot
+
+            @ConfigEntry.Gui.Tooltip
+            public float scale = 0.15f; // Größe des Punktes
+
+            @ConfigEntry.Gui.Tooltip
+            public int range = 128; // Reichweite
+
+            @ConfigEntry.Gui.Tooltip
+            public boolean showLine = false; // Optional: Linie zeichnen
         }
 
     }

@@ -98,7 +98,7 @@ public abstract class ChatHudMixin {
 
             if (opacity > 0.005f) {
                 int lineY = startY - i * lineHeight;
-                int drawY = lineY - textOffset;
+                int drawY = lineY - textOffset - 1;
                 simpletweaks$drawHeadForLine(context, visibleLine, drawY, opacity);
             }
         }
@@ -125,7 +125,7 @@ public abstract class ChatHudMixin {
 
         Identifier skin = playerEntry.getSkinTextures().body().texturePath();
 
-        int headSize = 8;
+        int headSize = 9;
         // Positionierung: Links vom Text (x=0)
         int x = -headSize - 2;
 

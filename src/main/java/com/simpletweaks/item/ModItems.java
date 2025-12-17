@@ -2,6 +2,7 @@ package com.simpletweaks.item;
 
 import com.simpletweaks.Simpletweaks;
 import com.simpletweaks.item.custom.BrickSnowballItem;
+import com.simpletweaks.item.custom.LaserPointerItem;
 import com.simpletweaks.item.custom.SpawnElytraItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
@@ -17,7 +18,7 @@ import java.util.function.Function;
 public class ModItems {
     public static final Item SPAWN_ELYTRA = registerItem("spawn_elytra", settings -> new SpawnElytraItem(settings.maxCount(1).fireproof()));
     public static final Item BRICK_SNOWBALL = registerItem("brick_snowball", settings -> new BrickSnowballItem(settings.maxCount(16)));
-
+    public static final Item LASER_POINTER = new LaserPointerItem(new Item.Settings().maxCount(1));
 
     private static Item registerItem(String name, Function<Item.Settings, Item> function) {
         return Registry.register(Registries.ITEM, Identifier.of(Simpletweaks.MOD_ID, name),

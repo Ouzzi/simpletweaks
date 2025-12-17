@@ -372,6 +372,53 @@ public class ModCommands {
                                                 ctx.getSource().sendFeedback(() -> Text.literal("Cleared all mute suffixes.").formatted(Formatting.RED), true);
                                                 return 1;
                                             }))
+                                    .then(CommandManager.literal("hoeHarvest")
+                                            .then(CommandManager.argument("enabled", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "enabled");
+                                                        Simpletweaks.getConfig().qOL.enableHoeHarvest = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("Hoe Harvest & Replant: " + val), true);
+                                                        return 1;
+                                                    })))
+                            )
+                            .then(CommandManager.literal("babySuffixes")
+                                    .then(CommandManager.literal("list")
+                                            .executes(ctx -> {
+                                                List<String> list = Simpletweaks.getConfig().qOL.nametagBabySuffixes;
+                                                ctx.getSource().sendFeedback(() -> Text.literal("Baby Suffixes: " + list.toString()).formatted(Formatting.YELLOW), false);
+                                                return list.size();
+                                            }))
+                                    .then(CommandManager.literal("add")
+                                            .then(CommandManager.argument("suffix", StringArgumentType.string())
+                                                    .executes(ctx -> {
+                                                        String suffix = StringArgumentType.getString(ctx, "suffix");
+                                                        List<String> list = Simpletweaks.getConfig().qOL.nametagBabySuffixes;
+                                                        if (!list.contains(suffix)) {
+                                                            list.add(suffix);
+                                                            saveConfig();
+                                                            ctx.getSource().sendFeedback(() -> Text.literal("Added baby suffix: " + suffix).formatted(Formatting.GREEN), true);
+                                                        } else {
+                                                            ctx.getSource().sendError(Text.literal("Suffix already exists."));
+                                                        }
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("remove")
+                                            .then(CommandManager.literal("remove")
+                                                    .then(CommandManager.argument("suffix", StringArgumentType.string())
+                                                            .suggests((context, builder) -> CommandSource.suggestMatching(Simpletweaks.getConfig().qOL.nametagBabySuffixes, builder))
+                                                            .executes(ctx -> {
+                                                                String suffix = StringArgumentType.getString(ctx, "suffix");
+                                                                List<String> list = Simpletweaks.getConfig().qOL.nametagBabySuffixes;
+                                                                if (list.remove(suffix)) {
+                                                                    saveConfig();
+                                                                    ctx.getSource().sendFeedback(() -> Text.literal("Removed baby suffix: " + suffix).formatted(Formatting.GREEN), true);
+                                                                } else {
+                                                                    ctx.getSource().sendError(Text.literal("Suffix not found."));
+                                                                }
+                                                                return 1;
+                                                            })))
+                                    )
                             )
                             // NEU: Player Locator
                             .then(CommandManager.literal("locator")
@@ -506,6 +553,173 @@ public class ModCommands {
                                                     })))
                             )
                     )
+
+                    // 9. Visual Settings
+                    .then(CommandManager.literal("visuals")
+
+                            // --- SPEED LINES ---
+                            .then(CommandManager.literal("speedLines")
+                                    .then(CommandManager.literal("enable")
+                                            .then(CommandManager.argument("val", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.speedLines.enableSpeedLines = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("SpeedLines enabled: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("color")
+                                            .then(CommandManager.argument("hex", IntegerArgumentType.integer())
+                                                    .executes(ctx -> {
+                                                        int val = IntegerArgumentType.getInteger(ctx, "hex");
+                                                        Simpletweaks.getConfig().visuals.speedLines.speedLinesColor = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("SpeedLines color set to: " + Integer.toHexString(val)), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("alpha")
+                                            .then(CommandManager.argument("val", FloatArgumentType.floatArg(0, 1))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.speedLines.speedLinesAlpha = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("SpeedLines alpha set to: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("amount")
+                                            .then(CommandManager.argument("val", FloatArgumentType.floatArg(0))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.speedLines.speedLinesAmount = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("SpeedLines amount set to: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("threshold")
+                                            .then(CommandManager.argument("val", FloatArgumentType.floatArg(0))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.speedLines.speedThreshold = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("SpeedLines threshold set to: " + val), true);
+                                                        return 1;
+                                                    })))
+                            )
+
+                            // --- PICKUP NOTIFIER ---
+                            .then(CommandManager.literal("pickupNotifier")
+                                    .then(CommandManager.literal("enable")
+                                            .then(CommandManager.argument("val", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.pickupNotifier.enablePickupNotifier = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier enabled: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("offset")
+                                            .then(CommandManager.argument("x", IntegerArgumentType.integer())
+                                                    .then(CommandManager.argument("y", IntegerArgumentType.integer())
+                                                            .executes(ctx -> {
+                                                                int x = IntegerArgumentType.getInteger(ctx, "x");
+                                                                int y = IntegerArgumentType.getInteger(ctx, "y");
+                                                                Simpletweaks.getConfig().visuals.pickupNotifier.pickupNotifierOffsetX = x;
+                                                                Simpletweaks.getConfig().visuals.pickupNotifier.pickupNotifierOffsetY = y;
+                                                                saveConfig();
+                                                                ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier Offset set to X:" + x + " Y:" + y), true);
+                                                                return 1;
+                                                            }))))
+                                    .then(CommandManager.literal("scale")
+                                            .then(CommandManager.argument("val", FloatArgumentType.floatArg(0))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.pickupNotifier.pickupNotifierScale = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier scale set to: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("duration")
+                                            .then(CommandManager.argument("ticks", IntegerArgumentType.integer(0))
+                                                    .executes(ctx -> {
+                                                        int val = IntegerArgumentType.getInteger(ctx, "ticks");
+                                                        Simpletweaks.getConfig().visuals.pickupNotifier.pickupNotifierDuration = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier duration set to: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("showXp")
+                                            .then(CommandManager.argument("val", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.pickupNotifier.pickupNotifierShowXp = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier Show XP: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("vanillaStyle")
+                                            .then(CommandManager.argument("val", BoolArgumentType.bool())
+                                                    .executes(ctx -> {
+                                                        boolean val = BoolArgumentType.getBool(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.pickupNotifier.pickupVanillaStyle = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier Vanilla Style: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("opacity")
+                                            .then(CommandManager.argument("val", FloatArgumentType.floatArg(0, 1))
+                                                    .executes(ctx -> {
+                                                        float val = FloatArgumentType.getFloat(ctx, "val");
+                                                        Simpletweaks.getConfig().visuals.pickupNotifier.pickupBackgroundOpacity = val;
+                                                        saveConfig();
+                                                        ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier Bg Opacity: " + val), true);
+                                                        return 1;
+                                                    })))
+                                    // ENUMS (Side & Layout)
+                                    .then(CommandManager.literal("side")
+                                            .then(CommandManager.argument("side", StringArgumentType.word())
+                                                    .suggests((context, builder) -> CommandSource.suggestMatching(new String[]{"left", "right"}, builder))
+                                                    .executes(ctx -> {
+                                                        String s = StringArgumentType.getString(ctx, "side");
+                                                        try {
+                                                            SimpletweaksConfig.PickupSide side = SimpletweaksConfig.PickupSide.valueOf(s.toUpperCase());
+                                                            Simpletweaks.getConfig().visuals.pickupNotifier.pickupNotifierSide = side;
+                                                            saveConfig();
+                                                            ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier Side set to: " + side), true);
+                                                        } catch (IllegalArgumentException e) {
+                                                            ctx.getSource().sendError(Text.literal("Invalid side. Use 'left' or 'right'."));
+                                                        }
+                                                        return 1;
+                                                    })))
+                                    .then(CommandManager.literal("layout")
+                                            .then(CommandManager.argument("layout", StringArgumentType.word())
+                                                    .suggests((context, builder) -> CommandSource.suggestMatching(new String[]{"icon_name_count", "count_icon_name", "name_icon_count", "icon_count_name"}, builder))
+                                                    .executes(ctx -> {
+                                                        String s = StringArgumentType.getString(ctx, "layout");
+                                                        try {
+                                                            SimpletweaksConfig.PickupLayout layout = SimpletweaksConfig.PickupLayout.valueOf(s.toUpperCase());
+                                                            Simpletweaks.getConfig().visuals.pickupNotifier.pickupNotifierLayout = layout;
+                                                            saveConfig();
+                                                            ctx.getSource().sendFeedback(() -> Text.literal("PickupNotifier Layout set to: " + layout), true);
+                                                        } catch (IllegalArgumentException e) {
+                                                            ctx.getSource().sendError(Text.literal("Invalid layout."));
+                                                        }
+                                                        return 1;
+                                                    })))
+                                    // Toggles für Elemente
+                                    .then(CommandManager.literal("elements")
+                                            .then(CommandManager.literal("item").then(CommandManager.argument("val", BoolArgumentType.bool()).executes(ctx -> {
+                                                Simpletweaks.getConfig().visuals.pickupNotifier.pickupShowItem = BoolArgumentType.getBool(ctx, "val"); saveConfig(); return 1;
+                                            })))
+                                            .then(CommandManager.literal("name").then(CommandManager.argument("val", BoolArgumentType.bool()).executes(ctx -> {
+                                                Simpletweaks.getConfig().visuals.pickupNotifier.pickupShowName = BoolArgumentType.getBool(ctx, "val"); saveConfig(); return 1;
+                                            })))
+                                            .then(CommandManager.literal("count").then(CommandManager.argument("val", BoolArgumentType.bool()).executes(ctx -> {
+                                                Simpletweaks.getConfig().visuals.pickupNotifier.pickupShowCount = BoolArgumentType.getBool(ctx, "val"); saveConfig(); return 1;
+                                            })))
+                                    )
+                            )
+                    )
+
             );
         });
     }
@@ -617,8 +831,6 @@ public class ModCommands {
     }
 
     private static boolean checkPermission(ServerCommandSource source, int level) {
-        // level 2 für killboats/killcarts, level 4 für config
-        // Wenn source kein Spieler ist (Konsole/CommandBlock), immer erlauben
         if (source.getEntity() instanceof ServerPlayerEntity player) {
             return source.getServer().getPlayerManager().isOperator(player.getPlayerConfigEntry());
         }

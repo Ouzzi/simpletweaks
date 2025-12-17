@@ -8,12 +8,16 @@ import com.simpletweaks.client.gui.SpawnElytraTimerOverlay;
 import com.simpletweaks.client.gui.SpeedLinesOverlay;
 import com.simpletweaks.client.gui.tooltip.MapTooltipComponent;
 import com.simpletweaks.client.gui.tooltip.MapTooltipData;
+import com.simpletweaks.client.render.LaserRenderer;
 import com.simpletweaks.entity.ModEntities;
+import com.simpletweaks.event.HoeHarvestHandler;
+import com.simpletweaks.network.LaserManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 
 public class SimpletweaksClient implements ClientModInitializer {
@@ -22,11 +26,10 @@ public class SimpletweaksClient implements ClientModInitializer {
     public void onInitializeClient() {
         AutoWalkHandler.register();
         SpawnElytraClient.register();
-        HudRenderCallback.EVENT.register(new SpawnElytraTimerOverlay());
         EntityRendererRegistry.register(ModEntities.BRICK_PROJECTILE, FlyingItemEntityRenderer::new);
-
+        HoeHarvestHandler.register();
+        HudRenderCallback.EVENT.register(new SpawnElytraTimerOverlay());
         HudRenderCallback.EVENT.register(new ElytraPitchHud());
-
         HudRenderCallback.EVENT.register(new SpeedLinesOverlay());
 
         TooltipComponentCallback.EVENT.register(data -> {
@@ -39,6 +42,18 @@ public class SimpletweaksClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (!client.isPaused()) {
                 PickupNotifierHud.tick();
+            }
+        });
+
+        LaserManager.registerClient(); // Network (Client)
+
+        // Renderer Event
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(LaserRenderer::render);
+
+        // Aufräumen alter Laser-Daten
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (!client.isPaused()) {
+                LaserManager.tick();
             }
         });
     }
