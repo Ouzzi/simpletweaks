@@ -104,4 +104,5 @@ public abstract class InGameHudMixin {
             context.drawText(this.client.textRenderer, text, textX, textY, color | 0xFF000000, false);
         }
     }
+
 }

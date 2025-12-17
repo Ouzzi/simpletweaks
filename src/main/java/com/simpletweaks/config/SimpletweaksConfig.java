@@ -40,6 +40,20 @@ public class SimpletweaksConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     public Visuals visuals = new Visuals();
 
+    public enum SlideActivationMode {
+        CAMERA, ALWAYS
+    }
+
+    public enum PickupLayout {
+        ICON_NAME_COUNT,
+        COUNT_ICON_NAME,
+        NAME_ICON_COUNT,
+        ICON_COUNT_NAME
+    }
+
+    public enum PickupSide {
+        LEFT, RIGHT
+    }
 
     public static class Balancing {
         @ConfigEntry.Gui.Tooltip(count = 2)
@@ -115,6 +129,16 @@ public class SimpletweaksConfig implements ConfigData {
         public double ladderClimbingSpeed = 0.4; // Vanilla default is ~0.2
 
         @ConfigEntry.Gui.Tooltip
+        public boolean enableFastLadderSlide = true;
+
+        @ConfigEntry.Gui.Tooltip
+        public double ladderSlideSpeed = 0.8;
+
+        @ConfigEntry.Gui.Tooltip
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+        public SlideActivationMode ladderSlideActivation = SlideActivationMode.CAMERA;
+
+        @ConfigEntry.Gui.Tooltip
         public boolean sharpnessCutsGrass = true;
 
     }
@@ -127,6 +151,7 @@ public class SimpletweaksConfig implements ConfigData {
         public boolean scaleXpOrbs = true;
 
     }
+
 
     public static class Visuals {
         @ConfigEntry.Gui.Tooltip
@@ -148,6 +173,95 @@ public class SimpletweaksConfig implements ConfigData {
         public float elytraPitchTolerance = 10.0f;
         @ConfigEntry.Gui.Tooltip
         public float elytraSensitivity = 4.0f;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableMapTooltips = true;
+
+// Unterkategorie: Speed Lines
+        @ConfigEntry.Gui.CollapsibleObject
+        public SpeedLines speedLines = new SpeedLines();
+
+        // Unterkategorie: Pickup Notifier
+        @ConfigEntry.Gui.CollapsibleObject
+        public PickupNotifier pickupNotifier = new PickupNotifier();
+
+        public static class SpeedLines {
+            @ConfigEntry.Gui.Tooltip
+            public boolean enableSpeedLines = false;
+
+            @ConfigEntry.Gui.Tooltip
+            public int speedLinesColor = 0xFFFFFF;
+
+            @ConfigEntry.Gui.Tooltip
+            public float speedLinesAlpha = 0.7f;
+
+            @ConfigEntry.Gui.Tooltip
+            public float speedLinesAmount = 1.0f;
+
+            @ConfigEntry.Gui.Tooltip
+            public float speedLinesRadius = 0.7f;
+
+            @ConfigEntry.Gui.Tooltip
+            public float speedLinesWidth = 8.0f;
+
+            @ConfigEntry.Gui.Tooltip
+            public float speedLinesSpeed = 1.0f;
+
+            @ConfigEntry.Gui.Tooltip
+            public float speedLinesScale = 4.0f;
+
+            @ConfigEntry.Gui.Tooltip
+            public float speedThreshold = 0.6f;
+        }
+
+        public static class PickupNotifier {
+            @ConfigEntry.Gui.Tooltip
+            public boolean enablePickupNotifier = true;
+
+            @ConfigEntry.Gui.Tooltip
+            public int pickupNotifierOffsetX = 10;
+
+            @ConfigEntry.Gui.Tooltip
+            public int pickupNotifierOffsetY = 10;
+
+            @ConfigEntry.Gui.Tooltip
+            public float pickupNotifierScale = 1.0f;
+
+            @ConfigEntry.Gui.Tooltip
+            public int pickupNotifierDuration = 120; // Dauer Einstellung
+
+            @ConfigEntry.Gui.Tooltip
+            public boolean pickupNotifierShowXp = true;
+
+            // NEU: Seite
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+            public PickupSide pickupNotifierSide = PickupSide.RIGHT;
+
+            // Anordnung
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+            public PickupLayout pickupNotifierLayout = PickupLayout.COUNT_ICON_NAME;
+
+            @ConfigEntry.Gui.Tooltip
+            public boolean pickupShowItem = true;
+            @ConfigEntry.Gui.Tooltip
+            public boolean pickupShowName = true;
+            @ConfigEntry.Gui.Tooltip
+            public boolean pickupShowCount = true;
+
+            // Stil
+            @ConfigEntry.Gui.Tooltip
+            public boolean pickupUseRarityColor = true;
+
+            @ConfigEntry.Gui.Tooltip
+            public boolean pickupVanillaStyle = true;
+
+            // NEU: Hintergrund Opazität
+            @ConfigEntry.Gui.Tooltip
+            public float pickupBackgroundOpacity = 1.0f;
+        }
+
     }
 
     public static class Fun {
