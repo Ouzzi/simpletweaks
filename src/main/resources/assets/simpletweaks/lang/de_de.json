@@ -184,5 +184,12 @@
   "text.autoconfig.simpletweaks.option.visuals.laserPointer.enable": "Laser-Rendering aktivieren",
   "text.autoconfig.simpletweaks.option.visuals.laserPointer.color": "Laserfarbe (Hex)",
   "text.autoconfig.simpletweaks.option.visuals.laserPointer.scale": "Punktgröße",
-  "text.autoconfig.simpletweaks.option.visuals.laserPointer.range": "Maximale Reichweite"
+  "text.autoconfig.simpletweaks.option.visuals.laserPointer.range": "Maximale Reichweite",
+  "text.autoconfig.simpletweaks.option.visuals.laserPointer.showLine": "Linie anzeigen",
+
+  "text.autoconfig.simpletweaks.option.visuals.heldItemTooltips": "Gehaltene Item-Tooltips",
+  "text.autoconfig.simpletweaks.option.visuals.heldItemTooltips.enable": "Aktivieren",
+  "text.autoconfig.simpletweaks.option.visuals.heldItemTooltips.showDurability": "Show Durability",
+  "text.autoconfig.simpletweaks.option.visuals.heldItemTooltips.showEnchantments": "Show Enchantments",
+  "text.autoconfig.simpletweaks.option.visuals.heldItemTooltips.maxEnchantments": "Max Enchantments"
 }

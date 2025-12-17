@@ -37,6 +37,7 @@
     "client.ClientPlayNetworkHandlerMixin",
     "client.ExperienceOrbRendererMixin",
     "client.ExperienceOrbRenderStateMixin",
+    "client.HeldItemTooltipMixin",
     "client.InGameHudLevelMixin",
     "client.InGameHudMixin",
     "client.InGameScreenHudMixin",

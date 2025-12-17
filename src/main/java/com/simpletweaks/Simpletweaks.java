@@ -68,7 +68,7 @@ public class Simpletweaks implements ModInitializer {
 // -- ...
 
 // - Better Item Frames (Later)
-// - Chat Calc (Later Later)
+// - Chat Calc (Later)
 
 // - modmenu pages
 // - toggle all on some groups
@@ -90,6 +90,6 @@ public class Simpletweaks implements ModInitializer {
 
 
 // BUGS/todo:
-// - sometimes pickup notifier doesnt show picked up item
+// - sometimes pickup notifier doesnt show picked up item (sometimes multiple items dont show)
 
 

@@ -223,6 +223,22 @@ public class SimpletweaksConfig implements ConfigData {
             @ConfigEntry.Gui.Tooltip
             public float speedThreshold = 0.6f;
         }
+        @ConfigEntry.Gui.CollapsibleObject
+        public HeldItemTooltips heldItemTooltips = new HeldItemTooltips();
+
+        public static class HeldItemTooltips {
+            @ConfigEntry.Gui.Tooltip
+            public boolean enable = true;
+
+            @ConfigEntry.Gui.Tooltip
+            public boolean showDurability = true;
+
+            @ConfigEntry.Gui.Tooltip
+            public boolean showEnchantments = true;
+
+            @ConfigEntry.Gui.Tooltip
+            public int maxEnchantments = 3; // Begrenzung, damit der Bildschirm nicht vollgespammt wird
+        }
 
         public static class PickupNotifier {
             @ConfigEntry.Gui.Tooltip
