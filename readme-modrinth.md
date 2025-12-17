@@ -6,6 +6,8 @@
 
 **Simpletweaks** ist die All-in-One Lösung, um deinen Server oder deine Singleplayer-Welt lebendiger, sauberer und spaßiger zu machen. Schluss mit langweiligen Lobbys und nervigem Mikromanagement!
 
+**[📚 Read the Full Documentation](https://github.com/Ouzzi/simpletweaks)**
+
 ## 🚀 Spawn & Reise Features
 
 ### 🪽 Spawn Elytra
@@ -32,6 +34,12 @@ Ein persönliches Teleport-Pad für den schnellen Heimweg.
 
 ## 🧱 Neue Items & Kampfmechaniken
 
+### 🔴 Laser Pointer
+Zeig deinen Freunden, was du meinst!
+* **Strahl:** Projiziert einen roten Punkt, der mit der Distanz skaliert.
+* **HUD:** Zeigt die exakte Entfernung zum Zielblock an.
+* **Sync:** Andere Spieler sehen deinen Laser in Echtzeit.
+
 ### 🧱 Werfbare Ziegel (Throwable Bricks)
 Mach Baumaterial zu Waffen!
 * **Werfen:** Normale **Ziegel** und **Nether-Ziegel** können per Rechtsklick geworfen werden.
@@ -46,6 +54,21 @@ Eine fiese Überraschung, verpackt in Schnee.
 * **Optik:** Erzeugt beim Aufprall eine Mischung aus Schnee- und Ziegel-Partikeln.
 
 ## 🖥️ HUD & Visuelle Verbesserungen
+
+### ℹ️ Gehaltenes Item Infos
+Wichtige Infos direkt über der Hotbar.
+* **Haltbarkeit:** Zeigt beim Item-Wechsel sofort die verbleibende Haltbarkeit an.
+* **Verzauberungen:** Listet alle Verzauberungen des Items auf.
+
+### 📥 Pickup Notifier
+Weiß immer, was du aufhebst.
+* **Pop-Up:** Zeigt eine kleine HUD-Benachrichtigung an, wenn du Items oder XP aufsammelst.
+* **Details:** Zeigt Name, Icon und Anzahl. Stapelt gleiche Items.
+
+### ⚡ Speed Lines
+Spüre die Geschwindigkeit!
+* **Visuell:** Fügt Wind-Linien am Bildschirmrand hinzu, wenn du schnell rennst, fliegst oder reitest.
+* **Dynamisch:** Die Intensität passt sich deiner Geschwindigkeit an.
 
 ### 🧭 Locator Heads
 Finde deine Freunde (oder Feinde)!
