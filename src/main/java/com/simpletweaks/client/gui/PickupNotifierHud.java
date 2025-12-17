@@ -6,6 +6,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
@@ -14,30 +16,91 @@ import net.minecraft.util.Rarity;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class PickupNotifierHud {
 
     private static final List<Notification> notifications = new ArrayList<>();
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
+    // Cache für gelöschte Entities
+    private static final Map<Integer, CachedPickup> deadEntityCache = new HashMap<>();
+
+    // Warteschlange für Pickups ohne Daten (z.B. vom Dropper)
+    private static final List<PendingPickup> pendingPickups = new ArrayList<>();
+
+    public record CachedPickup(ItemStack stack, int xpValue, long timestamp) {}
+    private record PendingPickup(int entityId, int amount, long timestamp) {}
+
+    // --- CACHE METHODEN ---
+    public static void cacheEntity(int entityId, ItemStack stack) {
+        if (!stack.isEmpty()) {
+            deadEntityCache.put(entityId, new CachedPickup(stack, 0, System.currentTimeMillis()));
+        }
+    }
+
+    public static void cacheXp(int entityId, int value) {
+        deadEntityCache.put(entityId, new CachedPickup(ItemStack.EMPTY, value, System.currentTimeMillis()));
+    }
+
+    public static CachedPickup getCachedPickup(int entityId) {
+        return deadEntityCache.get(entityId);
+    }
+
+    // --- PENDING METHODEN (Dropper Fix) ---
+    public static void schedulePendingPickup(int entityId, int amount) {
+        pendingPickups.add(new PendingPickup(entityId, amount, System.currentTimeMillis()));
+    }
+
+    public static boolean hasPending() {
+        return !pendingPickups.isEmpty();
+    }
+
+    /**
+     * Versucht, einen ausstehenden Pickup mit einem Inventar-Update zu matchen.
+     * Wird vom Mixin aufgerufen, wenn sich das Inventar ändert.
+     */
+    public static void resolvePendingWithInventory(ItemStack stack, int changeAmount) {
+        if (pendingPickups.isEmpty()) return;
+
+        long now = System.currentTimeMillis();
+        Iterator<PendingPickup> it = pendingPickups.iterator();
+
+        while (it.hasNext()) {
+            PendingPickup pending = it.next();
+
+            // Wenn das Event zu alt ist (> 500ms), ignorieren wir es hier (wird im tick() aufgeräumt)
+            if (now - pending.timestamp > 500) continue;
+
+            // Wir matchen, wenn die Menge stimmt ODER wir einfach irgendeinen Pending Pickup nehmen (FIFO).
+            // Da Netzwerk-Pakete gebündelt sein können, ist eine exakte Mengen-Übereinstimmung nicht immer garantiert,
+            // aber wir versuchen es.
+            // Einfache Heuristik: Nimm den ersten frischen Pending Pickup.
+
+            addNotification(stack, changeAmount); // Nutze die Menge aus dem Inventar-Update, die ist korrekt.
+            it.remove();
+            return; // Ein Update = Ein Pickup aufgelöst.
+        }
+    }
+    // ----------------------------------------
+
     public static void addNotification(ItemStack stack, int count) {
         if (stack.isEmpty() || count <= 0) return;
 
         ItemStack displayStack = stack.copy();
 
-        // Versuchen zu mergen
         for (Notification notification : notifications) {
-            if (ItemStack.areItemsEqual(notification.stack, displayStack) && notification.age < 60) {
+            if (!notification.isXp && ItemStack.areItemsEqual(notification.stack, displayStack) && notification.age < 60) {
                 notification.count += count;
-                notification.age = 0; // Reset timer
-                notification.popScale = 1.3f; // Kleiner Pop
+                notification.age = 0;
+                notification.popScale = 1.3f;
                 return;
             }
         }
 
-        // Neu hinzufügen
         notifications.add(new Notification(displayStack, count));
     }
 
@@ -67,7 +130,6 @@ public class PickupNotifierHud {
         int screenHeight = context.getScaledWindowHeight();
         TextRenderer textRenderer = client.textRenderer;
 
-        // --- POSITION & SEITE ---
         boolean isRight = (config.pickupNotifier.pickupNotifierSide == SimpletweaksConfig.PickupSide.RIGHT);
         int startX = isRight ? (screenWidth - config.pickupNotifier.pickupNotifierOffsetX) : config.pickupNotifier.pickupNotifierOffsetX;
         int startY = screenHeight - config.pickupNotifier.pickupNotifierOffsetY;
@@ -77,7 +139,6 @@ public class PickupNotifierHud {
 
         context.getMatrices().pushMatrix();
 
-        // Globale Skalierung
         if (scale != 1.0f) {
             context.getMatrices().scale(scale, scale);
             startX = (int) (startX / scale);
@@ -88,11 +149,8 @@ public class PickupNotifierHud {
 
         for (int i = 0; i < notifications.size(); i++) {
             Notification n = notifications.get(i);
-
-            // Lebensdauer
             float life = (float) n.age + tickCounter.getTickProgress(true);
 
-            // Ein-/Ausblenden
             float opacity = 1.0f;
             if (life < 5) opacity = MathHelper.clamp(life / 5.0f, 0.0f, 1.0f);
             else if (life > maxAge - 20) opacity = MathHelper.clamp((maxAge - life) / 20.0f, 0.0f, 1.0f);
@@ -100,12 +158,9 @@ public class PickupNotifierHud {
             if (opacity <= 0) continue;
 
             int alpha = (int) (255 * opacity);
-
-            // Textfarben
             int textColor = (alpha << 24) | 0xFFFFFF;
             int countColor = n.isXp ? ((alpha << 24) | 0x80FF20) : ((alpha << 24) | 0xAAAAAA);
 
-            // Name + Rarity
             Text nameText;
             if (n.isXp) {
                 nameText = Text.literal("Experience").formatted(Formatting.GREEN);
@@ -122,7 +177,6 @@ public class PickupNotifierHud {
             String countText = "+" + n.count;
             if (n.isXp) countText += " XP";
 
-            // Breiten
             int padding = 4;
             int iconWidth = 16;
             int nameWidth = textRenderer.getWidth(nameText);
@@ -136,21 +190,14 @@ public class PickupNotifierHud {
             if (showIcon) contentWidth += iconWidth + padding;
             if (showName) contentWidth += nameWidth + padding;
             if (showCount) contentWidth += countWidth + padding;
-            if (contentWidth > 0) contentWidth -= padding; // Letztes Padding weg
+            if (contentWidth > 0) contentWidth -= padding;
 
             int boxWidth = contentWidth + (padding * 2);
             int boxHeight = 20;
 
-            // X-Koordinate berechnen
-            int renderX;
-            if (isRight) {
-                renderX = startX - boxWidth;
-            } else {
-                renderX = startX;
-            }
+            int renderX = isRight ? startX - boxWidth : startX;
             int renderY = startY - yOffset - boxHeight;
 
-            // Pop Animation
             float currentScale = 1.0f;
             if (n.popScale > 1.0f) {
                 currentScale = n.popScale;
@@ -159,7 +206,6 @@ public class PickupNotifierHud {
 
             context.getMatrices().pushMatrix();
 
-            // Scale um Mitte
             if (currentScale > 1.0f) {
                 float centerX = renderX + boxWidth / 2.0f;
                 float centerY = renderY + boxHeight / 2.0f;
@@ -168,7 +214,6 @@ public class PickupNotifierHud {
                 context.getMatrices().translate(-centerX, -centerY);
             }
 
-            // HINTERGRUND
             if (config.pickupNotifier.pickupVanillaStyle) {
                 drawVanillaBox(context, renderX, renderY, boxWidth, boxHeight, alpha, config.pickupNotifier.pickupBackgroundOpacity);
             } else {
@@ -177,29 +222,24 @@ public class PickupNotifierHud {
                 context.fill(renderX, renderY, renderX + boxWidth, renderY + boxHeight, bgColor);
             }
 
-            // INHALT
             int currentX = renderX + padding;
             int centerY = renderY + (boxHeight / 2);
 
             SimpletweaksConfig.PickupLayout layout = config.pickupNotifier.pickupNotifierLayout;
 
-            // Zeichnen & X verschieben
             if (layout == SimpletweaksConfig.PickupLayout.ICON_NAME_COUNT) {
                 if (showIcon) currentX = drawIcon(context, n.stack, currentX, centerY, padding);
                 if (showName) currentX = drawString(context, textRenderer, nameText, currentX, centerY, textColor, padding);
                 if (showCount) drawString(context, textRenderer, countText, currentX, centerY, countColor, padding);
-            }
-            else if (layout == SimpletweaksConfig.PickupLayout.COUNT_ICON_NAME) {
+            } else if (layout == SimpletweaksConfig.PickupLayout.COUNT_ICON_NAME) {
                 if (showCount) currentX = drawString(context, textRenderer, countText, currentX, centerY, countColor, padding);
                 if (showIcon) currentX = drawIcon(context, n.stack, currentX, centerY, padding);
                 if (showName) drawString(context, textRenderer, nameText, currentX, centerY, textColor, padding);
-            }
-            else if (layout == SimpletweaksConfig.PickupLayout.NAME_ICON_COUNT) {
+            } else if (layout == SimpletweaksConfig.PickupLayout.NAME_ICON_COUNT) {
                 if (showName) currentX = drawString(context, textRenderer, nameText, currentX, centerY, textColor, padding);
                 if (showIcon) currentX = drawIcon(context, n.stack, currentX, centerY, padding);
                 if (showCount) drawString(context, textRenderer, countText, currentX, centerY, countColor, padding);
-            }
-            else if (layout == SimpletweaksConfig.PickupLayout.ICON_COUNT_NAME) {
+            } else if (layout == SimpletweaksConfig.PickupLayout.ICON_COUNT_NAME) {
                 if (showIcon) currentX = drawIcon(context, n.stack, currentX, centerY, padding);
                 if (showCount) currentX = drawString(context, textRenderer, countText, currentX, centerY, countColor, padding);
                 if (showName) drawString(context, textRenderer, nameText, currentX, centerY, textColor, padding);
@@ -207,7 +247,6 @@ public class PickupNotifierHud {
 
             context.getMatrices().popMatrix();
 
-            // Slide Animation für Liste
             float slideProgress = MathHelper.clamp(life / 3.0f, 0.0f, 1.0f);
             yOffset += (int) ((boxHeight + 2) * slideProgress);
         }
@@ -217,8 +256,6 @@ public class PickupNotifierHud {
 
     private static int drawIcon(DrawContext context, ItemStack stack, int x, int centerY, int padding) {
         context.drawItem(stack, x, centerY - 8);
-        // Auch Item Count im Icon (Overlay) zeichnen, falls gewünscht?
-        // Nein, das ist meist zu klein. Wir haben ja den Text.
         return x + 16 + padding;
     }
 
@@ -246,7 +283,6 @@ public class PickupNotifierHud {
             borderEnd = (alpha << 24) | (borderEnd & 0x00FFFFFF);
         }
 
-        // Vanilla Box Logic
         context.fill(x + 1, y + 1, x + w - 1, y + h - 1, bg);
         context.fillGradient(x + 1, y, x + w - 1, y + 1, borderStart, borderStart);
         context.fillGradient(x + 1, y + h - 1, x + w - 1, y + h, borderEnd, borderEnd);
@@ -255,14 +291,52 @@ public class PickupNotifierHud {
     }
 
     public static void tick() {
-        if (notifications.isEmpty()) return;
-        int maxAge = Simpletweaks.getConfig().visuals.pickupNotifier.pickupNotifierDuration;
+        long now = System.currentTimeMillis();
+
+        // 1. Pending Pickups prüfen (wurden Daten vom Entity geladen?)
+        if (!pendingPickups.isEmpty() && client.world != null) {
+            Iterator<PendingPickup> it = pendingPickups.iterator();
+            while (it.hasNext()) {
+                PendingPickup pending = it.next();
+
+                // Timeout (1 Sekunde)
+                if (now - pending.timestamp > 1000) {
+                    it.remove();
+                    continue;
+                }
+
+                // Check A: Entity lebt und hat jetzt Daten
+                Entity entity = client.world.getEntityById(pending.entityId);
+                if (entity instanceof ItemEntity itemEntity && !itemEntity.getStack().isEmpty()) {
+                    addNotification(itemEntity.getStack(), pending.amount);
+                    it.remove();
+                    continue;
+                }
+
+                // Check B: Entity ist im Cache
+                CachedPickup cached = deadEntityCache.get(pending.entityId);
+                if (cached != null && !cached.stack().isEmpty()) {
+                    addNotification(cached.stack(), pending.amount);
+                    it.remove();
+                    continue;
+                }
+
+                // Falls weder A noch B: Warten auf Inventar-Update (wird via Mixin getriggert)
+            }
+        }
+
+        if (notifications.isEmpty() && deadEntityCache.isEmpty()) return;
+
+        var config = Simpletweaks.getConfig().visuals;
+        int maxAge = config.pickupNotifier.pickupNotifierDuration;
         Iterator<Notification> iterator = notifications.iterator();
         while (iterator.hasNext()) {
             Notification n = iterator.next();
             n.age++;
             if (n.age > maxAge) iterator.remove();
         }
+
+        deadEntityCache.values().removeIf(c -> (now - c.timestamp) > 1000);
     }
 
     private static class Notification {

@@ -7,6 +7,8 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.s2c.play.EntitiesDestroyS2CPacket;
 import net.minecraft.network.packet.s2c.play.ItemPickupAnimationS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,52 +22,84 @@ public class ClientPlayNetworkHandlerMixin {
 
     @Shadow private ClientWorld world;
 
-    // Speichert das letzte Item, um Duplikate zu verhindern
     @Unique private int simpletweaks$lastEntityId = -1;
     @Unique private long simpletweaks$lastPickupTime = 0;
+
+    @Inject(method = "onEntitiesDestroy", at = @At("HEAD"))
+    private void onEntitiesDestroy(EntitiesDestroyS2CPacket packet, CallbackInfo ci) {
+        if (this.world == null) return;
+
+        for (int id : packet.getEntityIds()) {
+            Entity entity = this.world.getEntityById(id);
+            if (entity instanceof ItemEntity itemEntity) {
+                // Stack kopieren bevor er gelöscht wird.
+                // Wichtig: !isEmpty checken, damit wir keine leeren Stacks in den Cache ballern.
+                ItemStack stack = itemEntity.getStack();
+                if (!stack.isEmpty()) {
+                    PickupNotifierHud.cacheEntity(id, stack.copy());
+                }
+            } else if (entity instanceof ExperienceOrbEntity xpOrb) {
+                PickupNotifierHud.cacheXp(id, xpOrb.getValue());
+            }
+        }
+    }
 
     @Inject(method = "onItemPickupAnimation", at = @At("HEAD"))
     private void onPickupAnimation(ItemPickupAnimationS2CPacket packet, CallbackInfo ci) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null || this.world == null) return;
 
-        // 1. Prüfen, ob wir der Sammler sind
         Entity collector = this.world.getEntityById(packet.getCollectorEntityId());
         if (collector != client.player) return;
 
-        // 2. Duplikat-Schutz
-        // Wenn dasselbe Entity (gleiche ID) innerhalb von 5 Ticks (250ms) nochmal kommt -> Ignorieren
         long currentTime = System.currentTimeMillis();
-        if (packet.getEntityId() == simpletweaks$lastEntityId && (currentTime - simpletweaks$lastPickupTime) < 250) {
+        if (packet.getEntityId() == simpletweaks$lastEntityId && (currentTime - simpletweaks$lastPickupTime) < 150) {
             return;
         }
-
-        // Merken für das nächste Mal
         simpletweaks$lastEntityId = packet.getEntityId();
         simpletweaks$lastPickupTime = currentTime;
 
-        // 3. Entity holen
         Entity pickedUpEntity = this.world.getEntityById(packet.getEntityId());
-        if (pickedUpEntity == null) return;
 
-        // 4. Verarbeiten
-        if (pickedUpEntity instanceof ItemEntity itemEntity) {
-            // Priority: Packet Amount -> Stack Count
-            int amount = packet.getStackAmount();
-            if (amount <= 0) {
-                amount = itemEntity.getStack().getCount();
+        ItemStack stack = ItemStack.EMPTY;
+        int xpValue = 0;
+        int count = packet.getStackAmount();
+
+        // 1. Entity in Welt suchen
+        if (pickedUpEntity != null) {
+            if (pickedUpEntity instanceof ItemEntity itemEntity) {
+                stack = itemEntity.getStack();
+                if (count <= 0) count = stack.getCount();
+            } else if (pickedUpEntity instanceof ExperienceOrbEntity xpOrb) {
+                xpValue = xpOrb.getValue();
             }
-            // Wenn immer noch 0 (selten), nimm 1
-            if (amount <= 0) amount = 1;
-
-            PickupNotifierHud.addNotification(itemEntity.getStack(), amount);
         }
-        else if (pickedUpEntity instanceof ExperienceOrbEntity xpOrb) {
-            // XP hat keine "Packet Amount" im Animation Packet, wir nehmen den Wert vom Orb
-            int xpAmount = xpOrb.getValue();
-            if (xpAmount > 0) {
-                PickupNotifierHud.addXpNotification(xpAmount);
+        // 2. Cache suchen (falls schon gelöscht)
+        else {
+            PickupNotifierHud.CachedPickup cached = PickupNotifierHud.getCachedPickup(packet.getEntityId());
+            if (cached != null) {
+                stack = cached.stack();
+                xpValue = cached.xpValue();
+                if (count <= 0 && !stack.isEmpty()) {
+                    count = stack.getCount();
+                }
             }
+        }
+
+        // 3. Ergebnis
+        if (!stack.isEmpty()) {
+            if (count <= 0) count = 1;
+            PickupNotifierHud.addNotification(stack, count);
+        }
+        else if (xpValue > 0) {
+            PickupNotifierHud.addXpNotification(xpValue);
+        }
+        else {
+            // FIX: Wenn weder Welt noch Cache das Item haben (oder es leer ist),
+            // merken wir uns die ID und versuchen es in den nächsten Ticks erneut.
+            // (Datenpaket kommt wahrscheinlich gleich an).
+            if (count <= 0) count = 1;
+            PickupNotifierHud.schedulePendingPickup(packet.getEntityId(), count);
         }
     }
 }
