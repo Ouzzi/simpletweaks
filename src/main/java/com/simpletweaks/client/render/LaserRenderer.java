@@ -63,7 +63,7 @@ public class LaserRenderer {
         double distance = cameraPos.distanceTo(pos);
 
         // --- DYNAMISCHE SKALIERUNG (Subjektiv) ---
-        float distanceScale = (float) (distance * 0.07f);
+        float distanceScale = (float) (distance * 0.12f);
         float finalScale = Math.max(Simpletweaks.getConfig().visuals.laserPointer.scale, distanceScale);
 
         // --- DYNAMISCHER OFFSET GEGEN FLACKERN ---

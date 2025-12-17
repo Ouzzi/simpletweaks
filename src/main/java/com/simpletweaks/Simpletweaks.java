@@ -57,10 +57,6 @@ public class Simpletweaks implements ModInitializer {
 }
 
 /// TODO:
-// - laserpointer or similar tool to point at blocks/entities - for building or presentations (Later Later)
-
-
-
 
 // - more compostable items
 // - more waxing options - waxed sand and gravel to prevent falling, waxed ice to prevent melting, waxed concrete powder to prevent turning to concrete, waxesd coral blocks to prevent drying out
