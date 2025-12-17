@@ -54,14 +54,38 @@ public class Simpletweaks implements ModInitializer {
     public static SimpletweaksConfig getConfig() { return CONFIG; }
 }
 
-// TODO:
-// - Better Item Frames (Later)
-// - Pickup notifier (Later) - also xp notifier
-// - Chat Calc (Later Later)
-// - Visuals - speed-lines like cartoon or anime when fast (weak) when accelerating (strong)
-// - laserpointer or similar tool
-// - Map Tooltips showing map
-// - more compostable items
-// - dispenser place more blocks
+/// TODO:
 // - replant with hoe
-// - Leader slide faster when looking down while descending
+// - nametags on mobs to prevent growing up (like baby villagers,...)
+// - laserpointer or similar tool to point at blocks/entities - for building or presentations (Later Later)
+
+
+
+
+// - more compostable items
+// - more waxing options - waxed sand and gravel to prevent falling, waxed ice to prevent melting, waxed concrete powder to prevent turning to concrete, waxesd coral blocks to prevent drying out
+// - Visuals - speed-lines like cartoon or anime when fast (weak) when accelerating (strong)
+// - dispenser place more blocks
+// - (later) realworld Transformation:
+// -- two shulker shells on chest
+// -- moss on cobble
+// -- ...
+
+// - Better Item Frames (Later)
+// - Chat Calc (Later Later)
+
+// - modmenu pages
+// - toggle all on some groups
+
+// - 4 extra inv for challenges
+// - - example eat a dark heart -> wildcard slot
+// - - example eat a enchanted gapple -> food slot
+// - - example break 10000 ores -> tool slot
+// - - example kill 10000 mobs -> weapon slot
+
+
+// BUGS/todo:
+// - textures for pads
+// - sometimes pickup notifier doesnt show picked up item
+// - set world spawn not working properly
+
