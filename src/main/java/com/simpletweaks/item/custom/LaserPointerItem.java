@@ -3,8 +3,8 @@ package com.simpletweaks.item.custom;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult; // WICHTIG: Neuer Import
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class LaserPointerItem extends Item {
@@ -14,10 +14,12 @@ public class LaserPointerItem extends Item {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public ActionResult use(World world, PlayerEntity user, Hand hand) {
         // Erlaubt das "Halten" des Items (wie ein Bogen/Fernglas)
         user.setCurrentHand(hand);
-        return TypedActionResult.consume(user.getStackInHand(hand));
+
+        // Statt TypedActionResult.consume(...) gibt man jetzt einfach ActionResult.CONSUME zurück
+        return ActionResult.CONSUME;
     }
 
     @Override

@@ -280,10 +280,10 @@ public class SimpletweaksConfig implements ConfigData {
             public int color = 0xFF0000; // Rot
 
             @ConfigEntry.Gui.Tooltip
-            public float scale = 0.15f; // Größe des Punktes
+            public float scale = 0.25f; // Größe des Punktes
 
             @ConfigEntry.Gui.Tooltip
-            public int range = 128; // Reichweite
+            public int range = 512; // Reichweite
 
             @ConfigEntry.Gui.Tooltip
             public boolean showLine = false; // Optional: Linie zeichnen

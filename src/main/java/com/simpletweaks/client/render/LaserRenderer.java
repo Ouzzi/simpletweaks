@@ -10,7 +10,10 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.util.BufferAllocator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -35,28 +38,37 @@ public class LaserRenderer {
 
                 if (hit.getType() != HitResult.Type.MISS) {
                     Vec3d pos = hit.getPos();
-                    Vector3f posF = new Vector3f((float) pos.x, (float) pos.y, (float) pos.z);
+                    Direction side = hit instanceof BlockHitResult bHit ? bHit.getSide() : Direction.UP;
 
+                    Vector3f posF = new Vector3f((float) pos.x, (float) pos.y, (float) pos.z);
                     ClientPlayNetworking.send(new LaserManager.LaserPayload(me.getUuid(), posF, true));
-                    renderDot(context, pos, Simpletweaks.getConfig().visuals.laserPointer.color);
+
+                    renderPixelCircle(context, pos, side, Simpletweaks.getConfig().visuals.laserPointer.color);
                 }
             }
         }
 
         LaserManager.ACTIVE_LASERS.forEach((uuid, data) -> {
             if (!uuid.equals(me.getUuid())) {
-                Vec3d pos = new Vec3d(data.pos().x, data.pos().y, data.pos().z);
-                renderDot(context, pos, Simpletweaks.getConfig().visuals.laserPointer.color);
+                renderPixelCircle(context, new Vec3d(data.pos().x, data.pos().y, data.pos().z), Direction.UP, Simpletweaks.getConfig().visuals.laserPointer.color);
             }
         });
     }
 
-    private static void renderDot(WorldRenderContext context, Vec3d targetPos, int color) {
+    private static void renderPixelCircle(WorldRenderContext context, Vec3d pos, Direction side, int color) {
         MinecraftClient client = MinecraftClient.getInstance();
         MatrixStack matrices = context.matrices();
         Vec3d cameraPos = client.gameRenderer.getCamera().getCameraPos();
 
-        float scale = Simpletweaks.getConfig().visuals.laserPointer.scale;
+        double distance = cameraPos.distanceTo(pos);
+
+        // --- DYNAMISCHE SKALIERUNG (Subjektiv) ---
+        float distanceScale = (float) (distance * 0.07f);
+        float finalScale = Math.max(Simpletweaks.getConfig().visuals.laserPointer.scale, distanceScale);
+
+        // --- DYNAMISCHER OFFSET GEGEN FLACKERN ---
+        // Je weiter weg, desto mehr Abstand zur Wand (verhindert Z-Fighting in der Ferne)
+        double wallOffset = 0.01 + (distance * 0.002);
 
         int r = (color >> 16) & 0xFF;
         int g = (color >> 8) & 0xFF;
@@ -64,27 +76,25 @@ public class LaserRenderer {
         int a = 255;
 
         matrices.push();
-        matrices.translate(targetPos.x - cameraPos.x, targetPos.y - cameraPos.y, targetPos.z - cameraPos.z);
-        matrices.scale(scale, scale, scale);
+        matrices.translate(pos.x - cameraPos.x, pos.y - cameraPos.y, pos.z - cameraPos.z);
 
+        // Den Punkt von der Wand weg schieben
+        matrices.translate(side.getOffsetX() * wallOffset, side.getOffsetY() * wallOffset, side.getOffsetZ() * wallOffset);
+
+        rotateToFace(matrices, side);
+        matrices.scale(finalScale, finalScale, finalScale);
         Matrix4f matrix = matrices.peek().getPositionMatrix();
 
-        try (BufferAllocator allocator = new BufferAllocator(256)) {
+        try (BufferAllocator allocator = new BufferAllocator(512)) {
             VertexConsumerProvider.Immediate immediate = VertexConsumerProvider.immediate(allocator);
 
-            // FIX: 'getDebugLineStrip(1.0)' nutzen.
-            // Das existiert garantiert, da es für F3+B Hitboxen genutzt wird.
-            // Parameter 1.0 ist die Linienbreite.
-            VertexConsumer buffer = immediate.getBuffer(RenderLayer.getDebugLineStrip(1.0));
+            // FIX: debugQuads() benötigt NUR Position und Farbe. Keine Normale, keine LineWidth.
+            VertexConsumer buffer = immediate.getBuffer(RenderLayers.debugQuads());
 
-            float s = 0.5f;
-
-            // X-Achse
-            drawLine(buffer, matrix, -s, 0, 0, s, 0, 0, r, g, b, a);
-            // Y-Achse
-            drawLine(buffer, matrix, 0, -s, 0, 0, s, 0, r, g, b, a);
-            // Z-Achse
-            drawLine(buffer, matrix, 0, 0, -s, 0, 0, s, r, g, b, a);
+            // Minecraft Pixel Style (abgerundet durch 3 überlagerte Quads)
+            drawSimpleQuad(buffer, matrix, -0.5f, -0.3f, 0.5f, 0.3f, r, g, b, a);
+            drawSimpleQuad(buffer, matrix, -0.3f, -0.5f, 0.3f, 0.5f, r, g, b, a);
+            drawSimpleQuad(buffer, matrix, -0.4f, -0.4f, 0.4f, 0.4f, r, g, b, a);
 
             immediate.draw();
         }
@@ -92,9 +102,22 @@ public class LaserRenderer {
         matrices.pop();
     }
 
-    private static void drawLine(VertexConsumer buffer, Matrix4f matrix, float x1, float y1, float z1, float x2, float y2, float z2, int r, int g, int b, int a) {
-        // Für 'getDebugLineStrip' brauchen wir keine Normals, nur Position und Color
-        buffer.vertex(matrix, x1, y1, z1).color(r, g, b, a);
-        buffer.vertex(matrix, x2, y2, z2).color(r, g, b, a);
+    private static void drawSimpleQuad(VertexConsumer buffer, Matrix4f matrix, float x1, float y1, float x2, float y2, int r, int g, int b, int a) {
+        // Dieser Layer (debugQuads) akzeptiert NUR vertex() und color()!
+        buffer.vertex(matrix, x1, y1, 0).color(r, g, b, a);
+        buffer.vertex(matrix, x2, y1, 0).color(r, g, b, a);
+        buffer.vertex(matrix, x2, y2, 0).color(r, g, b, a);
+        buffer.vertex(matrix, x1, y2, 0).color(r, g, b, a);
+    }
+
+    private static void rotateToFace(MatrixStack matrices, Direction side) {
+        switch (side) {
+            case DOWN -> matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
+            case UP -> matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90));
+            case SOUTH -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
+            case WEST -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
+            case EAST -> matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-90));
+            default -> {}
+        }
     }
 }

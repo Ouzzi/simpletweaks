@@ -39,22 +39,15 @@ public class SimpletweaksClient implements ClientModInitializer {
             return null;
         });
 
+        // Client Ticks (zusammengefasst)
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (!client.isPaused()) {
                 PickupNotifierHud.tick();
-            }
-        });
-
-        LaserManager.registerClient(); // Network (Client)
-
-        // Renderer Event
-        WorldRenderEvents.AFTER_TRANSLUCENT.register(LaserRenderer::render);
-
-        // Aufräumen alter Laser-Daten
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (!client.isPaused()) {
                 LaserManager.tick();
             }
         });
+
+        LaserManager.registerClient();
+        WorldRenderEvents.END_MAIN.register(LaserRenderer::render);
     }
 }

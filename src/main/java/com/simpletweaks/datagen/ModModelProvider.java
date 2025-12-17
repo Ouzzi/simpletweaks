@@ -34,5 +34,6 @@ public class ModModelProvider extends FabricModelProvider {
         // Spawn Elytra (schon vorhanden)
         itemModelGenerator.register(ModItems.SPAWN_ELYTRA, Models.GENERATED);
         itemModelGenerator.register(ModItems.BRICK_SNOWBALL, Models.GENERATED);
+        itemModelGenerator.register(ModItems.LASER_POINTER, Models.GENERATED);
     }
 }
