@@ -58,6 +58,7 @@ public class Simpletweaks implements ModInitializer {
 // -- simpleservertweaks
 // -- simpleclienttweaks
 // -- simplefun
+// -- (Later) simplequestbook
 
 
 // - more compostable items
