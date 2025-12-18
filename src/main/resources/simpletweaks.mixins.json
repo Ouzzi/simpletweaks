@@ -4,27 +4,12 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "DimensionBlockMixin",
-    "EntityAccessor",
-    "EntityMuteMixin",
     "ExactSpawnMixin",
     "ExperienceOrbInvoker",
     "ExperienceOrbMixin",
-    "FarmlandTrampleMixin",
-    "GrassOutlineMixin",
-    "ItemMixin",
     "ItemStackMixin",
-    "LadderSpeedMixin",
-    "SharpnessGrassCutMixin",
     "SpawnElytraDamageMixin",
-    "VaultBlockEntityMixin",
-    "VaultBlockEntityServerMixin",
-    "VaultServerDataAccessor",
-    "VaultServerDataMixin",
-    "VaultSharedDataAccessor",
-    "YeetMixin",
-    "client.FilledMapItemMixin",
-    "client.SpawnTeleporterClientMixin",
-    "common.PassiveEntityMixin"
+    "client.SpawnTeleporterClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -33,16 +18,10 @@
     "requireAnnotations": true
   },
   "client": [
-    "client.ChatHudMixin",
-    "client.ClientPlayNetworkHandlerMixin",
     "client.ExperienceOrbRendererMixin",
     "client.ExperienceOrbRenderStateMixin",
-    "client.HeldItemTooltipMixin",
     "client.InGameHudLevelMixin",
     "client.InGameHudMixin",
-    "client.InGameScreenHudMixin",
-    "client.InventoryEffectBarMixin",
-    "client.LocatorBarMixin",
-    "client.StatusEffectBarMixin"
+    "client.InGameScreenHudMixin"
   ]
 }

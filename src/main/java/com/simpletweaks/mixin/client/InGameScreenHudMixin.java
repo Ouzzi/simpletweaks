@@ -1,7 +1,5 @@
 package com.simpletweaks.mixin.client;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.simpletweaks.client.gui.PickupNotifierHud;
 import com.simpletweaks.item.custom.LaserPointerItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -20,10 +18,6 @@ public class InGameScreenHudMixin {
 
     @Shadow @Final private MinecraftClient client;
 
-    @Inject(method = "render", at = @At("TAIL"))
-    private void renderPickupNotifier(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        PickupNotifierHud.render(context, tickCounter);
-    }
 
     @Inject(method = "renderCrosshair", at = @At("HEAD"))
     private void onRenderCrosshairStart(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {

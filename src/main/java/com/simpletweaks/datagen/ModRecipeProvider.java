@@ -56,16 +56,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         // hasItem und conditionsFromItem sind Methoden von RecipeGenerator und hier verfügbar
                         .criterion(hasItem(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE), conditionsFromItem(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE))
                         .offerTo(exporter, getRecipeName(ModBlocks.LAUNCHPAD) + "_smithing");
-
-                createShaped(RecipeCategory.COMBAT, ModItems.BRICK_SNOWBALL)
-                        .pattern(" S ")
-                        .pattern("SBS")
-                        .pattern(" S ")
-                        .input('S', Items.SNOWBALL)
-                        .input('B', Items.BRICK)
-                        .criterion(hasItem(Items.SNOWBALL), conditionsFromItem(Items.SNOWBALL))
-                        .criterion(hasItem(Items.BRICK), conditionsFromItem(Items.BRICK))
-                        .offerTo(exporter);
             }
         };
     }

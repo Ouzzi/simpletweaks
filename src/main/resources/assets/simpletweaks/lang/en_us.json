@@ -192,8 +192,8 @@
     "text.autoconfig.simpletweaks.option.visuals.speedLines.speedLinesSpeed.@Tooltip": "Speed of the speed lines animation.",
   "text.autoconfig.simpletweaks.option.visuals.speedLines.speedLinesScale": "Speed Lines Length",
     "text.autoconfig.simpletweaks.option.visuals.speedLines.speedLinesScale.@Tooltip": "Length of the speed lines.",
-  "text.autoconfig.simpletweaks.option.visuals.speedLines.speedLinesThreshold": "Speed Lines Speed Threshold",
-    "text.autoconfig.simpletweaks.option.visuals.speedLines.speedLinesThreshold.@Tooltip": "Minimum speed required to display speed lines.",
+  "text.autoconfig.simpletweaks.option.visuals.speedLines.speedThreshold": "Speed Lines Speed Threshold",
+    "text.autoconfig.simpletweaks.option.visuals.speedLines.speedThreshold.@Tooltip": "Minimum speed required to display speed lines.",
 
   "text.autoconfig.simpletweaks.option.visuals.pickupNotifier.enablePickupNotifier": "Enable Pickup Notifier",
   "text.autoconfig.simpletweaks.option.visuals.pickupNotifier.enablePickupNotifier.@Tooltip": "Displays a notifier on screen when picking up items or XP.",
