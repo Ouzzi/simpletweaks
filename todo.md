@@ -1,5 +1,5 @@
 ## TODO:
-
+- add particles when standing on spawn teleporter
 
 - more compostable items
 - more waxing options - waxed sand and gravel to prevent falling, waxed ice to prevent melting, waxed concrete powder to prevent turning to concrete, waxesd coral blocks to prevent drying out
