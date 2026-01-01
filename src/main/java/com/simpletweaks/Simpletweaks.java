@@ -5,6 +5,7 @@ import com.simpletweaks.block.entity.ModBlockEntities;
 import com.simpletweaks.command.ModCommands;
 import com.simpletweaks.component.ModDataComponentTypes;
 import com.simpletweaks.config.SimpletweaksConfig;
+import com.simpletweaks.event.ClaimProtectionHandler;
 import com.simpletweaks.event.FirstJoinHandler;
 import com.simpletweaks.event.SpawnHandler;
 import com.simpletweaks.event.WorldSpawnHandler;
@@ -36,21 +37,20 @@ public class Simpletweaks implements ModInitializer {
 
         ModBlocks.registerModBlocks();
         ModBlockEntities.registerBlockEntities();
-        FirstJoinHandler.register();
 
+        // --- EVENTS ---
+        FirstJoinHandler.register();
         SpawnHandler.register();
+        WorldSpawnHandler.register();
+
+        // WICHTIG: Hier wird der Schutz aktiviert!
+        ClaimProtectionHandler.register();
+
+        // --- NETWORKING & COMMANDS ---
         SpawnElytraNetworking.register();
         ModCommands.register();
-        WorldSpawnHandler.register();
         LaserManager.register();
-
     }
 
     public static SimpletweaksConfig getConfig() { return CONFIG; }
 }
-
-/// TODO:
-
-
-
-

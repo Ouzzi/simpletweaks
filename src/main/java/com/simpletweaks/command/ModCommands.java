@@ -25,6 +25,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -128,22 +129,33 @@ public class ModCommands {
                                         return 1;
                                     })
                             )
-                            .then(CommandManager.literal("info")
+                            .then(CommandManager.literal("listall")
                                     .executes(context -> {
-                                        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
-                                        ChunkPos pos = player.getChunkPos();
-                                        ClaimState state = ClaimState.get(player.getEntityWorld());
-                                        UUID ownerId = state.getOwner(pos);
+                                        ServerCommandSource source = context.getSource();
+                                        ClaimState state = ClaimState.get(source.getWorld());
+                                        Map<ChunkPos, UUID> allClaims = state.getAllClaims();
 
-                                        if (ownerId != null) {
-                                            String ownerName = resolveName(context.getSource().getServer(), ownerId);
-                                            int friendCount = state.getWhitelist(pos).size();
-                                            context.getSource().sendFeedback(() -> Text.literal("--- Chunk Info ---").formatted(Formatting.GOLD), false);
-                                            context.getSource().sendFeedback(() -> Text.literal("Owner: " + ownerName).formatted(Formatting.YELLOW), false);
-                                            context.getSource().sendFeedback(() -> Text.literal("Trusted: " + friendCount + " players").formatted(Formatting.AQUA), false);
-                                            context.getSource().sendFeedback(() -> Text.literal("Pos: " + pos.toString()).formatted(Formatting.GRAY), false);
-                                        } else {
-                                            context.getSource().sendFeedback(() -> Text.literal("This chunk is free.").formatted(Formatting.GREEN), false);
+                                        if (allClaims.isEmpty()) {
+                                            source.sendFeedback(() -> Text.literal("No chunks claimed yet.").formatted(Formatting.YELLOW), false);
+                                            return 1;
+                                        }
+
+                                        source.sendFeedback(() -> Text.literal("--- All Claimed Chunks (" + allClaims.size() + ") ---").formatted(Formatting.GOLD, Formatting.BOLD), false);
+
+                                        // Auflisten (max 50, um Chat Spam zu verhindern)
+                                        int count = 0;
+                                        for (Map.Entry<ChunkPos, UUID> entry : allClaims.entrySet()) {
+                                            if (count >= 50) {
+                                                source.sendFeedback(() -> Text.literal("... and more.").formatted(Formatting.GRAY), false);
+                                                break;
+                                            }
+                                            ChunkPos p = entry.getKey();
+                                            String name = resolveName(source.getServer(), entry.getValue());
+
+                                            source.sendFeedback(() -> Text.literal(" - [" + p.x + ", " + p.z + "] : " + name)
+                                                    .formatted(Formatting.YELLOW)
+                                                    .styled(style -> style.withColor(Formatting.YELLOW)), false);
+                                            count++;
                                         }
                                         return 1;
                                     })
@@ -399,18 +411,13 @@ public class ModCommands {
 
     private static String resolveName(MinecraftServer server, UUID uuid) {
         ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
-        if (player != null) {
-            return player.getName().getString();
-        }
+        if (player != null) return player.getName().getString();
         return uuid.toString();
     }
 
     private static Optional<GameProfile> resolveProfile(MinecraftServer server, String name) {
-        // Nur Online-Spieler
         ServerPlayerEntity player = server.getPlayerManager().getPlayer(name);
-        if (player != null) {
-            return Optional.of(player.getGameProfile());
-        }
+        if (player != null) return Optional.of(player.getGameProfile());
         return Optional.empty();
     }
 

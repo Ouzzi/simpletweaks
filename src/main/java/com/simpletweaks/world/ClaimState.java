@@ -146,6 +146,13 @@ public class ClaimState extends PersistentState {
                 .collect(Collectors.toList());
     }
 
+    // NEU: Gibt alle Claims zurück (für listall)
+    public Map<ChunkPos, UUID> getAllClaims() {
+        Map<ChunkPos, UUID> result = new HashMap<>();
+        claims.forEach((key, data) -> result.put(new ChunkPos(key), data.owner));
+        return result;
+    }
+
     public static class ClaimData {
         UUID owner;
         Set<UUID> whitelist = new HashSet<>();
