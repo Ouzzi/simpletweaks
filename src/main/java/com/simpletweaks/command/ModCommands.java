@@ -1,18 +1,20 @@
 package com.simpletweaks.command;
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.simpletweaks.Simpletweaks;
 import com.simpletweaks.config.SimpletweaksConfig;
+import com.simpletweaks.world.ClaimState;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.vehicle.*;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,13 +22,163 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.ChunkPos;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class ModCommands {
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+
+            // --- CLAIM COMMANDS ---
+            dispatcher.register(CommandManager.literal("claim")
+                    // Info über aktuellen Chunk
+                    .executes(context -> {
+                        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+                        ChunkPos pos = player.getChunkPos();
+
+                        // KORREKTUR: getEntityWorld() verwenden (gibt ServerWorld zurück)
+                        ClaimState state = ClaimState.get(player.getEntityWorld());
+
+                        UUID owner = state.getOwner(pos);
+                        if (owner == null) {
+                            context.getSource().sendFeedback(() -> Text.literal("This chunk is wild.").formatted(Formatting.GRAY), false);
+                        } else {
+                            // Namen auflösen (Online Spieler oder Fallback UUID)
+                            String ownerName = resolveName(context.getSource().getServer(), owner);
+                            context.getSource().sendFeedback(() -> Text.literal("Chunk owned by: " + ownerName).formatted(Formatting.GOLD), false);
+                        }
+                        return 1;
+                    })
+                    // Trust Player
+                    .then(CommandManager.literal("trust")
+                            .then(CommandManager.argument("player", StringArgumentType.word())
+                                    .executes(context -> {
+                                        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+                                        String targetName = StringArgumentType.getString(context, "player");
+
+                                        // Nur Online-Spieler suchen
+                                        Optional<GameProfile> profileOpt = resolveProfile(context.getSource().getServer(), targetName);
+
+                                        if (profileOpt.isPresent()) {
+                                            GameProfile profile = profileOpt.get();
+                                            ChunkPos pos = player.getChunkPos();
+                                            ClaimState state = ClaimState.get(player.getEntityWorld());
+
+                                            // getId() statt id()
+                                            if (state.addFriend(pos, player.getUuid(), profile.id())) {
+                                                context.getSource().sendFeedback(() -> Text.literal("Added " + targetName + " to this chunk.").formatted(Formatting.GREEN), false);
+                                            } else {
+                                                context.getSource().sendError(Text.literal("You don't own this chunk!"));
+                                            }
+                                        } else {
+                                            context.getSource().sendError(Text.literal("Player not found (must be online)."));
+                                        }
+
+                                        return 1;
+                                    })
+                            )
+                    )
+                    // Untrust Player
+                    .then(CommandManager.literal("untrust")
+                            .then(CommandManager.argument("player", StringArgumentType.word())
+                                    .executes(context -> {
+                                        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+                                        String targetName = StringArgumentType.getString(context, "player");
+
+                                        Optional<GameProfile> profileOpt = resolveProfile(context.getSource().getServer(), targetName);
+
+                                        if (profileOpt.isPresent()) {
+                                            GameProfile profile = profileOpt.get();
+                                            ChunkPos pos = player.getChunkPos();
+                                            ClaimState state = ClaimState.get(player.getEntityWorld());
+
+                                            if (state.removeFriend(pos, player.getUuid(), profile.id())) {
+                                                context.getSource().sendFeedback(() -> Text.literal("Removed " + targetName + " from this chunk.").formatted(Formatting.RED), false);
+                                            } else {
+                                                context.getSource().sendError(Text.literal("You don't own this chunk or player was not trusted."));
+                                            }
+                                        } else {
+                                            // Fallback: Wenn Spieler offline ist, können wir ihn hier schwer entfernen ohne Cache.
+                                            // Optional: Man könnte eine Logik bauen, die nur den Namen im State speichert, aber UUID ist sicherer.
+                                            context.getSource().sendError(Text.literal("Player not found (must be online to remove via command)."));
+                                        }
+
+                                        return 1;
+                                    })
+                            )
+                    )
+                    .then(CommandManager.literal("admin")
+                            .requires(source -> checkPermission(source, 4))
+                            .then(CommandManager.literal("unclaim")
+                                    .executes(context -> {
+                                        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+                                        ChunkPos pos = player.getChunkPos();
+                                        ClaimState state = ClaimState.get(player.getEntityWorld());
+
+                                        if (state.isClaimed(pos)) {
+                                            state.unclaim(pos, player.getUuid(), true);
+                                            context.getSource().sendFeedback(() -> Text.literal("Chunk force-unclaimed by admin.").formatted(Formatting.RED, Formatting.BOLD), true);
+                                        } else {
+                                            context.getSource().sendError(Text.literal("This chunk is not claimed."));
+                                        }
+                                        return 1;
+                                    })
+                            )
+                            .then(CommandManager.literal("info")
+                                    .executes(context -> {
+                                        ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
+                                        ChunkPos pos = player.getChunkPos();
+                                        ClaimState state = ClaimState.get(player.getEntityWorld());
+                                        UUID ownerId = state.getOwner(pos);
+
+                                        if (ownerId != null) {
+                                            String ownerName = resolveName(context.getSource().getServer(), ownerId);
+                                            int friendCount = state.getWhitelist(pos).size();
+                                            context.getSource().sendFeedback(() -> Text.literal("--- Chunk Info ---").formatted(Formatting.GOLD), false);
+                                            context.getSource().sendFeedback(() -> Text.literal("Owner: " + ownerName).formatted(Formatting.YELLOW), false);
+                                            context.getSource().sendFeedback(() -> Text.literal("Trusted: " + friendCount + " players").formatted(Formatting.AQUA), false);
+                                            context.getSource().sendFeedback(() -> Text.literal("Pos: " + pos.toString()).formatted(Formatting.GRAY), false);
+                                        } else {
+                                            context.getSource().sendFeedback(() -> Text.literal("This chunk is free.").formatted(Formatting.GREEN), false);
+                                        }
+                                        return 1;
+                                    })
+                            )
+                            // 3. List (Alle Claims eines Spielers)
+                            .then(CommandManager.literal("list")
+                                    .then(CommandManager.argument("target", StringArgumentType.word())
+                                            .executes(context -> {
+                                                String targetName = StringArgumentType.getString(context, "target");
+                                                Optional<GameProfile> profileOpt = resolveProfile(context.getSource().getServer(), targetName);
+
+                                                if (profileOpt.isPresent()) {
+                                                    UUID targetId = profileOpt.get().id();
+                                                    ClaimState state = ClaimState.get(context.getSource().getWorld());
+                                                    List<ChunkPos> claims = state.getClaimsByPlayer(targetId);
+
+                                                    context.getSource().sendFeedback(() -> Text.literal("Claims for " + targetName + ": " + claims.size()).formatted(Formatting.GOLD), false);
+
+                                                    for (int i = 0; i < Math.min(claims.size(), 10); i++) {
+                                                        ChunkPos p = claims.get(i);
+                                                        context.getSource().sendFeedback(() -> Text.literal("- [" + p.x + ", " + p.z + "]").formatted(Formatting.YELLOW), false);
+                                                    }
+                                                    if (claims.size() > 10) {
+                                                        context.getSource().sendFeedback(() -> Text.literal("... and " + (claims.size() - 10) + " more.").formatted(Formatting.GRAY), false);
+                                                    }
+
+                                                } else {
+                                                    context.getSource().sendError(Text.literal("Player not found online."));
+                                                }
+                                                return 1;
+                                            })
+                                    )
+                            )
+                    )
+            );
 
             // --- KILL BOATS ---
             dispatcher.register(CommandManager.literal("killboats")
@@ -243,6 +395,25 @@ public class ModCommands {
         });
     }
 
+    // --- HELPER ---
+
+    private static String resolveName(MinecraftServer server, UUID uuid) {
+        ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
+        if (player != null) {
+            return player.getName().getString();
+        }
+        return uuid.toString();
+    }
+
+    private static Optional<GameProfile> resolveProfile(MinecraftServer server, String name) {
+        // Nur Online-Spieler
+        ServerPlayerEntity player = server.getPlayerManager().getPlayer(name);
+        if (player != null) {
+            return Optional.of(player.getGameProfile());
+        }
+        return Optional.empty();
+    }
+
     // --- EXECUTION LOGIC ---
 
     private static int executeKillBoats(CommandContext<ServerCommandSource> context, String mode) {
@@ -343,6 +514,15 @@ public class ModCommands {
         final int finalCount = count;
         context.getSource().sendFeedback(() -> Text.literal("Removed " + finalCount + " minecarts (" + mode + ")."), true);
         return count;
+    }
+
+    private static boolean checkRemove(String mode, boolean isStorage, Inventory inv) {
+        switch (mode) {
+            case "standard": return !isStorage;
+            case "empty": return !isStorage || (inv != null && inv.isEmpty());
+            case "all": return true;
+            default: return !isStorage;
+        }
     }
 
     private static void saveConfig() {

@@ -1,6 +1,8 @@
 package com.simpletweaks.item;
 
 import com.simpletweaks.Simpletweaks;
+import com.simpletweaks.event.ClaimProtectionHandler;
+import com.simpletweaks.item.custom.ClaimDeedItem;
 import com.simpletweaks.item.custom.LaserPointerItem;
 import com.simpletweaks.item.custom.SpawnElytraItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -17,6 +19,7 @@ import java.util.function.Function;
 public class ModItems {
     public static final Item SPAWN_ELYTRA = registerItem("spawn_elytra", settings -> new SpawnElytraItem(settings.maxCount(1).fireproof()));
     public static final Item LASER_POINTER = registerItem("laser_pointer", settings -> new LaserPointerItem(settings.maxCount(1).maxDamage(500)));
+    public static final Item CLAIM_DEED = registerItem("claim_deed", settings -> new ClaimDeedItem(settings.maxCount(16)));
 
     private static Item registerItem(String name, Function<Item.Settings, Item> function) {
         return Registry.register(Registries.ITEM, Identifier.of(Simpletweaks.MOD_ID, name),
@@ -26,10 +29,12 @@ public class ModItems {
     public static void registerModItems() {
         Simpletweaks.LOGGER.info("Registering Mod Items for " + Simpletweaks.MOD_ID);
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
+            entries.add(CLAIM_DEED);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
             entries.add(LASER_POINTER);
         });
+        ClaimProtectionHandler.register();
     }
 }

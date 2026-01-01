@@ -1,4 +1,5 @@
 ## TODO:
+- add no faöll damage in spawn-elytra area - configurable in config
 - add particles when standing on spawn teleporter
 
 - more compostable items
