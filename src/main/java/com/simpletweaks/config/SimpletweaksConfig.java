@@ -45,6 +45,9 @@ public class SimpletweaksConfig implements ConfigData {
         public boolean forceExactSpawn = true;
 
         @ConfigEntry.Gui.Tooltip
+        public boolean disableFallDamageInSpawn = true;
+
+        @ConfigEntry.Gui.Tooltip
         public int xCoordSpawnPoint = 0;
         @ConfigEntry.Gui.Tooltip
         public int yCoordSpawnPoint = -1;
