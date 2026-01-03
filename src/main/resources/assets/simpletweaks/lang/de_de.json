@@ -76,5 +76,9 @@
   "text.autoconfig.simpletweaks.option.visuals.laserPointer.color": "Laserfarbe (Hex)",
   "text.autoconfig.simpletweaks.option.visuals.laserPointer.scale": "Punktgröße",
   "text.autoconfig.simpletweaks.option.visuals.laserPointer.range": "Max. Reichweite",
-  "text.autoconfig.simpletweaks.option.visuals.laserPointer.showLine": "Laserstrahl anzeigen"
+  "text.autoconfig.simpletweaks.option.visuals.laserPointer.showLine": "Laserstrahl anzeigen",
+
+
+  "item.echo_compass.echo_compass": "Echo-Kompass",
+  "item.echo_compass.echo_compass.lore": "Verbinde ihn mit einem Leitstein, um dich zu teleportieren"
 }

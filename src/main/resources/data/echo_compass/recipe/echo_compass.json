@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "tools",
+  "pattern": [
+    "PEP",
+    "PNP",
+    "PCP"
+  ],
+  "key": {
+    "P": "minecraft:ender_pearl",
+    "E": "minecraft:ender_eye",
+    "N": "minecraft:nether_star",
+    "C": "minecraft:recovery_compass"
+  },
+  "result": {
+    "id": "minecraft:compass",
+    "count": 1,
+    "components": {
+      "minecraft:rarity": "epic",
+      "minecraft:max_stack_size": 1,
+      "minecraft:enchantment_glint_override": true,
+      "minecraft:damage": 0,
+      "minecraft:max_damage": 64,
+      "minecraft:custom_data": {
+        "echo_compass": true
+      },
+      "minecraft:custom_name": {
+        "translate": "item.echo_compass.echo_compass",
+        "italic": false
+      },
+      "minecraft:lore": [
+        {
+          "translate": "item.echo_compass.echo_compass.lore",
+          "italic": false,
+          "color": "gray"
+        }
+      ]
+    }
+  }
+}
