@@ -1,5 +1,4 @@
 ## TODO:
-- add no fall damage in spawn-elytra area - configurable in config
 - add particles when standing on spawn teleporter
 - claim deed - not protecting land, just showing who owns it
 
