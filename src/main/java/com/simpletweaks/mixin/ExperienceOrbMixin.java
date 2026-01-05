@@ -43,7 +43,7 @@ public abstract class ExperienceOrbMixin extends Entity {
         // Nur Server-seitig und wenn aktiviert
         // Performance: Nur alle 5 Ticks prüfen
         if (this.getEntityWorld().isClient() || !Simpletweaks.getConfig().optimization.enableXpClumps || this.age % 5 != 0) return;
-
+        if (this.age % 20 != 0) return;
         // Radius von 2 Blöcken suchen
         Box box = this.getBoundingBox().expand(2.0);
         List<ExperienceOrbEntity> others = this.getEntityWorld().getEntitiesByClass(ExperienceOrbEntity.class, box,

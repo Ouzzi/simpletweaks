@@ -29,6 +29,8 @@ public class SpawnHandler {
 
         // Server Tick für Timer-Logik, Cleanup und Re-Entry
         ServerTickEvents.END_SERVER_TICK.register(server -> {
+            if (server.getTicks() % 20 != 0) return;
+
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                 tickSpawnLogic(player);
             }

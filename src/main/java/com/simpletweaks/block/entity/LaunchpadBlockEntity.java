@@ -45,15 +45,21 @@ public class LaunchpadBlockEntity extends BlockEntity {
         }
     }
 
+    private List<PlayerEntity> cachedPlayers = List.of(); // Cache Liste
     public static void tick(World world, BlockPos pos, BlockState state, LaunchpadBlockEntity be) {
         boolean isClient = world.isClient();
+
+        if (world.getTime() % 10 == 0) {
+            Box detectionBox = new Box(pos).offset(0, 0.1, 0).expand(0.0, 0.5, 0.0);
+            be.cachedPlayers = world.getEntitiesByClass(PlayerEntity.class, detectionBox, p -> true);
+        }
 
         // Bereich prüfen
         Box detectionBox = new Box(pos).offset(0, 0.1, 0).expand(0.0, 0.5, 0.0);
         List<PlayerEntity> players = world.getEntitiesByClass(PlayerEntity.class, detectionBox, p -> true);
 
         // --- 1. IDLE PARTIKEL (Wenn niemand draufsteht & geladen) ---
-        if (players.isEmpty() && be.charges > 0 && isClient) {
+        if (be.cachedPlayers.isEmpty() && be.charges > 0 && isClient) {
             // Alle paar Ticks ein kleiner Windstoß
             if (world.getRandom().nextInt(30) == 0) {
                 world.addParticleClient(ParticleTypes.SMALL_GUST,
@@ -64,8 +70,9 @@ public class LaunchpadBlockEntity extends BlockEntity {
             }
         }
 
-        if (!players.isEmpty()) {
-            PlayerEntity player = players.get(0);
+        if (!be.cachedPlayers.isEmpty()) {
+            PlayerEntity player = be.cachedPlayers.get(0);
+            if (!player.isAlive()) return;
 
             if (be.charges > 0) {
                 be.chargeTimer++;

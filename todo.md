@@ -32,3 +32,4 @@
 - - example kill 10000 mobs -> weapon slot
 
 ## BUGS:
+- unbreaking dosent work on echo compass for now
