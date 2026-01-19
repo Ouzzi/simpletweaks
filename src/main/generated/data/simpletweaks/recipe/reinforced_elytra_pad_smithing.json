@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:diamond_block",
+  "base": "simpletweaks:elytra_pad",
+  "result": {
+    "id": "simpletweaks:reinforced_elytra_pad"
+  },
+  "template": "#minecraft:trim_templates"
+}

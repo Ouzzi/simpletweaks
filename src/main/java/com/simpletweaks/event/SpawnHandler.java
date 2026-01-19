@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -41,30 +43,19 @@ public class SpawnHandler {
         SimpletweaksConfig.Spawn config = Simpletweaks.getConfig().spawn;
         if (!config.giveElytraOnSpawn) return;
 
-        // --- 1. CLEANUP (Elytra darf nur im Brust-Slot existieren) ---
-
-        // A. Mauszeiger (Cursor Stack) prüfen
+        // --- 1. CLEANUP ---
         ItemStack cursorStack = player.currentScreenHandler.getCursorStack();
         if (cursorStack.isOf(ModItems.SPAWN_ELYTRA)) {
-            player.currentScreenHandler.setCursorStack(ItemStack.EMPTY); // Löschen
+            player.currentScreenHandler.setCursorStack(ItemStack.EMPTY);
         }
-
-        // B. Inventar prüfen (Alles außer Brust-Slot)
         for (int i = 0; i < player.getInventory().size(); i++) {
             ItemStack stack = player.getInventory().getStack(i);
             if (stack.isOf(ModItems.SPAWN_ELYTRA)) {
-                // Slot 38 ist der Brustplatten-Slot im Spieler-Inventar
-                // Wir prüfen, ob der aktuelle Slot NICHT der Brust-Slot ist.
-                boolean isChestSlot = (i == 38);
-
-                if (!isChestSlot) {
-                    player.getInventory().removeStack(i); // Löschen
-                }
+                if (i != 38) player.getInventory().removeStack(i);
             }
         }
 
-        // --- 2. RADIUS LOGIK ---
-
+        // --- 2. LOGIK ---
         BlockPos worldSpawn = config.useWorldSpawnAsCenter
                 ? player.getEntityWorld().getSpawnPoint().getPos()
                 : new BlockPos(config.customSpawnElytraX, 0, config.customSpawnElytraZ);
@@ -77,7 +68,17 @@ public class SpawnHandler {
         ItemStack chestStack = player.getEquippedStack(EquipmentSlot.CHEST);
         boolean isWearingSpawnElytra = chestStack.isOf(ModItems.SPAWN_ELYTRA);
 
+        // FEATURE 1: Glowing Effekt für jeden, der die Elytra trägt
+        if (isWearingSpawnElytra) {
+            // 60 Ticks (3 Sek), damit es nicht flackert, ambient=true, showParticles=false
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 60, 0, true, false, false));
+        }
+
         if (insideSpawn) {
+            // FEATURE 2: Regeneration im Spawn-Bereich
+            // Regeneration I für 3 Sekunden
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 60, 0, true, false, true));
+
             // Im Spawn-Bereich
             if (isWearingSpawnElytra) {
                 // Aufladen (Timer & Boost resetten)
@@ -93,7 +94,8 @@ public class SpawnHandler {
         else if (isWearingSpawnElytra) {
             // Außerhalb Spawn-Bereich -> Timer Logik
             Integer ticksLeft = chestStack.get(ModDataComponentTypes.FLIGHT_TIME);
-            if (ticksLeft == null) ticksLeft = config.flightTimeSeconds * 20;
+            int maxTicks = config.flightTimeSeconds * 20; // Max Zeit berechnen
+            if (ticksLeft == null) ticksLeft = maxTicks;
 
             // Timer läuft nur, wenn man gleitet (Fliegt)
             if (player.isGliding()) {
@@ -105,11 +107,14 @@ public class SpawnHandler {
             boolean timeUp = ticksLeft <= 0;
             // Entfernen wenn gelandet (und nicht mehr am gleiten) oder Zeit abgelaufen
             boolean landed = player.isOnGround() && !player.isGliding();
+            // FIX: Nur entfernen, wenn sie bereits benutzt wurde (ticks < maxTicks)
+            // Das verhindert das Entfernen, wenn man gerade frisch vom Pad kommt (Ticks == Max)
+            boolean hasStartedFlying = ticksLeft < maxTicks;
 
-            if (timeUp || landed) {
+            if (timeUp || (landed && hasStartedFlying)) {
                 player.equipStack(EquipmentSlot.CHEST, ItemStack.EMPTY);
                 player.sendMessage(Text.literal("Spawn Elytra expired.").formatted(Formatting.YELLOW), true);
-            } else if (ticksLeft == 200) { // 10 Sekunden Warnung
+            } else if (ticksLeft == 200) {
                 player.sendMessage(Text.literal("Elytra expires in 10 seconds!").formatted(Formatting.RED), true);
             }
         }

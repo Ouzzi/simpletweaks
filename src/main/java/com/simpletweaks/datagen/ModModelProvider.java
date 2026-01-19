@@ -16,16 +16,31 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         // --- SPAWN TELEPORTER BLOCK ---
-        TextureMap teleporterTexture = new TextureMap().put(TextureKey.TEXTURE, Identifier.of(Simpletweaks.MOD_ID, "block/spawn_teleporter"));
-        Identifier modelId = Models.PRESSURE_PLATE_UP.upload(ModBlocks.SPAWN_TELEPORTER, teleporterTexture, blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(ModBlocks.SPAWN_TELEPORTER, BlockStateModelGenerator.createWeightedVariant(modelId)));
-        blockStateModelGenerator.registerParentedItemModel(ModBlocks.SPAWN_TELEPORTER, modelId);
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.SPAWN_TELEPORTER, "spawn_teleporter");
 
         // --- LAUNCHPAD BLOCK ---
-        TextureMap launchpadTexture = new TextureMap().put(TextureKey.TEXTURE, Identifier.of(Simpletweaks.MOD_ID, "block/launchpad"));
-        Identifier launchpadModelId = Models.PRESSURE_PLATE_UP.upload(ModBlocks.LAUNCHPAD, launchpadTexture, blockStateModelGenerator.modelCollector);
-        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(ModBlocks.LAUNCHPAD, BlockStateModelGenerator.createWeightedVariant(launchpadModelId)));
-        blockStateModelGenerator.registerParentedItemModel(ModBlocks.LAUNCHPAD, launchpadModelId);
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.LAUNCHPAD, "launchpad");
+
+        // --- DIAMOND PRESSURE PLATE ---
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.DIAMOND_PRESSURE_PLATE, "diamond_pressure_plate");
+
+        // --- ELYTRA PADS (Tier 1-4) ---
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.ELYTRA_PAD, "elytra_pad");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.REINFORCED_ELYTRA_PAD, "reinforced_elytra_pad");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.NETHERITE_ELYTRA_PAD, "netherite_elytra_pad");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.FINE_ELYTRA_PAD, "fine_elytra_pad");
+    }
+
+    /**
+     * Helfer-Methode für flache Blöcke (wie Druckplatten),
+     * registriert BlockState und ItemModel.
+     */
+    private void registerFlatBlock(BlockStateModelGenerator generator, net.minecraft.block.Block block, String textureName) {
+        TextureMap texture = new TextureMap().put(TextureKey.TEXTURE, Identifier.of(Simpletweaks.MOD_ID, "block/" + textureName));
+        Identifier modelId = Models.PRESSURE_PLATE_UP.upload(block, texture, generator.modelCollector);
+
+        generator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(block, BlockStateModelGenerator.createWeightedVariant(modelId)));
+        generator.registerParentedItemModel(block, modelId);
     }
 
     @Override

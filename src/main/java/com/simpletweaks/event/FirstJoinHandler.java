@@ -36,14 +36,17 @@ public class FirstJoinHandler {
     private static void giveStarterItems(ServerPlayerEntity player, int amount) {
         // Item mit der konfigurierten Anzahl erstellen
         ItemStack teleporter = new ItemStack(ModBlocks.SPAWN_TELEPORTER, amount);
+        ItemStack elytraPad = new ItemStack(ModBlocks.ELYTRA_PAD, amount);
 
         teleporter.set(DataComponentTypes.CUSTOM_NAME, Text.literal("Home Teleporter").formatted(Formatting.AQUA));
 
         if (!player.getInventory().insertStack(teleporter)) {
             player.dropItem(teleporter, false);
+        } else if (!player.getInventory().insertStack(elytraPad)) {
+            player.dropItem(elytraPad, false);
         }
 
         // Nachricht anpassen je nach Menge (Singular/Plural optional, hier einfach halten)
-        player.sendMessage(Text.literal("You received " + amount + " Spawn Teleporter(s)!").formatted(Formatting.GREEN), false);
+        player.sendMessage(Text.literal("You received " + amount + "Elytra-Pad(s) and Spawn Teleporter(s)!").formatted(Formatting.GREEN), false);
     }
 }

@@ -1,0 +1,82 @@
+package com.simpletweaks.block.entity;
+
+import com.simpletweaks.Simpletweaks;
+import com.simpletweaks.block.custom.ElytraPadBlock;
+import com.simpletweaks.component.ModDataComponentTypes;
+import com.simpletweaks.config.SimpletweaksConfig;
+import com.simpletweaks.item.ModItems;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.world.World;
+
+import java.util.List;
+
+public class ElytraPadBlockEntity extends BlockEntity {
+
+    public ElytraPadBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.ELYTRA_PAD_BE, pos, state);
+    }
+
+    public static void tick(World world, BlockPos pos, BlockState state, ElytraPadBlockEntity be) {
+        if (world.isClient() || world.getTime() % 10 != 0) return; // Server only, alle 0.5 Sek
+
+        int tier = 1; // Default
+        if (state.getBlock() instanceof ElytraPadBlock padBlock) {
+            tier = padBlock.getTier();
+        }
+        Box range = getBoxForTier(pos, tier);
+
+        List<ServerPlayerEntity> players = world.getEntitiesByClass(ServerPlayerEntity.class, range, p -> true);
+
+        SimpletweaksConfig.Spawn config = Simpletweaks.getConfig().spawn;
+
+        for (ServerPlayerEntity player : players) {
+            ItemStack chestStack = player.getEquippedStack(EquipmentSlot.CHEST);
+            
+            // 1. Elytra geben, wenn Slot leer
+            if (chestStack.isEmpty()) {
+                ItemStack elytra = new ItemStack(ModItems.SPAWN_ELYTRA);
+                initElytraData(elytra, config);
+                player.equipStack(EquipmentSlot.CHEST, elytra);
+                player.sendMessage(net.minecraft.text.Text.literal("Elytra equipped by Pad!").formatted(net.minecraft.util.Formatting.GREEN), true);
+            } 
+            // 2. Elytra aufladen, wenn vorhanden
+            else if (chestStack.isOf(ModItems.SPAWN_ELYTRA)) {
+                initElytraData(chestStack, config);
+                // Kleiner visueller Indikator
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 20, 0, true, false, false));
+            }
+        }
+    }
+
+    private static void initElytraData(ItemStack stack, SimpletweaksConfig.Spawn config) {
+        stack.set(ModDataComponentTypes.FLIGHT_TIME, config.flightTimeSeconds * 20);
+        stack.set(ModDataComponentTypes.BOOST_LEVEL, 1.0f);
+    }
+
+    private static Box getBoxForTier(BlockPos pos, int tier) {
+        // Tier 1: 5x5x15 -> Radius (Breite) ~2.5 -> Box +/- 2.5
+        // Die Angabe "5x5" interpretiere ich als Gesamtbreite.
+        // Höhe geht vom Pad nach oben.
+        
+        double xzRadius;
+        double height;
+
+        switch (tier) {
+            case 2 -> { xzRadius = 7.5; height = 31; }  // 15x15x31
+            case 3 -> { xzRadius = 15.5; height = 63; } // 31x31x63
+            case 4 -> { xzRadius = 31.5; height = 127; } // 63x63x127
+            default -> { xzRadius = 2.5; height = 15; } // Tier 1: 5x5x15
+        }
+        
+        // Box zentriert auf Blockmitte (x+0.5), y startet am Block
+        return new Box(pos).expand(xzRadius, 0, xzRadius).stretch(0, height, 0);
+    }
+}

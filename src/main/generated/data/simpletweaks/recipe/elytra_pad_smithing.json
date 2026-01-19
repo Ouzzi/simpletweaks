@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:diamond",
+  "base": "simpletweaks:diamond_pressure_plate",
+  "result": {
+    "id": "simpletweaks:elytra_pad"
+  },
+  "template": "#minecraft:trim_templates"
+}

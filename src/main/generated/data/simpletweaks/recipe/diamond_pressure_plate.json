@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "D": "minecraft:diamond"
+  },
+  "pattern": [
+    "DD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "simpletweaks:diamond_pressure_plate"
+  }
+}

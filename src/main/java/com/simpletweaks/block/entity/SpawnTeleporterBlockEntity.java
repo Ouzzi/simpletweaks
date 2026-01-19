@@ -9,6 +9,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.PositionFlag;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -109,6 +110,18 @@ public class SpawnTeleporterBlockEntity extends BlockEntity {
                 int ticks = be.timeStanding.getOrDefault(id, 0) + 1;
                 be.timeStanding.put(id, ticks);
 
+                // FEATURE 3: Partikel beim Warten
+                if (world instanceof ServerWorld serverWorld) {
+                    // Portal-Partikel um den Spieler herum
+                    serverWorld.spawnParticles(
+                        ParticleTypes.PORTAL,
+                        player.getX(), player.getY() + 0.5, player.getZ(),
+                        5,      // Anzahl
+                        0.3, 0.5, 0.3, // Streuung (Breite/Höhe)
+                        0.1     // Geschwindigkeit
+                    );
+                }
+
                 if (ticks % 20 == 0 && ticks < 100) {
                     player.sendMessage(Text.literal("Teleporting in " + (5 - (ticks / 20)) + "...").formatted(Formatting.BLUE), true);
                     world.playSound(null, pos, SoundEvents.BLOCK_NOTE_BLOCK_PLING.value(), SoundCategory.BLOCKS, 0.2f, 1.5f + (ticks/200f));
@@ -131,16 +144,7 @@ public class SpawnTeleporterBlockEntity extends BlockEntity {
 
             world.playSound(null, player.getBlockPos(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1f, 1f);
 
-            player.teleport(
-                    overworld,
-                    spawnPos.getX() + 0.5,
-                    spawnPos.getY(),
-                    spawnPos.getZ() + 0.5,
-                    Set.<PositionFlag>of(),
-                    0f,
-                    0f,
-                    false
-            );
+            player.teleport(overworld, spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, Set.<PositionFlag>of(), 0f, 0f, false);
 
             overworld.playSound(null, spawnPos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.5f, 1f);
             player.sendMessage(Text.literal("Welcome to Spawn!").formatted(Formatting.GOLD, Formatting.BOLD), true);

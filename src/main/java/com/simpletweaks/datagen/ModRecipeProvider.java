@@ -7,13 +7,17 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.recipe.SmithingTransformRecipeJsonBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 
 import java.util.concurrent.CompletableFuture;
+import org.jetbrains.annotations.NotNull;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
     public ModRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
@@ -25,7 +29,11 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         return new RecipeGenerator(wrapperLookup, recipeExporter) {
             @Override
             public void generate() {
-                // Smithing Rezept: Netherite Upgrade + Gold Pressure Plate = Spawn Teleporter
+                RegistryWrapper.Impl<Item> itemRegistry = wrapperLookup.getOrThrow(RegistryKeys.ITEM);
+                TagKey<Item> TRIM_TEMPLATES_KEY = TagKey.of(RegistryKeys.ITEM, Identifier.ofVanilla("trim_templates"));
+                Ingredient trimTemplatesIngredient = Ingredient.ofTag(itemRegistry.getOrThrow(TRIM_TEMPLATES_KEY));
+
+                // 1. Smithing: Spawn Teleporter
                 SmithingTransformRecipeJsonBuilder.create(
                                 Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                                 Ingredient.ofItems(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE),
@@ -36,7 +44,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE), conditionsFromItem(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE))
                         .offerTo(exporter, getRecipeName(ModBlocks.SPAWN_TELEPORTER) + "_smithing");
 
-                // Smithing Rezept: Netherite Upgrade + Heavy Pressure Plate = Launchpad
+                // 2. Smithing: Launchpad
                 SmithingTransformRecipeJsonBuilder.create(
                                 Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                                 Ingredient.ofItems(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE),
@@ -46,6 +54,53 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         )
                         .criterion(hasItem(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE), conditionsFromItem(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE))
                         .offerTo(exporter, getRecipeName(ModBlocks.LAUNCHPAD) + "_smithing");
+
+                // 3. Crafting: Diamond Pressure Plate
+                createShaped(RecipeCategory.REDSTONE, ModBlocks.DIAMOND_PRESSURE_PLATE)
+                        .pattern("DD")
+                        .input('D', Items.DIAMOND)
+                        .criterion(hasItem(Items.DIAMOND), conditionsFromItem(Items.DIAMOND))
+                        .offerTo(exporter);
+
+                // 4. Smithing: Elytra Pad (Tier 1)
+                SmithingTransformRecipeJsonBuilder.create(
+                            trimTemplatesIngredient, // FIX hier verwendet
+                            Ingredient.ofItems(ModBlocks.DIAMOND_PRESSURE_PLATE),
+                            Ingredient.ofItems(Items.DIAMOND),
+                            RecipeCategory.TOOLS,
+                            ModBlocks.ELYTRA_PAD.asItem())
+                        .criterion("has_diamond_pressure_plate", conditionsFromItem(ModBlocks.DIAMOND_PRESSURE_PLATE))
+                        .offerTo(exporter, "elytra_pad_smithing");
+
+                // 5. Smithing: Reinforced Elytra Pad (Tier 2)
+                SmithingTransformRecipeJsonBuilder.create(
+                            trimTemplatesIngredient,
+                            Ingredient.ofItems(ModBlocks.ELYTRA_PAD),
+                            Ingredient.ofItems(Blocks.DIAMOND_BLOCK),
+                            RecipeCategory.TOOLS,
+                            ModBlocks.REINFORCED_ELYTRA_PAD.asItem())
+                        .criterion("has_elytra_pad", conditionsFromItem(ModBlocks.ELYTRA_PAD))
+                        .offerTo(exporter, "reinforced_elytra_pad_smithing");
+
+                // 6. Smithing: Netherite Elytra Pad (Tier 3)
+                SmithingTransformRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                            Ingredient.ofItems(ModBlocks.REINFORCED_ELYTRA_PAD),
+                            Ingredient.ofItems(Items.NETHERITE_INGOT),
+                            RecipeCategory.TOOLS,
+                            ModBlocks.NETHERITE_ELYTRA_PAD.asItem())
+                        .criterion("has_reinforced_elytra_pad", conditionsFromItem(ModBlocks.REINFORCED_ELYTRA_PAD))
+                        .offerTo(exporter, "netherite_elytra_pad_smithing");
+
+                // 7. Smithing: Fine Elytra Pad (Tier 4)
+                SmithingTransformRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                            Ingredient.ofItems(ModBlocks.NETHERITE_ELYTRA_PAD),
+                            Ingredient.ofItems(Items.NETHER_STAR),
+                            RecipeCategory.TOOLS,
+                            ModBlocks.FINE_ELYTRA_PAD.asItem())
+                        .criterion("has_netherite_elytra_pad", conditionsFromItem(ModBlocks.NETHERITE_ELYTRA_PAD))
+                        .offerTo(exporter, "fine_elytra_pad_smithing");
             }
         };
     }
