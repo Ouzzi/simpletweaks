@@ -7,6 +7,12 @@
   "block.simpletweaks.spawn_teleporter": "Spawn Teleporter",
   "block.simpletweaks.launchpad": "Launchpad",
 
+  "block.simpletweaks.diamond_pressure_plate": "Diamond Pressure Plate",
+  "block.simpletweaks.elytra_pad": "Elytra Pad (Tier 1)",
+  "block.simpletweaks.reinforced_elytra_pad": "Reinforced Elytra Pad (Tier 2)",
+  "block.simpletweaks.netherite_elytra_pad": "Netherite Elytra Pad (Tier 3)",
+  "block.simpletweaks.fine_elytra_pad": "Fine Elytra Pad (Tier 4)",
+
   "text.autoconfig.simpletweaks.title": "Simpletweaks Config",
   "text.autoconfig.simpletweaks.category.default": "General",
 

@@ -24,7 +24,6 @@ public class ModBlockEntities {
 
     );
 
-    // --- FIX HIER: Alle 4 Blöcke eintragen ---
     public static final BlockEntityType<ElytraPadBlockEntity> ELYTRA_PAD_BE = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             Identifier.of(Simpletweaks.MOD_ID, "elytra_pad_be"),
@@ -33,6 +32,17 @@ public class ModBlockEntities {
                     ModBlocks.REINFORCED_ELYTRA_PAD, // Tier 2
                     ModBlocks.NETHERITE_ELYTRA_PAD,  // Tier 3
                     ModBlocks.FINE_ELYTRA_PAD        // Tier 4
+            ).build()
+    );
+
+    public static final BlockEntityType<FlypadBlockEntity> FLYPAD_BE = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(Simpletweaks.MOD_ID, "flypad_be"),
+            FabricBlockEntityTypeBuilder.create(FlypadBlockEntity::new,
+                    ModBlocks.FLYPAD,               // Tier 1
+                    ModBlocks.REINFORCED_FLYPAD,    // Tier 2
+                    ModBlocks.NETHERITE_FLYPAD,     // Tier 3
+                    ModBlocks.STELLAR_FLYPAD        // Tier 4
             ).build()
     );
 

@@ -20,6 +20,22 @@ A unique system designed for server lobbies or spawn areas.
 
 ![Spawn Elytra In Inventory](https://cdn.modrinth.com/data/cached_images/f366ca4cd22cb7a445599f62257e9a0ac1e7aa10_0.webp)
 
+### 🪽 Elytra Pads
+Expand your flight network beyond spawn!
+* **Function:** Standing on an Elytra Pad equips the player with a Spawn Elytra (or recharges it) and applies a glowing effect.
+* **Tiers:** Upgradable pads with increasing radius and height range.
+    * **Tier 1:** 5x15 Range (Crafted with Diamond Pressure Plate)
+    * **Tier 2:** 15x31 Range (Reinforced)
+    * **Tier 3:** 31x63 Range (Netherite)
+    * **Tier 4:** 63x127 Range (Fine/Nether Star)
+* **First Join Gift:** Players receive a Tier 1 Elytra Pad on their first join to start building their hub.
+
+### 💎 Diamond Pressure Plate
+A highly specialized redstone component.
+* **Player-Only:** This pressure plate activates **only** when a player steps on it. Mobs and items are ignored.
+* **Crafting:** 2 Diamonds in a horizontal row.
+* **Usage:** Perfect for secure doors, traps, or triggering Elytra Pads without accidental mob activation.
+
 ### 🌌 Spawn Teleporter
 A personal teleportation pad to get you back to the world spawn quickly.
 * **First Join Gift:** Players receive a configurable amount (Default: 1) on their first join.

@@ -7,6 +7,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -83,6 +84,31 @@ public class LaunchpadBlock extends BlockWithEntity implements Waterloggable {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new LaunchpadBlockEntity(pos, state); }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        super.onPlaced(world, pos, state, placer, itemStack);
+        if (!world.isClient() && placer instanceof PlayerEntity player) {
+            BlockEntity be = world.getBlockEntity(pos);
+            if (be instanceof LaunchpadBlockEntity pad) {
+                pad.setOwner(player.getUuid());
+            }
+        }
+    }
+
+    @Override
+    public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
+        if (player.isCreative()) return super.calcBlockBreakingDelta(state, player, world, pos);
+
+        BlockEntity be = world.getBlockEntity(pos);
+        if (be instanceof LaunchpadBlockEntity pad) {
+            // Besitzer: Schnell (ca. 2 Sekunden)
+            if (pad.isOwner(player)) return 1.0f / 40.0f;
+                // Fremde: Langsam (ca. 60 Sekunden)
+            else return 1.0f / 1200.0f;
+        }
+        return super.calcBlockBreakingDelta(state, player, world, pos);
+    }
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {

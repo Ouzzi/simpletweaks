@@ -17,6 +17,22 @@ Verwandle deinen Spawn in einen Spielplatz!
 * **Custom HUD:** Eine schicke **blaue Boost-Bar** ersetzt die XP-Leiste und zeigt dir deine Energie an.
 * **Sicherheit:** Kein Fallschaden und kein Schaden beim Aufprall gegen Wände.
 
+### 🛫 Elytren-Pads
+Erweitere dein Flugnetzwerk weit über den Spawn hinaus!
+* **Funktion:** Stelle dich auf ein Elytren-Pad, um eine Spawn-Elytra zu erhalten (oder aufzuladen) und einen Glüheffekt zu bekommen.
+* **Stufen (Tiers):** Upgradefähige Pads mit wachsendem Radius und Höhenreichweite.
+    * **Stufe 1:** 5x15 Reichweite (Craftbar mit Diamant-Druckplatte)
+    * **Stufe 2:** 15x31 Reichweite (Verstärkt)
+    * **Stufe 3:** 31x63 Reichweite (Netherite)
+    * **Stufe 4:** 63x127 Reichweite (Edel/Netherstern)
+* **Startgeschenk:** Spieler erhalten beim ersten Beitritt ein Stufe 1 Pad, um ihren Hub zu bauen.
+
+### 💎 Diamant-Druckplatte
+Ein hochspezialisiertes Redstone-Bauteil.
+* **Nur Spieler:** Diese Druckplatte aktiviert sich **nur**, wenn ein Spieler darauf tritt. Monster und Items werden ignoriert.
+* **Crafting:** 2 Diamanten horizontal nebeneinander.
+* **Nutzung:** Perfekt für sichere Türen, Fallen oder Elytren-Pads, ohne versehentliche Aktivierung durch Mobs.
+
 ### 🌪️ Startrampe (Launchpad)
 Ein mächtiges Sprungpad, betrieben durch Windenergie.
 * **Crafting:** `Windkugel` + `Schwere Wägeplatte` + `Windkugel` (Vertikal).

@@ -12,17 +12,26 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
+import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ElytraPadBlockEntity extends BlockEntity {
+    private UUID ownerUuid;
 
     public ElytraPadBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ELYTRA_PAD_BE, pos, state);
     }
+
+    public void setOwner(UUID uuid) { this.ownerUuid = uuid; markDirty(); }
+    public boolean isOwner(PlayerEntity player) { return ownerUuid != null && ownerUuid.equals(player.getUuid()); }
 
     public static void tick(World world, BlockPos pos, BlockState state, ElytraPadBlockEntity be) {
         if (world.isClient() || world.getTime() % 10 != 0) return; // Server only, alle 0.5 Sek
@@ -79,5 +88,17 @@ public class ElytraPadBlockEntity extends BlockEntity {
         
         // Box zentriert auf Blockmitte (x+0.5), y startet am Block
         return new Box(pos).expand(xzRadius, 0-offsetY, xzRadius).stretch(0, height-offsetY, 0);
+    }
+
+    @Override
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        if (ownerUuid != null) {view.put("Owner", Uuids.INT_STREAM_CODEC, ownerUuid);}
+    }
+
+    @Override
+    protected void readData(ReadView view) {
+        super.readData(view);
+        view.read("Owner", Uuids.INT_STREAM_CODEC).ifPresent(uuid -> this.ownerUuid = uuid);
     }
 }

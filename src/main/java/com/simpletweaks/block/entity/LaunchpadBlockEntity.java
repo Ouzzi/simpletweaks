@@ -1,5 +1,6 @@
 package com.simpletweaks.block.entity;
 
+import com.simpletweaks.block.custom.LaunchpadBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,30 +19,43 @@ import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.UUID;
 
 public class LaunchpadBlockEntity extends BlockEntity {
     private int charges = 0;
     private int chargeTimer = 0;
 
+    private UUID ownerUuid;
+
     public LaunchpadBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.LAUNCHPAD_BE, pos, state);
     }
 
-    public int getCharges() {
-        return charges;
+    // --- Owner Logic ---
+    public void setOwner(UUID uuid) {
+        this.ownerUuid = uuid;
+        markDirty();
     }
+
+    public boolean isOwner(PlayerEntity player) {
+        return ownerUuid != null && ownerUuid.equals(player.getUuid());
+    }
+
+    // --- Charges Logic ---
+    public int getCharges() { return charges; }
 
     public void addCharge() {
         if (this.charges < 16) {
             this.charges++;
             this.chargeTimer = 0;
             markDirty();
-            updateListeners();
+            if (world != null) world.updateListeners(pos, getCachedState(), getCachedState(), 3);
         }
     }
 
@@ -158,12 +172,15 @@ public class LaunchpadBlockEntity extends BlockEntity {
     protected void writeData(WriteView view) {
         super.writeData(view);
         view.putInt("Charges", charges);
+        if (ownerUuid != null) {view.put("Owner", Uuids.INT_STREAM_CODEC, ownerUuid);}
     }
 
+    // --- FIX: readData mit Codec ---
     @Override
     protected void readData(ReadView view) {
         super.readData(view);
         this.charges = view.getInt("Charges", 0);
+        view.read("Owner", Uuids.INT_STREAM_CODEC).ifPresent(uuid -> this.ownerUuid = uuid);
     }
 
     @Override

@@ -1,10 +1,7 @@
 package com.simpletweaks.block;
 
 import com.simpletweaks.Simpletweaks;
-import com.simpletweaks.block.custom.DiamondPressurePlateBlock;
-import com.simpletweaks.block.custom.ElytraPadBlock;
-import com.simpletweaks.block.custom.LaunchpadBlock;
-import com.simpletweaks.block.custom.SpawnTeleporterBlock;
+import com.simpletweaks.block.custom.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -53,7 +50,17 @@ public class ModBlocks {
                             .pistonBehavior(PistonBehavior.DESTROY)
             ));
 
-    // TIER 1
+    public static final Block NETHERITE_PRESSURE_PLATE = registerBlock("netherite_pressure_plate",
+            new NetheritePressurePlateBlock(BlockSetType.IRON, // Sound Metal
+                    AbstractBlock.Settings.create()
+                            .registryKey(keyOf("netherite_pressure_plate"))
+                            .mapColor(MapColor.BLACK)
+                            .noCollision()
+                            .strength(4.0F)
+                            .pistonBehavior(PistonBehavior.DESTROY)
+            ));
+
+    // Elytra Pad TIERS
     public static final Block ELYTRA_PAD = registerBlock("elytra_pad",
             new ElytraPadBlock(AbstractBlock.Settings.create()
                     .registryKey(keyOf("elytra_pad")) // WICHTIG: Key setzen!
@@ -64,7 +71,6 @@ public class ModBlocks {
                     1 // Tier
             ));
 
-    // TIER 2
     public static final Block REINFORCED_ELYTRA_PAD = registerBlock("reinforced_elytra_pad",
             new ElytraPadBlock(AbstractBlock.Settings.create()
                     .registryKey(keyOf("reinforced_elytra_pad")) // WICHTIG: Key setzen!
@@ -75,7 +81,6 @@ public class ModBlocks {
                     2 // Tier
             ));
 
-    // TIER 3
     public static final Block NETHERITE_ELYTRA_PAD = registerBlock("netherite_elytra_pad",
             new ElytraPadBlock(AbstractBlock.Settings.create()
                     .registryKey(keyOf("netherite_elytra_pad")) // WICHTIG: Key setzen!
@@ -86,7 +91,6 @@ public class ModBlocks {
                     3 // Tier
             ));
 
-    // TIER 4
     public static final Block FINE_ELYTRA_PAD = registerBlock("fine_elytra_pad",
             new ElytraPadBlock(AbstractBlock.Settings.create()
                     .registryKey(keyOf("fine_elytra_pad")) // WICHTIG: Key setzen!
@@ -97,6 +101,28 @@ public class ModBlocks {
                     .nonOpaque(),
                     4 // Tier
             ));
+
+
+    // FLYPAD TIERS
+    public static final Block FLYPAD = registerBlock("flypad",
+            new FlypadBlock(AbstractBlock.Settings.create()
+                    .registryKey(keyOf("flypad"))
+                    .mapColor(MapColor.EMERALD_GREEN).strength(2.0f).nonOpaque(), 1));
+
+    public static final Block REINFORCED_FLYPAD = registerBlock("reinforced_flypad",
+            new FlypadBlock(AbstractBlock.Settings.create()
+                    .registryKey(keyOf("reinforced_flypad"))
+                    .mapColor(MapColor.DIAMOND_BLUE).strength(3.0f).nonOpaque(), 2));
+
+    public static final Block NETHERITE_FLYPAD = registerBlock("netherite_flypad",
+            new FlypadBlock(AbstractBlock.Settings.create()
+                    .registryKey(keyOf("netherite_flypad"))
+                    .mapColor(MapColor.BLACK).strength(5.0f).nonOpaque(), 3));
+
+    public static final Block STELLAR_FLYPAD = registerBlock("stellar_flypad",
+            new FlypadBlock(AbstractBlock.Settings.create()
+                    .registryKey(keyOf("stellar_flypad"))
+                    .mapColor(MapColor.PURPLE).strength(5.0f).luminance(s -> 15).nonOpaque(), 4));
 
 
     private static Block registerBlock(String name, Block block) {
@@ -122,6 +148,11 @@ public class ModBlocks {
             entries.add(REINFORCED_ELYTRA_PAD);
             entries.add(NETHERITE_ELYTRA_PAD);
             entries.add(FINE_ELYTRA_PAD);
+            entries.add(NETHERITE_PRESSURE_PLATE);
+            entries.add(FLYPAD);
+            entries.add(REINFORCED_FLYPAD);
+            entries.add(NETHERITE_FLYPAD);
+            entries.add(STELLAR_FLYPAD);
         });
     }
 }

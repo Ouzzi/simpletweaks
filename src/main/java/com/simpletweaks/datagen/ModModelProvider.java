@@ -24,11 +24,20 @@ public class ModModelProvider extends FabricModelProvider {
         // --- DIAMOND PRESSURE PLATE ---
         registerFlatBlock(blockStateModelGenerator, ModBlocks.DIAMOND_PRESSURE_PLATE, "diamond_pressure_plate");
 
+        // --- NETHERITE PRESSURE PLATE ---
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.NETHERITE_PRESSURE_PLATE, "netherite_pressure_plate");
+
         // --- ELYTRA PADS (Tier 1-4) ---
         registerFlatBlock(blockStateModelGenerator, ModBlocks.ELYTRA_PAD, "elytra_pad");
         registerFlatBlock(blockStateModelGenerator, ModBlocks.REINFORCED_ELYTRA_PAD, "reinforced_elytra_pad");
         registerFlatBlock(blockStateModelGenerator, ModBlocks.NETHERITE_ELYTRA_PAD, "netherite_elytra_pad");
         registerFlatBlock(blockStateModelGenerator, ModBlocks.FINE_ELYTRA_PAD, "fine_elytra_pad");
+
+        // --- FLYPADS (Tier 1-4) ---
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.FLYPAD, "flypad");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.REINFORCED_FLYPAD, "reinforced_flypad");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.NETHERITE_FLYPAD, "netherite_flypad");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.STELLAR_FLYPAD, "stellar_flypad");
     }
 
     /**
