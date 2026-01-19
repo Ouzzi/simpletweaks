@@ -86,5 +86,11 @@
 
 
   "item.echo_compass.echo_compass": "Echo Compass",
-  "item.echo_compass.echo_compass.lore": "Link to a lodestone and use it to teleport"
+  "item.echo_compass.echo_compass.lore": "Link to a lodestone and use it to teleport",
+
+  "block.simpletweaks.netherite_pressure_plate": "Netherite Pressure Plate",
+  "block.simpletweaks.flypad": "Flypad (Tier 1)",
+  "block.simpletweaks.reinforced_flypad": "Reinforced Flypad (Tier 2)",
+  "block.simpletweaks.netherite_flypad": "Netherite Flypad (Tier 3)",
+  "block.simpletweaks.stellar_flypad": "Stellar Flypad (Tier 4)"
 }

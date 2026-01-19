@@ -86,5 +86,11 @@
 
 
   "item.echo_compass.echo_compass": "Echo-Kompass",
-  "item.echo_compass.echo_compass.lore": "Verbinde ihn mit einem Leitstein, um dich zu teleportieren"
+  "item.echo_compass.echo_compass.lore": "Verbinde ihn mit einem Leitstein, um dich zu teleportieren",
+
+  "block.simpletweaks.netherite_pressure_plate": "Netherite-Druckplatte",
+  "block.simpletweaks.flypad": "Flug-Pad (Stufe 1)",
+  "block.simpletweaks.reinforced_flypad": "Verstärktes Flug-Pad (Stufe 2)",
+  "block.simpletweaks.netherite_flypad": "Netherite-Flug-Pad (Stufe 3)",
+  "block.simpletweaks.stellar_flypad": "Stellares Flug-Pad (Stufe 4)"
 }

@@ -51,67 +51,24 @@ A powerful jump pad powered by wind.
 * **Variable Power:** The more charges stored, the stronger the launch!
 * **Visuals:** Emits wind particles when charged and displays the current power level via sound and particles.
 
-### 🧱 Throwable Bricks
-Turn construction materials into dangerous projectiles!
-* **Vanilla Items:** Standard **Bricks** and **Nether Bricks** can now be thrown by right-clicking.
-* **Damage:** They deal significant damage on impact (Default: 2 Hearts). Configurable.
-* **Physics:** Thrown bricks can shatter **Glass** and **Glass Panes** (but not Tinted Glass). This can be disabled in the config.
-* **Drop:** The brick item drops on the ground after impact.
+### 🕊️ Flypads (Creative Flight)
+Experience true freedom within your base!
+* **Function:** Grants **Creative Flight** to players within its radius. Players glow to indicate the effect is active.
+* **Tiers:** Same range upgrades as Elytra Pads:
+    * **Tier 1:** 5x15 Range (Smithing: Netherite Upgrade + Netherite Ingot + Tier 4 Elytra Pad)
+    * **Tier 2:** 15x31 Range (Smithing: Netherite Upgrade + Netherite Block + Tier 1 Flypad)
+    * **Tier 3:** 31x63 Range (Crafting: Netherite Block, Nether Star, Tier 2 Flypad, Ominous Keys)
+    * **Tier 4:** 63x127 Range (Crafting: Nether Star, Tier 3 Flypad, Ominous Keys) - Massive range!
 
-### ❄️🧱 Brick Snowball
-A nasty surprise wrapped in snow.
-* **Crafting:** Combine **3 Snowballs** and **1 Brick** to craft.
-* **Effect:** Throws like a snowball but deals physical damage (Default: 1 Heart) and breaks glass.
-* **Visuals:** Emits a mix of snowball and brick particles upon impact.
+### ⬛ Netherite Pressure Plate
+The ultimate security filter.
+* **Item Filter:** If placed on top of a **Barrel**, this plate only activates if the player holding an item that matches one inside the barrel.
+* **Smart Detection:** Without a barrel, it acts as a heavy-duty player detector.
+* **Grief Protection:** Like other pads, the owner can break it instantly, while others take significantly longer.
 
-### 💨 "Yeet" Item Throw
-Throw items further than ever before!
-* **Action:** Hold `Sneak (Shift)` + `Drop (Q)` to throw an item.
-* **Effect:** The item is launched at high velocity in your viewing direction.
-* **Configurable:** Adjust the throw strength in the config or via commands.
-
-## 🖥️ HUD & Visual Enhancements
-
-### 🧭 Locator Heads
-Find your friends easily!
-* **Compass Bar:** Shows a bar at the top of the screen displaying the **heads of nearby players**.
-* **Directional:** The heads move left/right based on your viewing angle, acting like a compass.
-* **Immersive:** Replaces abstract markers with actual player skins.
-
-### 💬 Chat Heads
-See who is talking.
-* **Visual Chat:** Displays the player's head next to their chat messages.
-* **Opacity:** The heads fade out together with the chat text.
-
-### 🧪 Status Effect Bars
-Never guess your potion duration again.
-* **Duration Bar:** Adds a colored durability-like bar under status effect icons in the **HUD** and **Inventory**.
-* **Visual:** The bar shrinks as the effect wears off, matching the effect's color (e.g., pink for Regeneration).
-
-### 📉 Elytra Pitch Helper
-Master the perfect flight.
-* **40/40 Guide:** Displays visual guide lines when you are gliding near the optimal pitch of **±40°**.
-* **Alignment:** Align the line with your crosshair for maximum speed or altitude gain.
-
-## Speed-Lines
-Visual speed indicators when sprinting or flying with Elytra.
-
-## 🔥 Fun & Quality of Life
-
-* **🟢 XP Clumps:** Groups XP orbs into single entities to reduce lag.
-    * **Instant Pickup:** No more waiting for the "ding-ding-ding" cooldown; pick up all XP instantly.
-    * **Visual Scaling:** Orbs with more XP appear physically larger.
-* **💨 YEET!** Hold `Shift` + `Q` to throw items with great force.
-* **🚶 Auto-Walk:** Press `R` (configurable) to walk automatically. Perfect for long trips.
-* **🤫 Silence Mobs:** Name tags ending with `_mute` or `_shhh` silence mobs completely.
-* **🌾 Crop Protection:** Players with **Feather Falling** boots will not trample farmland.
-* **⚔️ Lawn Mower:** Weapons with **Sharpness III+** cut through grass and flowers during combat.
-* **🪜 Faster Ladders:** Climb ladders noticeably faster. Slide down quicker too!
-* **🔫 Laser-Pointer:** Projects a red laser point.
 
 ## 🛡️ Admin & Server Tools
 
-* **💀 PvP Heads:** Players drop their head (skin included) upon death in PvP.
 * **📍 Exact Spawn:** Force players to spawn exactly on a block (or pillow) - no random radius.
 * **🌍 Dimensions:** Globally disable the Nether or End until you are ready.
 * **🧹 Lag Killer:** Remove empty boats and minecarts with a single command.
