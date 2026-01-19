@@ -3,13 +3,6 @@
 - copper pressureplate - activates only when player stands longer on it, more oxidized the plate is, longer time is needed to activate it 
 - copper pressureplate can bbe turned into chunk loader plate, no uprades
 
-- netherite pressureplate - activates only when player with specific item stands on it (configurable with barrel below it), multiple items possible (like a whitelist)
-- flypad - like elytrapad, same tiers, and radius, allows creative flight inside radius
-- also highlight players who creative fly inside flypad radius (spectral arrow effect)
-- smithable first tier with netherite upgrade and netherite and tier 4 elytra pad in smithing table
-- second tier netherite upgrade + netherite block + fly pad -> tier 2 flypad (reinforced flypad)
-- third tier crafting table -> netherite block + netherstar + flypad tier 2 + 2 oninous keys + 4 diablocks -> tier 3 flypad (netherite flypad)
-- fourth tier crafting table -> 1 netherstar + 3 flypad tier 3  + 5 oninous keys -> tier 4 flypad (stellar flypad)
 
 - claim deed - not protecting land, just showing who owns it
 
@@ -56,3 +49,12 @@
 - - starter elytra equiped inside of the radius
 - - craftable with any template + diamond + diamond pressure-plate (fine pressure-plate - activates only when player stands on it)
 - spawnteleporter - shouldnt be broken with water/lava
+
+
+- netherite pressureplate - activates only when player with specific item stands on it (configurable with barrel below it), multiple items possible (like a whitelist)
+- flypad - like elytrapad, same tiers, and radius, allows creative flight inside radius
+- also highlight players who creative fly inside flypad radius (spectral arrow effect)
+- smithable first tier with netherite upgrade and netherite and tier 4 elytra pad in smithing table
+- second tier netherite upgrade + netherite block + fly pad -> tier 2 flypad (reinforced flypad)
+- third tier crafting table -> netherite block + netherstar + flypad tier 2 + 2 oninous keys + 4 diablocks -> tier 3 flypad (netherite flypad)
+- fourth tier crafting table -> 1 netherstar + 3 flypad tier 3  + 5 oninous keys -> tier 4 flypad (stellar flypad)
