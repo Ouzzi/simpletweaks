@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "simpletweaks:fine_elytra_pad",
+  "result": {
+    "id": "simpletweaks:flypad"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": "minecraft:netherite_block",
+    "D": "minecraft:diamond_block",
+    "F": "simpletweaks:reinforced_flypad",
+    "K": "minecraft:ominous_trial_key",
+    "S": "minecraft:nether_star"
+  },
+  "pattern": [
+    "DBD",
+    "DSD",
+    "KFK"
+  ],
+  "result": {
+    "count": 1,
+    "id": "simpletweaks:netherite_flypad"
+  }
+}

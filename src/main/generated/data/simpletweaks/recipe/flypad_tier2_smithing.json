@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_block",
+  "base": "simpletweaks:flypad",
+  "result": {
+    "id": "simpletweaks:reinforced_flypad"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

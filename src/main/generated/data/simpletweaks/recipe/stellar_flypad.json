@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": "simpletweaks:netherite_flypad",
+    "K": "minecraft:ominous_trial_key",
+    "S": "minecraft:nether_star"
+  },
+  "pattern": [
+    "KKK",
+    "KSK",
+    "FFF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "simpletweaks:stellar_flypad"
+  }
+}
