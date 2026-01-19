@@ -8,51 +8,81 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
-public class LaunchpadBlock extends BlockWithEntity {
+public class LaunchpadBlock extends BlockWithEntity implements Waterloggable {
     public static final MapCodec<LaunchpadBlock> CODEC = createCodec(LaunchpadBlock::new);
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
     // Flache Form
     protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 1.0D, 15.0D);
 
     public LaunchpadBlock(Settings settings) {
         super(settings);
+        this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
-    }
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(WATERLOGGED);
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new LaunchpadBlockEntity(pos, state);
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+        return this.getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
+        if (state.get(WATERLOGGED)) {
+            tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() { return CODEC; }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) { return SHAPE; }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new LaunchpadBlockEntity(pos, state); }
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
@@ -60,15 +90,11 @@ public class LaunchpadBlock extends BlockWithEntity {
             BlockEntity be = world.getBlockEntity(pos);
             if (be instanceof LaunchpadBlockEntity launchpad) {
                 ItemStack handStack = player.getStackInHand(Hand.MAIN_HAND);
-
-                // Aufladen mit Wind Charge
                 if (handStack.isOf(Items.WIND_CHARGE)) {
                     int current = launchpad.getCharges();
                     if (current < 16) {
                         launchpad.addCharge();
-                        if (!player.isCreative()) {
-                            handStack.decrement(1);
-                        }
+                        if (!player.isCreative()) handStack.decrement(1);
                         world.playSound(null, pos, SoundEvents.ITEM_BUNDLE_INSERT, SoundCategory.BLOCKS, 1.0f, 1.5f);
                         player.sendMessage(Text.literal("Charges: " + (current + 1) + "/16").formatted(Formatting.GREEN), true);
                         return ActionResult.SUCCESS;
@@ -76,8 +102,7 @@ public class LaunchpadBlock extends BlockWithEntity {
                         player.sendMessage(Text.literal("Launchpad is full (16/16)").formatted(Formatting.RED), true);
                         return ActionResult.FAIL;
                     }
-                }
-                else {
+                } else {
                     player.sendMessage(Text.literal("Wind Charges: " + launchpad.getCharges() + "/16").formatted(Formatting.AQUA), true);
                     return ActionResult.SUCCESS;
                 }

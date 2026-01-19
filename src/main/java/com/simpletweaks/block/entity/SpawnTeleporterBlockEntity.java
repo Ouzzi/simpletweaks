@@ -90,7 +90,7 @@ public class SpawnTeleporterBlockEntity extends BlockEntity {
     public static void tick(World world, BlockPos pos, BlockState state, SpawnTeleporterBlockEntity be) {
         if (world.isClient()) return;
 
-        Box box = new Box(pos).offset(0, 0.5, 0).expand(0.1, 0.5, 0.1);
+        Box box = new Box(pos).offset(0, 0.5, 0).expand(0.1, 1.5, 0.1);
         List<ServerPlayerEntity> players = world.getEntitiesByClass(ServerPlayerEntity.class, box, p -> true);
 
         be.timeStanding.keySet().removeIf(uuid -> players.stream().noneMatch(p -> p.getUuid().equals(uuid)));

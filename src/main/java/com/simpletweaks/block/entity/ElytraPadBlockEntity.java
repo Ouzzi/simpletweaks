@@ -68,6 +68,7 @@ public class ElytraPadBlockEntity extends BlockEntity {
         
         double xzRadius;
         double height;
+        double offsetY = 2.0;
 
         switch (tier) {
             case 2 -> { xzRadius = 7.5; height = 31; }  // 15x15x31
@@ -77,6 +78,6 @@ public class ElytraPadBlockEntity extends BlockEntity {
         }
         
         // Box zentriert auf Blockmitte (x+0.5), y startet am Block
-        return new Box(pos).expand(xzRadius, 0, xzRadius).stretch(0, height, 0);
+        return new Box(pos).expand(xzRadius, 0-offsetY, xzRadius).stretch(0, height-offsetY, 0);
     }
 }

@@ -29,12 +29,39 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         return new RecipeGenerator(wrapperLookup, recipeExporter) {
             @Override
             public void generate() {
-                RegistryWrapper.Impl<Item> itemRegistry = wrapperLookup.getOrThrow(RegistryKeys.ITEM);
-                TagKey<Item> TRIM_TEMPLATES_KEY = TagKey.of(RegistryKeys.ITEM, Identifier.ofVanilla("trim_templates"));
-                Ingredient trimTemplatesIngredient = Ingredient.ofTag(itemRegistry.getOrThrow(TRIM_TEMPLATES_KEY));
+                Ingredient templates = Ingredient.ofItems(
+                        Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE,
+                        Items.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.COAST_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.WILD_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.WARD_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.EYE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.VEX_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.RIB_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.HOST_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.FLOW_ARMOR_TRIM_SMITHING_TEMPLATE,
+                        Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE
+                );
 
                 // 1. Smithing: Spawn Teleporter
-                SmithingTransformRecipeJsonBuilder.create(
+                SmithingTransformRecipeJsonBuilder.create( // later weaker pad
+                                templates,
+                                Ingredient.ofItems(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE),
+                                Ingredient.ofItems(Blocks.DIAMOND_BLOCK),
+                                RecipeCategory.TOOLS,
+                                ModBlocks.SPAWN_TELEPORTER.asItem()
+                        )
+                        .criterion(hasItem(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE), conditionsFromItem(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE))
+                        .offerTo(exporter, getRecipeName(ModBlocks.SPAWN_TELEPORTER) + "_smithing");
+                SmithingTransformRecipeJsonBuilder.create( // later stronger pad
                                 Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                                 Ingredient.ofItems(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE),
                                 Ingredient.ofItems(Items.NETHERITE_INGOT),
@@ -45,7 +72,16 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .offerTo(exporter, getRecipeName(ModBlocks.SPAWN_TELEPORTER) + "_smithing");
 
                 // 2. Smithing: Launchpad
-                SmithingTransformRecipeJsonBuilder.create(
+                SmithingTransformRecipeJsonBuilder.create( // later weaker pad
+                                templates,
+                                Ingredient.ofItems(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE),
+                                Ingredient.ofItems(Blocks.DIAMOND_BLOCK),
+                                RecipeCategory.TOOLS,
+                                ModBlocks.LAUNCHPAD.asItem()
+                        )
+                        .criterion(hasItem(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE), conditionsFromItem(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE))
+                        .offerTo(exporter, getRecipeName(ModBlocks.LAUNCHPAD) + "_smithing");
+                SmithingTransformRecipeJsonBuilder.create( // later stronger pad
                                 Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                                 Ingredient.ofItems(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE),
                                 Ingredient.ofItems(Items.NETHERITE_INGOT),
@@ -64,7 +100,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
                 // 4. Smithing: Elytra Pad (Tier 1)
                 SmithingTransformRecipeJsonBuilder.create(
-                            trimTemplatesIngredient, // FIX hier verwendet
+                            templates,
                             Ingredient.ofItems(ModBlocks.DIAMOND_PRESSURE_PLATE),
                             Ingredient.ofItems(Items.DIAMOND),
                             RecipeCategory.TOOLS,
@@ -74,7 +110,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 
                 // 5. Smithing: Reinforced Elytra Pad (Tier 2)
                 SmithingTransformRecipeJsonBuilder.create(
-                            trimTemplatesIngredient,
+                            templates,
                             Ingredient.ofItems(ModBlocks.ELYTRA_PAD),
                             Ingredient.ofItems(Blocks.DIAMOND_BLOCK),
                             RecipeCategory.TOOLS,

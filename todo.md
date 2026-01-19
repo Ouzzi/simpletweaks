@@ -1,8 +1,4 @@
 ## TODO:
-- elytra pad ( one on first join )
-- - diffrent tiers - 5x5x15 radius - 15x15x31 radius - 31x31x63 radius - 63x63x127 radius
-- - starter elytra equiped inside of the radius
-- - craftable with any template + diamond + diamond pressure-plate (fine pressure-plate - activates only when player stands on it) 
 
 
 
@@ -38,7 +34,6 @@
 
 ## BUGS:
 - unbreaking dosent work on echo compass for now
-- spawnteleporter - shouldnt be broken with water/lava
 
 
 ## DONE:
@@ -46,3 +41,9 @@
 - add effect to evey player who wears the starter elytra - highlight player like spectral arrow
 - add regeneration effect when standing on spawn area
 - add particles when standing on spawn teleporter
+
+- elytra pad ( one on first join )
+- - diffrent tiers - 5x5x15 radius - 15x15x31 radius - 31x31x63 radius - 63x63x127 radius
+- - starter elytra equiped inside of the radius
+- - craftable with any template + diamond + diamond pressure-plate (fine pressure-plate - activates only when player stands on it)
+- spawnteleporter - shouldnt be broken with water/lava
