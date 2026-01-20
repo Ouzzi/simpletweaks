@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "simpletweaks:block/spawn_teleporter_tier_3"
+    }
+  }
+}

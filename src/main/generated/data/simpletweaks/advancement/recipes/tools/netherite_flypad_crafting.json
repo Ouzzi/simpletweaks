@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "simpletweaks:netherite_flypad"
+        "recipe": "simpletweaks:netherite_flypad_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "simpletweaks:netherite_flypad"
+      "simpletweaks:netherite_flypad_crafting"
     ]
   }
 }

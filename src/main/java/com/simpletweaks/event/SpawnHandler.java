@@ -74,6 +74,13 @@ public class SpawnHandler {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 60, 0, true, false, false));
         }
 
+        // Prüfen ob Spieler "valid" ist (Spawn oder kürzlich auf Pad)
+        long currentTime = player.getEntityWorld().getTime();
+        Long lastPadTick = isWearingSpawnElytra ? chestStack.get(ModDataComponentTypes.LAST_PAD_TICK) : null;
+        // 3 Sekunden Toleranz (60 Ticks) nach Verlassen des Pads
+        boolean recentlyOnPad = lastPadTick != null && (currentTime - lastPadTick < 60);
+        boolean isValidLocation = insideSpawn || recentlyOnPad;
+
         if (insideSpawn) {
             // FEATURE 2: Regeneration im Spawn-Bereich
             // Regeneration I für 3 Sekunden
@@ -111,7 +118,7 @@ public class SpawnHandler {
             // Das verhindert das Entfernen, wenn man gerade frisch vom Pad kommt (Ticks == Max)
             boolean hasStartedFlying = ticksLeft < maxTicks;
 
-            if (timeUp || (landed && hasStartedFlying)) {
+            if (timeUp || (!isValidLocation && landed)) {
                 player.equipStack(EquipmentSlot.CHEST, ItemStack.EMPTY);
                 player.sendMessage(Text.literal("Spawn Elytra expired.").formatted(Formatting.YELLOW), true);
             } else if (ticksLeft == 200) {

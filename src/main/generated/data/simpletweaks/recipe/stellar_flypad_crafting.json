@@ -2,13 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
+    "E": "minecraft:enchanted_golden_apple",
     "F": "simpletweaks:netherite_flypad",
     "K": "minecraft:ominous_trial_key",
     "S": "minecraft:nether_star"
   },
   "pattern": [
     "KKK",
-    "KSK",
+    "ESE",
     "FFF"
   ],
   "result": {

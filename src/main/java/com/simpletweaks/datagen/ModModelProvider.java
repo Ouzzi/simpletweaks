@@ -17,6 +17,9 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         // --- SPAWN TELEPORTER BLOCK ---
         registerFlatBlock(blockStateModelGenerator, ModBlocks.SPAWN_TELEPORTER, "spawn_teleporter");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.SPAWN_TELEPORTER_TIER_2, "spawn_teleporter_tier_2");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.SPAWN_TELEPORTER_TIER_3, "spawn_teleporter_tier_3");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.SPAWN_TELEPORTER_TIER_4, "spawn_teleporter_tier_4");
 
         // --- LAUNCHPAD BLOCK ---
         registerFlatBlock(blockStateModelGenerator, ModBlocks.LAUNCHPAD, "launchpad");

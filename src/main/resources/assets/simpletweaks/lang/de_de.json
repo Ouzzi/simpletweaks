@@ -12,6 +12,11 @@
   "block.simpletweaks.reinforced_elytra_pad": "Verstärktes Elytren-Pad (Stufe 2)",
   "block.simpletweaks.netherite_elytra_pad": "Netherite-Elytren-Pad (Stufe 3)",
   "block.simpletweaks.fine_elytra_pad": "Edles Elytren-Pad (Stufe 4)",
+  "item.simpletweaks.diamond_pressure_plate": "Diamant-Druckplatte",
+  "item.simpletweaks.elytra_pad": "Elytren-Pad (Stufe 1)",
+  "item.simpletweaks.reinforced_elytra_pad": "Verstärktes Elytren-Pad (Stufe 2)",
+  "item.simpletweaks.netherite_elytra_pad": "Netherite-Elytren-Pad (Stufe 3)",
+  "item.simpletweaks.fine_elytra_pad": "Edles Elytren-Pad (Stufe 4)",
 
   "text.autoconfig.simpletweaks.title": "Simpletweaks Konfiguration",
   "text.autoconfig.simpletweaks.category.default": "Allgemein",
@@ -92,5 +97,10 @@
   "block.simpletweaks.flypad": "Flug-Pad (Stufe 1)",
   "block.simpletweaks.reinforced_flypad": "Verstärktes Flug-Pad (Stufe 2)",
   "block.simpletweaks.netherite_flypad": "Netherite-Flug-Pad (Stufe 3)",
-  "block.simpletweaks.stellar_flypad": "Stellares Flug-Pad (Stufe 4)"
+  "block.simpletweaks.stellar_flypad": "Stellares Flug-Pad (Stufe 4)",
+  "item.simpletweaks.netherite_pressure_plate": "Netherite-Druckplatte",
+  "item.simpletweaks.flypad": "Flug-Pad (Stufe 1)",
+  "item.simpletweaks.reinforced_flypad": "Verstärktes Flug-Pad (Stufe 2)",
+  "item.simpletweaks.netherite_flypad": "Netherite-Flug-Pad (Stufe 3)",
+  "item.simpletweaks.stellar_flypad": "Stellares Flug-Pad (Stufe 4)"
 }

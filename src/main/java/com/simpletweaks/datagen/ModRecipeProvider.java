@@ -70,6 +70,32 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         )
                         .criterion(hasItem(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE), conditionsFromItem(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE))
                         .offerTo(exporter, getRecipeName(ModBlocks.SPAWN_TELEPORTER) + "_smithing_alternative");
+                Ingredient netheriteUpgrade = Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
+
+                SmithingTransformRecipeJsonBuilder.create(
+                                netheriteUpgrade,
+                                Ingredient.ofItems(ModBlocks.SPAWN_TELEPORTER),
+                                Ingredient.ofItems(Items.NETHERITE_INGOT),
+                                RecipeCategory.TOOLS,
+                                ModBlocks.SPAWN_TELEPORTER_TIER_2.asItem())
+                        .criterion("has_spawn_teleporter", conditionsFromItem(ModBlocks.SPAWN_TELEPORTER))
+                        .offerTo(exporter, "spawn_teleporter_tier2_smithing");
+                SmithingTransformRecipeJsonBuilder.create(
+                                netheriteUpgrade,
+                                Ingredient.ofItems(ModBlocks.SPAWN_TELEPORTER_TIER_2),
+                                Ingredient.ofItems(Items.NETHERITE_INGOT),
+                                RecipeCategory.TOOLS,
+                                ModBlocks.SPAWN_TELEPORTER_TIER_3.asItem())
+                        .criterion("has_spawn_teleporter_t2", conditionsFromItem(ModBlocks.SPAWN_TELEPORTER_TIER_2))
+                        .offerTo(exporter, "spawn_teleporter_tier3_smithing");
+                SmithingTransformRecipeJsonBuilder.create(
+                                netheriteUpgrade,
+                                Ingredient.ofItems(ModBlocks.SPAWN_TELEPORTER_TIER_3),
+                                Ingredient.ofItems(Items.NETHERITE_INGOT),
+                                RecipeCategory.TOOLS,
+                                ModBlocks.SPAWN_TELEPORTER_TIER_4.asItem())
+                        .criterion("has_spawn_teleporter_t3", conditionsFromItem(ModBlocks.SPAWN_TELEPORTER_TIER_3))
+                        .offerTo(exporter, "spawn_teleporter_tier4_smithing");
 
                 // 2. Smithing: Launchpad
                 SmithingTransformRecipeJsonBuilder.create( // later weaker pad
@@ -160,22 +186,23 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern("ESE")
                         .pattern("KFK")
                         .input('D', Blocks.DIAMOND_BLOCK)
+                        .input('B', Blocks.NETHERITE_BLOCK)
+                        .input('E', Items.ENCHANTED_GOLDEN_APPLE)
                         .input('S', Items.NETHER_STAR)
                         .input('K', Items.OMINOUS_TRIAL_KEY)
                         .input('F', ModBlocks.REINFORCED_FLYPAD)
-                        .input('B', Blocks.NETHERITE_BLOCK)
                         .criterion("has_reinforced_flypad", conditionsFromItem(ModBlocks.REINFORCED_FLYPAD))
-                        .offerTo(exporter);
+                        .offerTo(exporter, "netherite_flypad_crafting");
                 createShaped(RecipeCategory.TOOLS, ModBlocks.STELLAR_FLYPAD)
                         .pattern("KKK")
                         .pattern("ESE")
                         .pattern("FFF")
                         .input('K', Items.OMINOUS_TRIAL_KEY)
-                        .input('F', ModBlocks.NETHERITE_FLYPAD)
                         .input('E', Items.ENCHANTED_GOLDEN_APPLE)
                         .input('S', Items.NETHER_STAR)
+                        .input('F', ModBlocks.NETHERITE_FLYPAD)
                         .criterion("has_netherite_flypad", conditionsFromItem(ModBlocks.NETHERITE_FLYPAD))
-                        .offerTo(exporter);
+                        .offerTo(exporter, "stellar_flypad_crafting");
 
             }
         };

@@ -53,4 +53,8 @@ public class Simpletweaks implements ModInitializer {
     }
 
     public static SimpletweaksConfig getConfig() { return CONFIG; }
+
+    public static void saveConfig() {
+        AutoConfig.getConfigHolder(SimpletweaksConfig.class).save();
+    }
 }

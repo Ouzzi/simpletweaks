@@ -53,16 +53,38 @@ public class ElytraPadBlockEntity extends BlockEntity {
             if (chestStack.isEmpty()) {
                 ItemStack elytra = new ItemStack(ModItems.SPAWN_ELYTRA);
                 initElytraData(elytra, config);
+                // Standardmäßig NICHT sicher (Falle/Kinetic enabled), außer es kommt vom Spawn.
+                elytra.set(ModDataComponentTypes.IS_SAFE_ELYTRA, false);
+                // Wir sind auf dem Pad, also Valid
+                elytra.set(ModDataComponentTypes.LAST_PAD_TICK, world.getTime());
+
                 player.equipStack(EquipmentSlot.CHEST, elytra);
                 player.sendMessage(net.minecraft.text.Text.literal("Elytra equipped by Pad!").formatted(net.minecraft.util.Formatting.GREEN), true);
             } 
             // 2. Elytra aufladen, wenn vorhanden
             else if (chestStack.isOf(ModItems.SPAWN_ELYTRA)) {
-                initElytraData(chestStack, config);
-                // Kleiner visueller Indikator
+                // Sagen, dass wir hier sicher sind (verhindert despawn im SpawnHandler)
+                chestStack.set(ModDataComponentTypes.LAST_PAD_TICK, world.getTime());
+
+                // Flugzeit IMMER resetten im Radius (damit man nicht abstürzt)
+                chestStack.set(ModDataComponentTypes.FLIGHT_TIME, config.flightTimeSeconds * 20);
+
+                // FIX: Boosts nur im 3x3 Bereich (direkt über Pad) aufladen
+                if (isInBoostColumn(player, pos)) {
+                    chestStack.set(ModDataComponentTypes.BOOST_LEVEL, 1.0f);
+                }
+
+                // Safe State NICHT überschreiben! Wenn sie vom Spawn kommt (True), bleibt sie True.
+
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 20, 0, true, false, false));
             }
         }
+    }
+
+    private static boolean isInBoostColumn(ServerPlayerEntity player, BlockPos pos) {
+        // 3x3 Säule zentriert auf Pad, etwas höher
+        Box boostBox = new Box(pos).expand(1.5, 0, 1.5).stretch(0, 4.0, 0);
+        return boostBox.intersects(player.getBoundingBox());
     }
 
     private static void initElytraData(ItemStack stack, SimpletweaksConfig.Spawn config) {

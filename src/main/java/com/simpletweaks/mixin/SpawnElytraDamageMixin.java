@@ -1,6 +1,7 @@
 package com.simpletweaks.mixin;
 
 import com.simpletweaks.Simpletweaks;
+import com.simpletweaks.component.ModDataComponentTypes;
 import com.simpletweaks.item.ModItems;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -28,12 +29,14 @@ public class SpawnElytraDamageMixin {
         ItemStack chest = entity.getEquippedStack(EquipmentSlot.CHEST);
 
         if (chest.isOf(ModItems.SPAWN_ELYTRA)) {
-            cir.setReturnValue(false);
-            return;
+            if (Boolean.TRUE.equals(chest.get(ModDataComponentTypes.IS_SAFE_ELYTRA))) {
+                cir.setReturnValue(false);
+                return;
+            }
         }
 
-        // 2. Check: Genereller Fallschutz im Spawn-Bereich (NEU)
-        if (entity instanceof ServerPlayerEntity player) { // Nur für Spieler (Server-seitig)
+        // Fallback: Spawn-Radius Check (Config)
+        if (entity instanceof ServerPlayerEntity player) {
             if (Simpletweaks.getConfig().spawn.disableFallDamageInSpawn && isInSpawnArea(player)) {
                 cir.setReturnValue(false);
             }
@@ -75,7 +78,9 @@ public class SpawnElytraDamageMixin {
         if (chest.isOf(ModItems.SPAWN_ELYTRA)) {
             // Prüfen ob es "Fly Into Wall" (Kinetische Energie) ist
             if (source.isOf(DamageTypes.FLY_INTO_WALL)) {
-                cir.setReturnValue(false); // Schaden abbrechen
+                if (Boolean.TRUE.equals(chest.get(ModDataComponentTypes.IS_SAFE_ELYTRA))) {
+                    cir.setReturnValue(false);
+                }
             }
         }
     }

@@ -1,17 +1,34 @@
 {
   "itemgroup.simpletweaks.money_items": "Currency Materials",
-  "item.simpletweaks.spawn_teleporter": "Spawn Teleporter",
   "item.simpletweaks.brick_snowball": "Brick Snowball",
-  "item.simpletweaks.launchpad": "Launchpad",
   "item.simpletweaks.claim_deed": "Claim Deed",
+
   "block.simpletweaks.spawn_teleporter": "Spawn Teleporter",
+  "item.simpletweaks.spawn_teleporter": "Spawn Teleporter",
   "block.simpletweaks.launchpad": "Launchpad",
+  "item.simpletweaks.launchpad": "Launchpad",
 
   "block.simpletweaks.diamond_pressure_plate": "Diamond Pressure Plate",
-  "block.simpletweaks.elytra_pad": "Elytra Pad (Tier 1)",
-  "block.simpletweaks.reinforced_elytra_pad": "Reinforced Elytra Pad (Tier 2)",
-  "block.simpletweaks.netherite_elytra_pad": "Netherite Elytra Pad (Tier 3)",
-  "block.simpletweaks.fine_elytra_pad": "Fine Elytra Pad (Tier 4)",
+  "block.simpletweaks.elytra_pad": "Elytra Pad I",
+  "block.simpletweaks.reinforced_elytra_pad": "Reinforced Elytra Pad II",
+  "block.simpletweaks.netherite_elytra_pad": "Netherite Elytra Pad III",
+  "block.simpletweaks.fine_elytra_pad": "Fine Elytra Pad IV",
+  "item.simpletweaks.diamond_pressure_plate": "Diamond Pressure Plate",
+  "item.simpletweaks.elytra_pad": "Elytra Pad I",
+  "item.simpletweaks.reinforced_elytra_pad": "Reinforced Elytra Pad II",
+  "item.simpletweaks.netherite_elytra_pad": "Netherite Elytra Pad III",
+  "item.simpletweaks.fine_elytra_pad": "Fine Elytra Pad IV",
+
+  "block.simpletweaks.netherite_pressure_plate": "Netherite Pressure Plate",
+  "block.simpletweaks.flypad": "Flypad I",
+  "block.simpletweaks.reinforced_flypad": "Reinforced Flypad II",
+  "block.simpletweaks.netherite_flypad": "Netherite Flypad III",
+  "block.simpletweaks.stellar_flypad": "Stellar Flypad IIII",
+  "item.simpletweaks.netherite_pressure_plate": "Netherite Pressure Plate",
+  "item.simpletweaks.flypad": "Flypad I",
+  "item.simpletweaks.reinforced_flypad": "Reinforced Flypad II",
+  "item.simpletweaks.netherite_flypad": "Netherite Flypad III",
+  "item.simpletweaks.stellar_flypad": "Stellar Flypad IV",
 
   "text.autoconfig.simpletweaks.title": "Simpletweaks Config",
   "text.autoconfig.simpletweaks.category.default": "General",
@@ -86,11 +103,5 @@
 
 
   "item.echo_compass.echo_compass": "Echo Compass",
-  "item.echo_compass.echo_compass.lore": "Link to a lodestone and use it to teleport",
-
-  "block.simpletweaks.netherite_pressure_plate": "Netherite Pressure Plate",
-  "block.simpletweaks.flypad": "Flypad (Tier 1)",
-  "block.simpletweaks.reinforced_flypad": "Reinforced Flypad (Tier 2)",
-  "block.simpletweaks.netherite_flypad": "Netherite Flypad (Tier 3)",
-  "block.simpletweaks.stellar_flypad": "Stellar Flypad (Tier 4)"
+  "item.echo_compass.echo_compass.lore": "Link to a lodestone and use it to teleport"
 }

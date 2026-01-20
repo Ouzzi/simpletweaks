@@ -28,16 +28,18 @@ import net.minecraft.world.tick.ScheduledTickView;
 import org.jetbrains.annotations.Nullable;
 
 public class SpawnTeleporterBlock extends BlockWithEntity implements Waterloggable {
-    public static final MapCodec<SpawnTeleporterBlock> CODEC = createCodec(SpawnTeleporterBlock::new);
+    public static final MapCodec<SpawnTeleporterBlock> CODEC = createCodec(settings -> new SpawnTeleporterBlock(settings, 1));
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-
-    // Form wie eine Druckplatte (etwas flacher als voller Block)
     protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 1.0D, 15.0D);
 
-    public SpawnTeleporterBlock(AbstractBlock.Settings settings) {
+    private final int tier; // 1, 2, 3, 4
+
+    public SpawnTeleporterBlock(AbstractBlock.Settings settings, int tier) {
         super(settings);
+        this.tier = tier;
         this.setDefaultState(this.stateManager.getDefaultState().with(WATERLOGGED, false));
     }
+    public int getTier() { return tier; }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
@@ -100,16 +102,11 @@ public class SpawnTeleporterBlock extends BlockWithEntity implements Waterloggab
 
     @Override
     public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
-        if (player.isCreative()) {
-            return super.calcBlockBreakingDelta(state, player, world, pos);
-        }
+        if (player.isCreative()) return super.calcBlockBreakingDelta(state, player, world, pos);
         BlockEntity be = world.getBlockEntity(pos);
         if (be instanceof SpawnTeleporterBlockEntity teleporter) {
-            if (teleporter.isOwner(player)) {
-                return 1.0f / 40.0f;
-            } else {
-                return 1.0f / 1200.0f;
-            }
+            if (teleporter.isOwner(player)) return 1.0f / 40.0f;
+            else return 1.0f / 1200.0f;
         }
         return super.calcBlockBreakingDelta(state, player, world, pos);
     }

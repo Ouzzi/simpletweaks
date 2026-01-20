@@ -5,15 +5,22 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import com.mojang.serialization.Codec;
 import java.util.function.UnaryOperator;
 
 public class ModDataComponentTypes {
 
-    // Speichert verbleibende Ticks (Integer)
-    public static final ComponentType<Integer> FLIGHT_TIME = register("flight_time", builder -> builder.codec(com.mojang.serialization.Codec.INT));
+    // Verbleibende Ticks (Integer)
+    public static final ComponentType<Integer> FLIGHT_TIME = register("flight_time", builder -> builder.codec(Codec.INT));
 
-    // Speichert verbleibende Boost-Menge (Float 0.0 - 1.0 für die Bar)
-    public static final ComponentType<Float> BOOST_LEVEL = register("boost_level", builder -> builder.codec(com.mojang.serialization.Codec.FLOAT));
+    // Verbleibende Boost-Menge (Float 0.0 - 1.0)
+    public static final ComponentType<Float> BOOST_LEVEL = register("boost_level", builder -> builder.codec(Codec.FLOAT));
+
+    // NEU: Wann war der Spieler zuletzt auf einem Pad? (Für Grace-Period Logik)
+    public static final ComponentType<Long> LAST_PAD_TICK = register("last_pad_tick", builder -> builder.codec(Codec.LONG));
+
+    // NEU: Ist diese Elytra sicher vor Schaden? (Spawn = Ja, Pad = Nein)
+    public static final ComponentType<Boolean> IS_SAFE_ELYTRA = register("is_safe_elytra", builder -> builder.codec(Codec.BOOL));
 
     private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(Simpletweaks.MOD_ID, name), builderOperator.apply(ComponentType.builder()).build());

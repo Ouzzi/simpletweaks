@@ -346,6 +346,15 @@ public class ModCommands {
 
                     // 6. World Spawn Settings
                     .then(CommandManager.literal("worldspawn")
+                            .then(CommandManager.literal("setspawn1")
+                                    .executes(ctx -> setTeleporterSpawn(ctx, 1)))
+                            .then(CommandManager.literal("setspawn2")
+                                    .executes(ctx -> setTeleporterSpawn(ctx, 2)))
+                            .then(CommandManager.literal("setspawn3")
+                                    .executes(ctx -> setTeleporterSpawn(ctx, 3)))
+                            .then(CommandManager.literal("setspawn4")
+                                    .executes(ctx -> setTeleporterSpawn(ctx, 4)))
+
                             .then(CommandManager.literal("forceExact")
                                     .then(CommandManager.argument("enabled", BoolArgumentType.bool())
                                             .executes(ctx -> {
@@ -541,5 +550,22 @@ public class ModCommands {
             return source.getServer().getPlayerManager().isOperator(player.getPlayerConfigEntry());
         }
         return true;
+    }
+
+    private static int setTeleporterSpawn(CommandContext<ServerCommandSource> ctx, int tier) {
+        ServerPlayerEntity player = ctx.getSource().getPlayer();
+        if (player == null) return 0;
+        BlockPos pos = player.getBlockPos();
+        SimpletweaksConfig config = Simpletweaks.getConfig();
+
+        switch (tier) {
+            case 1 -> { config.spawn.spawn1X = pos.getX(); config.spawn.spawn1Y = pos.getY(); config.spawn.spawn1Z = pos.getZ(); }
+            case 2 -> { config.spawn.spawn2X = pos.getX(); config.spawn.spawn2Y = pos.getY(); config.spawn.spawn2Z = pos.getZ(); }
+            case 3 -> { config.spawn.spawn3X = pos.getX(); config.spawn.spawn3Y = pos.getY(); config.spawn.spawn3Z = pos.getZ(); }
+            case 4 -> { config.spawn.spawn4X = pos.getX(); config.spawn.spawn4Y = pos.getY(); config.spawn.spawn4Z = pos.getZ(); }
+        }
+        Simpletweaks.saveConfig();
+        ctx.getSource().sendFeedback(() -> Text.literal("Teleporter Spawn " + tier + " set to " + pos.toShortString()).formatted(Formatting.GREEN), true);
+        return 1;
     }
 }

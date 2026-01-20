@@ -14,7 +14,12 @@ public class ModBlockEntities {
     public static final BlockEntityType<SpawnTeleporterBlockEntity> SPAWN_TELEPORTER_BE = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             Identifier.of(Simpletweaks.MOD_ID, "spawn_teleporter_be"),
-            FabricBlockEntityTypeBuilder.create(SpawnTeleporterBlockEntity::new, ModBlocks.SPAWN_TELEPORTER).build()
+            FabricBlockEntityTypeBuilder.create(SpawnTeleporterBlockEntity::new,
+                    ModBlocks.SPAWN_TELEPORTER,
+                    ModBlocks.SPAWN_TELEPORTER_TIER_2,
+                    ModBlocks.SPAWN_TELEPORTER_TIER_3,
+                    ModBlocks.SPAWN_TELEPORTER_TIER_4
+            ).build()
     );
 
     public static final BlockEntityType<LaunchpadBlockEntity> LAUNCHPAD_BE = Registry.register(

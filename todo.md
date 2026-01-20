@@ -1,10 +1,35 @@
+
+## BUGS:
+- flypad:
+- - spawn elytra and others are not checkted when touching ground/not flying (elytra flight end) - can be abused
+- - - only when fliing it is checked uppon landing. 
+- give the ammount of boost "charges" but only 3x3 above the flypad inside the area
+- allow falldamage and kinetic damage when using the flypad elytra - but continue disabling it when in spawn area or using the spawnarea elytra even when flying above flypad area
+
+- Spawn teleporter:
+- - add riser sound when teleport process is on going
+- - add little effects after teleporting: particles (soul, ender,... ), nausea effect (1 sec), darkness effect (3 sec), slight levitation (1 sec), slow falling (2 sec)
+- - teleport 2 blocks above spawn for slow falling effect after teleporting
+- - 2nd  and 3rd and 4th tier spawn teleporter - each same as first but other location (spawn 1, spawn 2, spawn 3, spawn 4)
+- - - if spawn point not set, use world spawn
+- - - diffrent spawn points can be set via commands by ops (/simpletweaks worldspawn setspawn1, setspawn2, setspawn3, setspawn4) (only for spawnteleporter)
+- - - each tier craftable with previous tier + netherite upgrade + netherite ingot in smithing table
+
+
+- later:
+- claim deed - not protecting land, just showing who owns it
+
+- unbreaking dosent work on echo compass for now
+
 ## TODO:
+
+
 
 - copper pressureplate - activates only when player stands longer on it, more oxidized the plate is, longer time is needed to activate it 
 - copper pressureplate can bbe turned into chunk loader plate, no uprades
 
+- wooden pressureplate can be turned into ?
 
-- claim deed - not protecting land, just showing who owns it
 
 - more compostable items
 - more waxing options - waxed sand and gravel to prevent falling, waxed ice to prevent melting, waxed concrete powder to prevent turning to concrete, waxesd coral blocks to prevent drying out
@@ -33,10 +58,6 @@
 - - example eat a enchanted golden apple -> food slot
 - - example break 10000 ores -> tool slot
 - - example kill 10000 mobs -> weapon slot
-
-## BUGS:
-- unbreaking dosent work on echo compass for now
-
 
 ## DONE:
 

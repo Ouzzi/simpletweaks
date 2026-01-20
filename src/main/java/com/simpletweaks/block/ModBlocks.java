@@ -29,9 +29,22 @@ public class ModBlocks {
     public static final Block SPAWN_TELEPORTER = registerBlock("spawn_teleporter",
             new SpawnTeleporterBlock(AbstractBlock.Settings.create()
                     .registryKey(keyOf("spawn_teleporter"))
-                    .luminance(state -> 10)
-                    .nonOpaque()
-            ));
+                    .luminance(state -> 10).nonOpaque(), 1)); // Tier 1
+
+    public static final Block SPAWN_TELEPORTER_TIER_2 = registerBlock("spawn_teleporter_tier_2",
+            new SpawnTeleporterBlock(AbstractBlock.Settings.create()
+                    .registryKey(keyOf("spawn_teleporter_tier_2"))
+                    .luminance(state -> 12).nonOpaque().mapColor(MapColor.DIAMOND_BLUE), 2));
+
+    public static final Block SPAWN_TELEPORTER_TIER_3 = registerBlock("spawn_teleporter_tier_3",
+            new SpawnTeleporterBlock(AbstractBlock.Settings.create()
+                    .registryKey(keyOf("spawn_teleporter_tier_3"))
+                    .luminance(state -> 14).nonOpaque().mapColor(MapColor.EMERALD_GREEN), 3));
+
+    public static final Block SPAWN_TELEPORTER_TIER_4 = registerBlock("spawn_teleporter_tier_4",
+            new SpawnTeleporterBlock(AbstractBlock.Settings.create()
+                    .registryKey(keyOf("spawn_teleporter_tier_4"))
+                    .luminance(state -> 15).nonOpaque().mapColor(MapColor.GOLD), 4));
 
     public static final Block LAUNCHPAD = registerBlock("launchpad",
             new LaunchpadBlock(AbstractBlock.Settings.create()
@@ -142,6 +155,9 @@ public class ModBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
             entries.add(SPAWN_TELEPORTER);
+            entries.add(SPAWN_TELEPORTER_TIER_2);
+            entries.add(SPAWN_TELEPORTER_TIER_3);
+            entries.add(SPAWN_TELEPORTER_TIER_4);
             entries.add(LAUNCHPAD);
             entries.add(DIAMOND_PRESSURE_PLATE);
             entries.add(ELYTRA_PAD);

@@ -74,6 +74,14 @@ public class SimpletweaksConfig implements ConfigData {
         public int maxBoosts = 3;
         @ConfigEntry.Gui.Tooltip
         public float boostStrength = 0.6f;
+
+        public int spawn1X = 0, spawn1Y = -1000, spawn1Z = 0; // Y=-1000 als "nicht gesetzt" Marker
+        // Tier 2
+        public int spawn2X = 0, spawn2Y = -1000, spawn2Z = 0;
+        // Tier 3
+        public int spawn3X = 0, spawn3Y = -1000, spawn3Z = 0;
+        // Tier 4
+        public int spawn4X = 0, spawn4Y = -1000, spawn4Z = 0;
     }
 
     public static class Commands {

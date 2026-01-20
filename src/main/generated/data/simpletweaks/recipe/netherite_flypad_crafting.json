@@ -4,13 +4,14 @@
   "key": {
     "B": "minecraft:netherite_block",
     "D": "minecraft:diamond_block",
+    "E": "minecraft:enchanted_golden_apple",
     "F": "simpletweaks:reinforced_flypad",
     "K": "minecraft:ominous_trial_key",
     "S": "minecraft:nether_star"
   },
   "pattern": [
     "DBD",
-    "DSD",
+    "ESE",
     "KFK"
   ],
   "result": {

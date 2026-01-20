@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_netherite_flypad": {
+    "has_spawn_teleporter_t3": {
       "conditions": {
         "items": [
           {
-            "items": "simpletweaks:netherite_flypad"
+            "items": "simpletweaks:spawn_teleporter_tier_3"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "simpletweaks:stellar_flypad"
+        "recipe": "simpletweaks:spawn_teleporter_tier4_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_netherite_flypad"
+      "has_spawn_teleporter_t3"
     ]
   ],
   "rewards": {
     "recipes": [
-      "simpletweaks:stellar_flypad"
+      "simpletweaks:spawn_teleporter_tier4_smithing"
     ]
   }
 }
