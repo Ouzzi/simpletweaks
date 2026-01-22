@@ -1,5 +1,6 @@
 package com.simpletweaks;
 
+import com.simpletweaks.block.ModBlocks;
 import com.simpletweaks.client.SpawnElytraClient;
 import com.simpletweaks.client.gui.SpawnElytraTimerOverlay;
 import com.simpletweaks.client.render.LaserRenderer;
@@ -8,8 +9,12 @@ import com.simpletweaks.network.LaserManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
+import net.minecraft.client.render.BlockRenderLayer;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderLayers;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Vector3f;
@@ -21,6 +26,31 @@ public class SimpletweaksClient implements ClientModInitializer {
         SpawnElytraClient.register();
         HudRenderCallback.EVENT.register(new SpawnElytraTimerOverlay());
 
+        // --- RENDER LAYERS ---
+        // FIX: Statischer Aufruf ohne .INSTANCE (basierend auf deinem Snippet)
+        // FIX: Falls RenderLayer.getCutout() rot ist, versuche RenderLayers.getCutout()
+        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT,
+                ModBlocks.SPAWN_TELEPORTER,
+                ModBlocks.SPAWN_TELEPORTER_TIER_2,
+                ModBlocks.SPAWN_TELEPORTER_TIER_3,
+                ModBlocks.SPAWN_TELEPORTER_TIER_4,
+                ModBlocks.LAUNCHPAD,
+                ModBlocks.DIAMOND_PRESSURE_PLATE,
+                ModBlocks.NETHERITE_PRESSURE_PLATE,
+                ModBlocks.ELYTRA_PAD,
+                ModBlocks.REINFORCED_ELYTRA_PAD,
+                ModBlocks.NETHERITE_ELYTRA_PAD,
+                ModBlocks.FINE_ELYTRA_PAD,
+                ModBlocks.FLYPAD,
+                ModBlocks.REINFORCED_FLYPAD,
+                ModBlocks.NETHERITE_FLYPAD,
+                ModBlocks.STELLAR_FLYPAD,
+                ModBlocks.CHUNK_LOADER,
+                ModBlocks.COPPER_PRESSURE_PLATE,
+                ModBlocks.EXPOSED_COPPER_PRESSURE_PLATE,
+                ModBlocks.WEATHERED_COPPER_PRESSURE_PLATE,
+                ModBlocks.OXIDIZED_COPPER_PRESSURE_PLATE
+        );
 
         // Client Ticks (zusammengefasst)
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -31,8 +61,6 @@ public class SimpletweaksClient implements ClientModInitializer {
 
         LaserManager.registerClient();
         WorldRenderEvents.END_MAIN.register(LaserRenderer::render);
-
-
 
     }
 

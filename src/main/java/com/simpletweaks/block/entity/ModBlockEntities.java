@@ -51,6 +51,30 @@ public class ModBlockEntities {
             ).build()
     );
 
+    public static final BlockEntityType<ChunkLoaderBlockEntity> CHUNK_LOADER_BE = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(Simpletweaks.MOD_ID, "chunk_loader_be"),
+            FabricBlockEntityTypeBuilder.create(ChunkLoaderBlockEntity::new, ModBlocks.CHUNK_LOADER).build()
+    );
+
+    public static final BlockEntityType<CopperPressurePlateBlockEntity> COPPER_PRESSURE_PLATE_BE = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(Simpletweaks.MOD_ID, "copper_pressure_plate_be"),
+            FabricBlockEntityTypeBuilder.create(CopperPressurePlateBlockEntity::new,
+                    ModBlocks.COPPER_PRESSURE_PLATE,
+                    ModBlocks.EXPOSED_COPPER_PRESSURE_PLATE,
+                    ModBlocks.WEATHERED_COPPER_PRESSURE_PLATE,
+                    ModBlocks.OXIDIZED_COPPER_PRESSURE_PLATE
+                    // Hier auch die gewachsten Varianten einfügen, wenn du sie erstellst
+            ).build()
+    );
+
+    public static final BlockEntityType<NetheritePressurePlateBlockEntity> NETHERITE_PRESSURE_PLATE_BE = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(Simpletweaks.MOD_ID, "netherite_pressure_plate_be"),
+            FabricBlockEntityTypeBuilder.create(NetheritePressurePlateBlockEntity::new, ModBlocks.NETHERITE_PRESSURE_PLATE).build()
+    );
+
     public static void registerBlockEntities() {
         Simpletweaks.LOGGER.info("Registering Block Entities for " + Simpletweaks.MOD_ID);
     }

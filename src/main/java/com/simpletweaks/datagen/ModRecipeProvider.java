@@ -124,11 +124,14 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Items.DIAMOND), conditionsFromItem(Items.DIAMOND))
                         .offerTo(exporter);
 
-                createShaped(RecipeCategory.REDSTONE, ModBlocks.NETHERITE_PRESSURE_PLATE)
-                        .pattern("NN")
-                        .input('N', Items.NETHERITE_INGOT)
-                        .criterion(hasItem(Items.NETHERITE_INGOT), conditionsFromItem(Items.NETHERITE_INGOT))
-                        .offerTo(exporter);
+                SmithingTransformRecipeJsonBuilder.create(
+                                Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                                Ingredient.ofItems(ModBlocks.DIAMOND_PRESSURE_PLATE),
+                                Ingredient.ofItems(Items.NETHERITE_INGOT),
+                                RecipeCategory.REDSTONE,
+                                ModBlocks.NETHERITE_PRESSURE_PLATE.asItem())
+                        .criterion("has_diamond_pressure_plate", conditionsFromItem(ModBlocks.DIAMOND_PRESSURE_PLATE))
+                        .offerTo(exporter, "netherite_pressure_plate_smithing");
 
                 // 4. Smithing: Elytra Pad (Tiered)
                 SmithingTransformRecipeJsonBuilder.create(
@@ -204,6 +207,24 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .criterion("has_netherite_flypad", conditionsFromItem(ModBlocks.NETHERITE_FLYPAD))
                         .offerTo(exporter, "stellar_flypad_crafting");
 
+                // --- NEW RECIPES ---
+
+                // 1. Copper Pressure Plate (2 Copper Blocks)
+                createShaped(RecipeCategory.REDSTONE, ModBlocks.COPPER_PRESSURE_PLATE)
+                        .pattern("CC")
+                        .input('C', Blocks.COPPER_BLOCK) // 2 Blöcke = 1 Platte
+                        .criterion(hasItem(Blocks.COPPER_BLOCK), conditionsFromItem(Blocks.COPPER_BLOCK))
+                        .offerTo(exporter);
+
+                // 2. Chunk Loader (Copper Plate + Netherite Ingot via Smithing)
+                SmithingTransformRecipeJsonBuilder.create(
+                                Ingredient.ofItems(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                                Ingredient.ofItems(ModBlocks.COPPER_PRESSURE_PLATE),
+                                Ingredient.ofItems(Items.NETHERITE_INGOT),
+                                RecipeCategory.TOOLS,
+                                ModBlocks.CHUNK_LOADER.asItem())
+                        .criterion("has_copper_pressure_plate", conditionsFromItem(ModBlocks.COPPER_PRESSURE_PLATE))
+                        .offerTo(exporter, "chunk_loader_smithing");
             }
         };
     }

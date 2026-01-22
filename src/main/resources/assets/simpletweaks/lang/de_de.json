@@ -6,17 +6,40 @@
   "item.simpletweaks.claim_deed": "Besitzurkunde",
   "block.simpletweaks.spawn_teleporter": "Spawn-Teleporter",
   "block.simpletweaks.launchpad": "Startrampe",
+  "block.simpletweaks.chunk_loader": "Chunk-Lader",
+  "item.simpletweaks.chunk_loader": "Chunk-Lader",
 
   "block.simpletweaks.diamond_pressure_plate": "Diamant-Druckplatte",
+  "item.simpletweaks.diamond_pressure_plate": "Diamant-Druckplatte",
+  "block.simpletweaks.netherite_pressure_plate": "Netherite-Druckplatte",
+  "item.simpletweaks.netherite_pressure_plate": "Netherite-Druckplatte",
+
+  "block.simpletweaks.copper_pressure_plate": "Kupferdruckplatte",
+  "item.simpletweaks.copper_pressure_plate": "Kupferdruckplatte",
+  "block.simpletweaks.exposed_copper_pressure_plate": "Exponierte Kupferdruckplatte",
+  "item.simpletweaks.exposed_copper_pressure_plate": "Exponierte Kupferdruckplatte",
+  "block.simpletweaks.weathered_copper_pressure_plate": "Verwitterte Kupferdruckplatte",
+  "item.simpletweaks.weathered_copper_pressure_plate": "Verwitterte Kupferdruckplatte",
+  "block.simpletweaks.oxidized_copper_pressure_plate": "Oxidierte Kupferdruckplatte",
+  "item.simpletweaks.oxidized_copper_pressure_plate": "Oxidierte Kupferdruckplatte",
+
   "block.simpletweaks.elytra_pad": "Elytren-Pad (Stufe 1)",
   "block.simpletweaks.reinforced_elytra_pad": "Verstärktes Elytren-Pad (Stufe 2)",
   "block.simpletweaks.netherite_elytra_pad": "Netherite-Elytren-Pad (Stufe 3)",
   "block.simpletweaks.fine_elytra_pad": "Edles Elytren-Pad (Stufe 4)",
-  "item.simpletweaks.diamond_pressure_plate": "Diamant-Druckplatte",
   "item.simpletweaks.elytra_pad": "Elytren-Pad (Stufe 1)",
   "item.simpletweaks.reinforced_elytra_pad": "Verstärktes Elytren-Pad (Stufe 2)",
   "item.simpletweaks.netherite_elytra_pad": "Netherite-Elytren-Pad (Stufe 3)",
   "item.simpletweaks.fine_elytra_pad": "Edles Elytren-Pad (Stufe 4)",
+
+  "block.simpletweaks.flypad": "Flug-Pad (Stufe 1)",
+  "block.simpletweaks.reinforced_flypad": "Verstärktes Flug-Pad (Stufe 2)",
+  "block.simpletweaks.netherite_flypad": "Netherite-Flug-Pad (Stufe 3)",
+  "block.simpletweaks.stellar_flypad": "Stellares Flug-Pad (Stufe 4)",
+  "item.simpletweaks.flypad": "Flug-Pad (Stufe 1)",
+  "item.simpletweaks.reinforced_flypad": "Verstärktes Flug-Pad (Stufe 2)",
+  "item.simpletweaks.netherite_flypad": "Netherite-Flug-Pad (Stufe 3)",
+  "item.simpletweaks.stellar_flypad": "Stellares Flug-Pad (Stufe 4)",
 
   "text.autoconfig.simpletweaks.title": "Simpletweaks Konfiguration",
   "text.autoconfig.simpletweaks.category.default": "Allgemein",
@@ -91,16 +114,5 @@
 
 
   "item.echo_compass.echo_compass": "Echo-Kompass",
-  "item.echo_compass.echo_compass.lore": "Verbinde ihn mit einem Leitstein, um dich zu teleportieren",
-
-  "block.simpletweaks.netherite_pressure_plate": "Netherite-Druckplatte",
-  "block.simpletweaks.flypad": "Flug-Pad (Stufe 1)",
-  "block.simpletweaks.reinforced_flypad": "Verstärktes Flug-Pad (Stufe 2)",
-  "block.simpletweaks.netherite_flypad": "Netherite-Flug-Pad (Stufe 3)",
-  "block.simpletweaks.stellar_flypad": "Stellares Flug-Pad (Stufe 4)",
-  "item.simpletweaks.netherite_pressure_plate": "Netherite-Druckplatte",
-  "item.simpletweaks.flypad": "Flug-Pad (Stufe 1)",
-  "item.simpletweaks.reinforced_flypad": "Verstärktes Flug-Pad (Stufe 2)",
-  "item.simpletweaks.netherite_flypad": "Netherite-Flug-Pad (Stufe 3)",
-  "item.simpletweaks.stellar_flypad": "Stellares Flug-Pad (Stufe 4)"
+  "item.echo_compass.echo_compass.lore": "Verbinde ihn mit einem Leitstein, um dich zu teleportieren"
 }

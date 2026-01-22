@@ -41,6 +41,15 @@ public class ModModelProvider extends FabricModelProvider {
         registerFlatBlock(blockStateModelGenerator, ModBlocks.REINFORCED_FLYPAD, "reinforced_flypad");
         registerFlatBlock(blockStateModelGenerator, ModBlocks.NETHERITE_FLYPAD, "netherite_flypad");
         registerFlatBlock(blockStateModelGenerator, ModBlocks.STELLAR_FLYPAD, "stellar_flypad");
+
+        // --- COPPER PRESSURE PLATES (Oxidation Stages) ---
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.COPPER_PRESSURE_PLATE, "copper_pressure_plate");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.EXPOSED_COPPER_PRESSURE_PLATE, "exposed_copper_pressure_plate");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.WEATHERED_COPPER_PRESSURE_PLATE, "weathered_copper_pressure_plate");
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.OXIDIZED_COPPER_PRESSURE_PLATE, "oxidized_copper_pressure_plate");
+
+        // --- CHUNK LOADER ---
+        registerFlatBlock(blockStateModelGenerator, ModBlocks.CHUNK_LOADER, "chunk_loader");
     }
 
     /**
