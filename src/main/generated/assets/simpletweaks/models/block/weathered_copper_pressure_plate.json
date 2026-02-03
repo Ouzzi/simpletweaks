@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/pressure_plate_up",
+  "textures": {
+    "texture": "simpletweaks:block/weathered_copper_pressure_plate"
+  }
+}

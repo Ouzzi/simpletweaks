@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "simpletweaks:copper_pressure_plate",
+  "result": {
+    "id": "simpletweaks:chunk_loader"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}
